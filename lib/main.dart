@@ -1,24 +1,67 @@
-import 'package:demo_ui/screens/login.dart';
+import 'package:demo_ui/screens/change_password.dart';
+import 'package:demo_ui/screens/email_confirmation.dart';
+import 'package:demo_ui/screens/forgot_password.dart';
+import 'package:demo_ui/screens/reset_password.dart';
+import 'package:demo_ui/screens/signin.dart';
+import 'package:demo_ui/screens/signup.dart';
+import 'package:demo_ui/screens/update_profile.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Login(),
+      // home: const Login(),
+      routerConfig: _router,
     );
   }
+
+  final GoRouter _router = GoRouter(
+    initialLocation: "/changePassword",
+    routes: [
+      
+      GoRoute(
+        path: "/login",
+        builder: (context, state) => const Login(),
+      ),
+      GoRoute(
+        path: "/signup",
+        builder: (context, state) => const Signup(),
+      ),
+      GoRoute(
+        path: "/forgotPassword",
+        builder: (context, state) => const ForgotPassword(),
+      ),
+      GoRoute(
+        path: "/emailConfirmation",
+        builder: (context, state) => const EmailConfirmation(),
+      ),
+      GoRoute(
+        path: "/resetPassword",
+        builder: (context, state) => const ResetPassword(),
+      ),
+      GoRoute(
+        path: "/changePassword",
+        builder: (context, state) => const ChangePassword(),
+      ),
+      GoRoute(
+        path: "/profile",
+        builder: (context, state) => UpdateProfile(),
+      ),
+    ],
+  );
 }
