@@ -93,7 +93,7 @@ class Login extends StatelessWidget {
                 ],
               ),
               const Spacer(),
-              ActionButton(text: 'Login', direction: '/login'),
+              ActionButton(text: 'Login', direction: '/profile'),
               const SizedBox(height: 10),
               ActionText(
                 text: "Don't have any account? Sign up",

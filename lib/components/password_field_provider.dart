@@ -14,8 +14,8 @@ class PasswordFieldProvider extends StatelessWidget {
           children: [
             Text(
               text,
-              style: const TextStyle(
-                  color: Color(0xFF24786D), fontWeight: FontWeight.w600),
+              style: TextStyle(
+                  color: Theme.of(context).colorScheme.tertiary, fontWeight: FontWeight.w600),
             ),
             SizedBox(
               width: 360,
