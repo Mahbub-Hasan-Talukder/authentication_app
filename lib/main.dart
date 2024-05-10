@@ -5,6 +5,7 @@ import 'package:demo_ui/screens/reset_password.dart';
 import 'package:demo_ui/screens/signin.dart';
 import 'package:demo_ui/screens/signup.dart';
 import 'package:demo_ui/screens/update_profile.dart';
+import 'package:demo_ui/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -21,10 +22,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      theme: theme,
       // home: const Login(),
       routerConfig: _router,
     );

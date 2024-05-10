@@ -18,7 +18,7 @@ class TitleText extends StatelessWidget {
             child: Container(
               height: 10,
               width: 60,
-              color: const Color(0xFF24786D).withOpacity(0.7),
+              color: Theme.of(context).colorScheme.tertiary.withOpacity(0.7),
             ),
           ),
           Text(
