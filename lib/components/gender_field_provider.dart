@@ -11,29 +11,29 @@ class GenderFieldProvider extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               'Select Gender',
               style: TextStyle(
-                  color: Color(0xFF24786D), fontWeight: FontWeight.w600),
+                  color: Theme.of(context).colorScheme.tertiary, fontWeight: FontWeight.w600),
             ),
             SizedBox(
               width: 360,
               child: TextField(
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   hintText: '',
-                  hintStyle: TextStyle(
+                  hintStyle: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                     color: Color(0xFFC1CAD0),
                   ),
-                  enabledBorder: UnderlineInputBorder(
+                  enabledBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(
                       color: Color(0xFFC1CAD0),
                     ),
                   ),
                   focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
-                      color: Color(0xFF24786D),
+                      color: Theme.of(context).colorScheme.tertiary,
                     ),
                   ),
                 ),
