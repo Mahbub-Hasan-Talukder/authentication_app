@@ -8,8 +8,19 @@ class TitleText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
+      child: Stack(
+
         children: [
+          
+          Positioned(
+            bottom: 0,
+            left: 0,
+            child: Container(
+              height: 10,
+              width: 60,
+              color: const Color(0xFF24786D).withOpacity(0.7),
+            ),
+          ),
           Text(
             text,
             style: const TextStyle(
