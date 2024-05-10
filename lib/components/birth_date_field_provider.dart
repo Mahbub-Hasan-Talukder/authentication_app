@@ -19,12 +19,14 @@ class DateOfBirthProvier extends StatelessWidget {
             SizedBox(
               width: 360,
               child: TextField(
-
                 decoration: InputDecoration(
-                  suffix: Image(
-                    height: 40,
-                    width: 40,
-                    image: Assets.calender.provider(),
+                  suffixIcon: Container(
+                    height: 25,
+                    width: 25,
+                    padding: const EdgeInsets.all(8),
+                    child: Image(
+                      image: Assets.calender.provider(),
+                    ),
                   ),
                   labelText: "",
                   enabledBorder: const UnderlineInputBorder(
