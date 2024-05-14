@@ -40,7 +40,7 @@ class ForgotPassword extends StatelessWidget {
               ),
               const Spacer(),
               ActionButton(
-                text: 'Create an account',
+                text: 'submit',
                 direction: '',
                 onpress: () async {
                   try {
@@ -52,8 +52,9 @@ class ForgotPassword extends StatelessWidget {
                       },
                     );
                     String? userEmail = email.text.toString();
+                    String previousPage = 'forgotPassword';
                     // ignore: use_build_context_synchronously
-                    context.go('/emailConfirmation/$userEmail');
+                    context.go('/emailConfirmation/$userEmail/$previousPage');
                     
                   } catch (e) {
                     print(e.toString());
