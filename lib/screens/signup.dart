@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart';
 
+
 class Signup extends StatelessWidget {
   const Signup({super.key});
 
@@ -84,8 +85,10 @@ class Signup extends StatelessWidget {
                     if (response.statusCode == 201) {
                       // ignore: use_build_context_synchronously
                       String? userEmail = email.text.toString();
+                      String previousPage = 'signup';
+                      // String? dir = enumex
                       // ignore: use_build_context_synchronously
-                      context.go('/emailConfirmation/$userEmail');
+                      context.go('/emailConfirmation/$userEmail/$previousPage');
                     } else {
                       String msg = jsonDecode(response.body)['message'];
 

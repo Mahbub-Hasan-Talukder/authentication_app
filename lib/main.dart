@@ -45,14 +45,18 @@ class MyApp extends StatelessWidget {
         builder: (context, state) => ForgotPassword(),
       ),
       GoRoute(
-        path: "/emailConfirmation/:email",
+        path: "/emailConfirmation/:email/:previousPage",
         builder: (context, state) => EmailConfirmation(
-          email:state.pathParameters["email"]!
+          email:state.pathParameters["email"]!,
+          previousPage: state.pathParameters["previousPage"]!,
+
         ),
       ),
       GoRoute(
-        path: "/resetPassword",
-        builder: (context, state) => const ResetPassword(),
+        path: "/resetPassword/:email",
+        builder: (context, state) =>  ResetPassword(
+          email: state.pathParameters["email"]!,
+        ),
       ),
       GoRoute(
         path: "/changePassword",
