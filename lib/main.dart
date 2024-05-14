@@ -9,7 +9,7 @@ import 'package:demo_ui/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-void main() {
+void main() async {
   runApp(MyApp());
 }
 
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
       
       GoRoute(
         path: "/login",
-        builder: (context, state) => const Login(),
+        builder: (context, state) =>  Login(),
       ),
       GoRoute(
         path: "/signup",
@@ -42,15 +42,21 @@ class MyApp extends StatelessWidget {
       ),
       GoRoute(
         path: "/forgotPassword",
-        builder: (context, state) => const ForgotPassword(),
+        builder: (context, state) => ForgotPassword(),
       ),
       GoRoute(
-        path: "/emailConfirmation",
-        builder: (context, state) => const EmailConfirmation(),
+        path: "/emailConfirmation/:email/:previousPage",
+        builder: (context, state) => EmailConfirmation(
+          email:state.pathParameters["email"]!,
+          previousPage: state.pathParameters["previousPage"]!,
+
+        ),
       ),
       GoRoute(
-        path: "/resetPassword",
-        builder: (context, state) => const ResetPassword(),
+        path: "/resetPassword/:email",
+        builder: (context, state) =>  ResetPassword(
+          email: state.pathParameters["email"]!,
+        ),
       ),
       GoRoute(
         path: "/changePassword",

@@ -25,17 +25,17 @@ class UpdateProfile extends StatelessWidget {
               Center(
                 child: ProfilePictureHolder(image: Assets.profile.provider()),
               ),
-              const CustomTextField(
+               CustomTextField(
                 text: 'First Name',
                 hintText: '',
               ),
               const SizedBox(height: 40),
-              const CustomTextField(
+               CustomTextField(
                 text: 'Last Name',
                 hintText: '',
               ),
               const SizedBox(height: 40),
-              const CustomTextField(
+               CustomTextField(
                 text: 'Phone number',
                 hintText: '',
               ),
