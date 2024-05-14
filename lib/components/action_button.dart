@@ -1,21 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 class ActionButton extends StatelessWidget {
   
   final String text;
   String? direction;
-  
-  ActionButton({super.key, required this.text, this.direction});
+  dynamic onpress;
+  ActionButton({super.key, required this.text, this.direction, this.onpress});
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () {
-        if(direction?.isNotEmpty==true){
-          context.go(direction!);
-        }
-      },
+      onPressed: onpress,
       style: const ButtonStyle(
         backgroundColor: MaterialStatePropertyAll(
           Color(0xFFF3F6F6),
