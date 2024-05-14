@@ -236,6 +236,12 @@
       "languageVersion": "2.18"
     },
     {
+      "name": "http",
+      "rootUri": "file:///Users/mahbubhasan/.pub-cache/hosted/pub.dev/http-1.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
       "name": "http_multi_server",
       "rootUri": "file:///Users/mahbubhasan/.pub-cache/hosted/pub.dev/http_multi_server-3.2.1",
       "packageUri": "lib/",
@@ -255,9 +261,9 @@
     },
     {
       "name": "js",
-      "rootUri": "file:///Users/mahbubhasan/.pub-cache/hosted/pub.dev/js-0.7.1",
+      "rootUri": "file:///Users/mahbubhasan/.pub-cache/hosted/pub.dev/js-0.6.7",
       "packageUri": "lib/",
-      "languageVersion": "3.1"
+      "languageVersion": "2.19"
     },
     {
       "name": "json_annotation",
@@ -458,7 +464,7 @@
       "languageVersion": "3.2"
     }
   ],
-  "generated": "2024-05-10T06:57:33.732399Z",
+  "generated": "2024-05-14T05:28:17.810735Z",
   "generator": "pub",
   "generatorVersion": "3.2.3"
 }

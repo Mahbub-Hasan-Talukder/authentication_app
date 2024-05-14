@@ -8,9 +8,14 @@ import 'package:demo_ui/components/title.dart';
 import 'package:demo_ui/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
+import 'package:http/http.dart';
+
 
 class Login extends StatelessWidget {
-  const Login({super.key});
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  Login({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -77,10 +82,16 @@ class Login extends StatelessWidget {
                   ],
                 ),
               ),
-              const CustomTextField(text: 'Email', hintText: 'Enter email'),
+              CustomTextField(
+                text: 'Email',
+                hintText: 'Enter email',
+                controller: emailController,
+              ),
               const SizedBox(height: 20),
-              const PasswordFieldProvider(
-                  text: 'Email', hintText: 'Enter password'),
+              PasswordFieldProvider(
+                  controller: passwordController,
+                  text: 'Password',
+                  hintText: 'Enter password'),
               Row(
                 children: [
                   Checkbox(value: false, onChanged: (newValue) {}, shape: null),
@@ -93,7 +104,33 @@ class Login extends StatelessWidget {
                 ],
               ),
               const Spacer(),
-              ActionButton(text: 'Login', direction: '/profile'),
+              ActionButton(
+                text: 'Login',
+                direction: '',
+                onpress: () async {
+                  try {
+                    Response response = await post(
+                      Uri.parse('http://34.72.136.54:4067/api/v1/auth/login'),
+                      body: {
+                        'email': emailController.text,
+                        'password': passwordController.text,
+                        'OS': 'IOS',
+                        'model': 'iPhone 15',
+                        'FCMToken': 'Token1',
+                      },
+                    );
+                    print(response.statusCode);
+                    if (response.statusCode == 201 || response.statusCode==200) {
+                      context.go('/profile');
+                    } else {
+                      // ignore: use_build_context_synchronously
+                      
+                    }
+                  } catch (e) {
+                    print(e.toString());
+                  }
+                },
+              ),
               const SizedBox(height: 10),
               ActionText(
                 text: "Don't have any account? Sign up",
@@ -107,3 +144,5 @@ class Login extends StatelessWidget {
     );
   }
 }
+// moshi.bs23@gmail.com
+// password123

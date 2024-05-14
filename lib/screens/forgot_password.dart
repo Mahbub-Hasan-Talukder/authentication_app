@@ -5,10 +5,11 @@ import 'package:demo_ui/components/subtitle.dart';
 import 'package:demo_ui/components/title.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:http/http.dart';
 
 class ForgotPassword extends StatelessWidget {
-  const ForgotPassword({super.key});
-
+  ForgotPassword({super.key});
+  TextEditingController email = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,30 +27,44 @@ class ForgotPassword extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(height: 145),
-
               const TitleText(text: 'ForgotPassword'),
-
               const SizedBox(height: 30),
-
               const SubTitleText(
                   text:
                       'Enter your email address. We will send a code to verify your identity'),
-
               const SizedBox(height: 40),
-
-              const CustomTextField(text: 'Email', hintText: ''),
-
-              const Spacer(),
-
-              ActionButton(
-                text: 'Submit',
-                direction: '/emailConfirmation',
+              CustomTextField(
+                text: 'Email',
+                hintText: '',
+                controller: email,
               ),
-
+              const Spacer(),
+              ActionButton(
+                text: 'Create an account',
+                direction: '',
+                onpress: () async {
+                  try {
+                    Response response = await post(
+                      Uri.parse(
+                          'http://34.72.136.54:4067/api/v1/auth/forget-password'),
+                      body: {
+                        'email': email.text.toString(),
+                      },
+                    );
+                    String? userEmail = email.text.toString();
+                    // ignore: use_build_context_synchronously
+                    context.go('/emailConfirmation/$userEmail');
+                    
+                  } catch (e) {
+                    print(e.toString());
+                  }
+                },
+              ),
               const SizedBox(height: 10),
-
-             ActionText(text: "Remember your password? Login", direction: '/login',)
-
+              ActionText(
+                text: "Remember your password? Login",
+                direction: '/login',
+              )
             ],
           ),
         ),
