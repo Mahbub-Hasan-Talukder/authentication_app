@@ -86,12 +86,9 @@ class Signup extends StatelessWidget {
                       // ignore: use_build_context_synchronously
                       String? userEmail = email.text.toString();
                       String previousPage = 'signup';
-                      // String? dir = enumex
                       // ignore: use_build_context_synchronously
                       context.go('/emailConfirmation/$userEmail/$previousPage');
                     } else {
-                      String msg = jsonDecode(response.body)['message'];
-
                       // ignore: use_build_context_synchronously
                       showDialog(
                         context: context,
