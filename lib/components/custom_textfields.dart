@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 class CustomTextField extends StatelessWidget {
   
   final String text, hintText;
+  TextEditingController? controller;
   
-  const CustomTextField({super.key, required this.text, required this.hintText});
+   CustomTextField({super.key, required this.text, required this.hintText, this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +22,7 @@ class CustomTextField extends StatelessWidget {
             SizedBox(
               width: 360,
               child: TextField(
+                controller: controller,
                 decoration: InputDecoration(
                   hintText: hintText,
                   hintStyle: const TextStyle(

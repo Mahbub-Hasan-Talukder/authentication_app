@@ -19,31 +19,22 @@ class ChangePassword extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(height: 145),
-
               const TitleText(text: 'Change password'),
-
               const SizedBox(height: 30),
-
               const SubTitleText(
-                  text:
-                      'Make sure to enter a strong password to ensure your security.'),
-
+                text: 'Make sure to enter a strong password to ensure your security.',
+              ),
               const SizedBox(height: 40),
-
-              const PasswordFieldProvider(text: 'Old Password', hintText: 'Enter password'),
-
+               PasswordFieldProvider(
+                  text: 'Old Password', hintText: 'Enter password'),
               const SizedBox(height: 40),
-
-              const PasswordFieldProvider(text: 'New passwrod', hintText: 'New password'),
-
+               PasswordFieldProvider(
+                  text: 'New passwrod', hintText: 'New password'),
               const SizedBox(height: 40),
-
-              const PasswordFieldProvider(text: 'Confirm password', hintText: 'Confirm password'),
-
+               PasswordFieldProvider(
+                  text: 'Confirm password', hintText: 'Confirm password'),
               const Spacer(),
-
               ActionButton(text: 'Change Password', direction: '/profile'),
-
               const SizedBox(height: 20),
             ],
           ),

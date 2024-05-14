@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class PasswordFieldProvider extends StatelessWidget {
   final String text, hintText;
-  const PasswordFieldProvider(
-      {super.key, required this.text, required this.hintText});
+  TextEditingController? controller;
+   PasswordFieldProvider(
+      {super.key, required this.text, required this.hintText, this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +21,7 @@ class PasswordFieldProvider extends StatelessWidget {
             SizedBox(
               width: 360,
               child: TextField(
+                controller: controller,
                 obscureText: true,
                 decoration: InputDecoration(
                   suffixIcon: const Icon(

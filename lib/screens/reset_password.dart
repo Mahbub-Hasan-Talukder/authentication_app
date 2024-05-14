@@ -31,9 +31,9 @@ class ResetPassword extends StatelessWidget {
                   text:
                       'Please enter a new password. Don’t enter your old password.'),
               const SizedBox(height: 40),
-              const PasswordFieldProvider(text: 'Password', hintText: ''),
+               PasswordFieldProvider(text: 'Password', hintText: ''),
               const SizedBox(height: 40),
-              const PasswordFieldProvider(
+               PasswordFieldProvider(
                   text: 'Confirm Password', hintText: ''),
               const Spacer(),
               ActionButton(
