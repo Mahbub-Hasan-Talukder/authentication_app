@@ -1,20 +1,13 @@
-import 'package:demo_ui/screens/change_password.dart';
-import 'package:demo_ui/screens/email_confirmation.dart';
-import 'package:demo_ui/screens/forgot_password.dart';
-import 'package:demo_ui/screens/reset_password.dart';
-import 'package:demo_ui/screens/signin.dart';
-import 'package:demo_ui/screens/signup.dart';
-import 'package:demo_ui/screens/update_profile.dart';
+import 'package:demo_ui/core/service/navigation/router_config/router_config.dart';
 import 'package:demo_ui/theme/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 void main() async {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
+  const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
@@ -24,48 +17,53 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: theme,
       // home: const Login(),
-      routerConfig: _router,
+      routerConfig: MyRouterConfig().router,
+      // routeInformationParser: MyRouterConfig().router.routeInformationParser,
+      // routerDelegate: MyRouterConfig().router.routerDelegate,
     );
   }
 
-  final GoRouter _router = GoRouter(
-    initialLocation: "/login",
-    routes: [
+  // final GoRouter _router = GoRouter(
+  //   initialLocation: "/login",
+  //   routes: [
       
-      GoRoute(
-        path: "/login",
-        builder: (context, state) =>  Login(),
-      ),
-      GoRoute(
-        path: "/signup",
-        builder: (context, state) => const Signup(),
-      ),
-      GoRoute(
-        path: "/forgotPassword",
-        builder: (context, state) => ForgotPassword(),
-      ),
-      GoRoute(
-        path: "/emailConfirmation/:email/:previousPage",
-        builder: (context, state) => EmailConfirmation(
-          email:state.pathParameters["email"]!,
-          previousPage: state.pathParameters["previousPage"]!,
+  //     GoRoute(
+  //       path: "/login",
+  //       builder: (context, state) =>  Login(),
+  //     ),
+  //     GoRoute(
+  //       path: "/signup",
+  //       builder: (context, state) => const Signup(),
+  //     ),
+  //     GoRoute(
+  //       path: "/forgotPassword",
+  //       builder: (context, state) => ForgotPassword(),
+  //     ),
+  //     GoRoute(
+  //       path: "/emailConfirmation/:email/:previousPage",
+  //       builder: (context, state) => EmailConfirmation(
+  //         email:state.pathParameters["email"]!,
+  //         previousPage: state.pathParameters["previousPage"]!,
 
-        ),
-      ),
-      GoRoute(
-        path: "/resetPassword/:email",
-        builder: (context, state) =>  ResetPassword(
-          email: state.pathParameters["email"]!,
-        ),
-      ),
-      GoRoute(
-        path: "/changePassword",
-        builder: (context, state) => const ChangePassword(),
-      ),
-      GoRoute(
-        path: "/profile",
-        builder: (context, state) => UpdateProfile(),
-      ),
-    ],
-  );
+  //       ),
+  //     ),
+  //     GoRoute(
+  //       path: "/resetPassword/:email/:previousPage",
+  //       builder: (context, state) =>  ResetPassword(
+  //         email: state.pathParameters["email"]!,
+  //         previousPage: state.pathParameters["previousPage"]!,
+  //       ),
+  //     ),
+  //     GoRoute(
+  //       path: "/changePassword",
+  //       builder: (context, state) => const ChangePassword(),
+  //     ),
+  //     GoRoute(
+  //       path: "/profile",
+  //       builder: (context, state) => UpdateProfile(),
+  //     ),
+  //   ],
+  // );
+
 }
+
