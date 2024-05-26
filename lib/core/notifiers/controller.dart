@@ -47,6 +47,6 @@ class Controller extends _$Controller {
       );
     }
   }
-
+  
   //signout
 }
