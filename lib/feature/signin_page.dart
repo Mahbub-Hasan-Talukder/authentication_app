@@ -137,9 +137,16 @@ class Login extends ConsumerWidget {
               ),
               const Spacer(),
               TextButton(
-                style: const ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(
+                style:!loginButtonState? const ButtonStyle(
+                  backgroundColor:  WidgetStatePropertyAll(
                     Color(0xFFF3F6F6),
+                  ),
+                  minimumSize: WidgetStatePropertyAll(
+                    Size(double.infinity, 50),
+                  ),
+                ):const ButtonStyle(
+                  backgroundColor:  WidgetStatePropertyAll(
+                    Color.fromARGB(255, 97, 145, 122),
                   ),
                   minimumSize: WidgetStatePropertyAll(
                     Size(double.infinity, 50),
