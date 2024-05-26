@@ -12,10 +12,10 @@ class ActionButton extends StatelessWidget {
     return TextButton(
       onPressed: onpress,
       style: const ButtonStyle(
-        backgroundColor: MaterialStatePropertyAll(
+        backgroundColor: WidgetStatePropertyAll(
           Color(0xFFF3F6F6),
         ),
-        minimumSize: MaterialStatePropertyAll(
+        minimumSize: WidgetStatePropertyAll(
           Size(double.infinity, 50),
         ),
       ),

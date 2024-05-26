@@ -19,6 +19,11 @@ class UpdateProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+            onPressed: () {
+              // exit(0);
+            },
+            icon: const Icon(Icons.arrow_back_ios)),
         // leading: const Icon(Icons.arrow_back),
         actions: [
           Padding(
@@ -28,20 +33,17 @@ class UpdateProfile extends StatelessWidget {
                   try {
                     Response response = await post(
                       Uri.parse(ApiLinks.logout),
-                      
                     );
-                    
+
                     // ignore: use_build_context_synchronously
                     showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          print(response.statusCode);
-                          if(response.statusCode==201){
-                            return AlertDialog(
-                            title:
-                                const Text('Logout successful'),
-                            content:
-                                const Text('Good Bye'),
+                      context: context,
+                      builder: (BuildContext context) {
+                        print(response.statusCode);
+                        if (response.statusCode == 201) {
+                          return AlertDialog(
+                            title: const Text('Logout successful'),
+                            content: const Text('Good Bye'),
                             actions: [
                               TextButton(
                                 onPressed: () {
@@ -51,23 +53,21 @@ class UpdateProfile extends StatelessWidget {
                               ),
                             ],
                           );
-                          }
-                          return AlertDialog(
-                            title:
-                                const Text('Logout Failed'),
-                            content:
-                                const Text('Try again'),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: const Text('OK'),
-                              ),
-                            ],
-                          );
-                        },
-                      );
+                        }
+                        return AlertDialog(
+                          title: const Text('Logout Failed'),
+                          content: const Text('Try again'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
                   } catch (e) {
                     print(e.toString());
                   }

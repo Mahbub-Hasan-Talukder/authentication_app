@@ -29,7 +29,7 @@ class ForgotPassword extends StatelessWidget {
               const SizedBox(height: 30),
               const SubTitleText(
                   text:
-                      'Enter your email address. We will send a code to verify your identity'),
+                      ' your email address. We will send a code to verify your identity'),
               const SizedBox(height: 40),
               CustomTextField(
                 text: 'Email',
