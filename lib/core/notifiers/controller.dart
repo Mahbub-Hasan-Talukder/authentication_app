@@ -70,7 +70,7 @@ class Controller extends _$Controller {
     );
 
     if (state!.statusCode == 201) {
-      GoRouter.of(context).pushNamed(Routes.profile);
+      GoRouter.of(context).pushNamed(Routes.profile);///
     } else {
       showDialog(
         context: context,
