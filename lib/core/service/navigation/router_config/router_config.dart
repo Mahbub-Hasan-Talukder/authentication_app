@@ -1,6 +1,7 @@
 import 'package:demo_ui/core/service/navigation/routes/routes.dart';
 import 'package:demo_ui/feature/email_confirmation_page.dart';
 import 'package:demo_ui/feature/forgot_password_page.dart';
+import 'package:demo_ui/feature/login/new_login_page.dart';
 import 'package:demo_ui/feature/reset_password_page.dart';
 import 'package:demo_ui/feature/signin_page.dart';
 import 'package:demo_ui/feature/signup_page.dart';

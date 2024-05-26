@@ -10,9 +10,15 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart';
 
-class Signup extends StatelessWidget {
+class Signup extends StatefulWidget {
   const Signup({super.key});
 
+  @override
+  State<Signup> createState() => _SignupState();
+}
+
+class _SignupState extends State<Signup> {
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     TextEditingController firstName = TextEditingController();
@@ -66,10 +72,13 @@ class Signup extends StatelessWidget {
                 controller: password,
               ),
               const Spacer(),
-              ActionButton(
+              isLoading?const CircularProgressIndicator(): ActionButton(
                 text: 'Create an account',
                 direction: '',
                 onpress: () async {
+                  setState(() {
+                          isLoading = true;
+                        });
                   try {
                     Response response = await post(
                       Uri.parse(ApiLinks.signup),
@@ -117,6 +126,11 @@ class Signup extends StatelessWidget {
                     }
                   } catch (e) {
                     print(e.toString());
+                  }
+                  finally{
+                    setState(() {
+                      isLoading = true;
+                    });
                   }
                 },
               ),

@@ -1,7 +1,7 @@
-
 import 'dart:convert';
 
 import 'package:demo_ui/core/gen/assets.gen.dart';
+import 'package:demo_ui/core/notifiers/controller.dart';
 import 'package:demo_ui/core/service/navigation/routes/routes.dart';
 import 'package:demo_ui/core/widgets/action_button.dart';
 import 'package:demo_ui/core/widgets/action_text.dart';
@@ -12,19 +12,21 @@ import 'package:demo_ui/core/widgets/password_field_provider.dart';
 import 'package:demo_ui/core/widgets/subtitle.dart';
 import 'package:demo_ui/core/widgets/title.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart';
 
-
-class Login extends StatelessWidget {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+class Login extends ConsumerWidget {
   Login({super.key});
+  bool isLoading = false;
+  TextEditingController emailController = TextEditingController();
+
+  TextEditingController passwordController = TextEditingController();
 
   @override
-  Widget build(BuildContext context) {
-    
+  Widget build(BuildContext context, WidgetRef ref) {
+    dynamic state = ref.watch(controllerProvider);
     return Scaffold(
       appBar: AppBar(),
       body: SafeArea(
@@ -102,64 +104,48 @@ class Login extends StatelessWidget {
               Row(
                 children: [
                   Checkbox(value: false, onChanged: (newValue) {}, shape: null),
-                  ActionText(text: 'Remember me',ontap: (){},),
+                  ActionText(
+                    text: 'Remember me',
+                    ontap: () {},
+                  ),
                   const Spacer(),
                   ActionText(
                     text: 'Forgot password',
-                    ontap: (){
+                    ontap: () {
                       GoRouter.of(context).pushNamed(Routes.forgetPassword);
                     },
                   )
                 ],
               ),
               const Spacer(),
-              ActionButton(
-                text: 'Login',
-                direction: '',
-                onpress: () async {
-                  try {
-                    Response response = await post(
-                      Uri.parse(ApiLinks.login),
-                      body: {
-                        'email': emailController.text,
-                        'password': passwordController.text,
-                        'OS': 'IOS',
-                        'model': 'iPhone 15',
-                        'FCMToken': 'Token1',
-                      },
-                    );
-                    print(response.statusCode);
-                    if (response.statusCode == 201 || response.statusCode==200) {
-                      GoRouter.of(context).pushNamed(Routes.profile);
-                    } else {
-                      // ignore: use_build_context_synchronously
-                      showDialog(context: context, builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: const Text(
-                                  'Wrong email or password'),
-                              content:  Text(
-                                  jsonDecode(response.body)['message']),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    // context.go('/login');
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text('OK'),
-                                ),
-                              ],
-                            );
-                          },);
-                    }
-                  } catch (e) {
-                    print(e.toString());
-                  }
+              TextButton(
+                style: const ButtonStyle(
+                  backgroundColor: WidgetStatePropertyAll(
+                    Color(0xFFF3F6F6),
+                  ),
+                  minimumSize: WidgetStatePropertyAll(
+                    Size(double.infinity, 50),
+                  ),
+                ),
+                onPressed: () {
+                  ref.read(controllerProvider.notifier).signIn(
+                      emailController.text.toString(),
+                      passwordController.text.toString(),
+                      context);
                 },
+                child:
+                    (state?.runtimeType.toString() == 'AsyncLoading<dynamic>')
+                        ? const CircularProgressIndicator(
+                            backgroundColor: Colors.white)
+                        : Text(
+                            'Login',
+                            style: const TextStyle(color: Color(0xFF797C7B)),
+                          ),
               ),
               const SizedBox(height: 10),
               ActionText(
                 text: "Don't have any account? Sign up",
-                ontap: (){
+                ontap: () {
                   GoRouter.of(context).pushNamed(Routes.signup);
                 },
               ),
