@@ -6,7 +6,10 @@ class EmailController extends _$EmailController{
   bool build(){
     return false;
   }
-  void update(){
+  void makeTrue(){
     state = true;
+  }
+  void makeFalse(){
+    state = false;
   }
 }

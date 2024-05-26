@@ -6,7 +6,10 @@ class PasswordController extends _$PasswordController{
   bool build(){
     return false;
   }
-  void update(){
+  void makeTrue(){
     state = true;
+  }
+  void makeFalse(){
+    state = false;
   }
 }

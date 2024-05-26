@@ -1,14 +1,10 @@
-import 'dart:convert';
-
 import 'package:demo_ui/core/gen/assets.gen.dart';
 import 'package:demo_ui/core/notifiers/controller.dart';
 import 'package:demo_ui/core/notifiers/email_controller.dart';
 import 'package:demo_ui/core/notifiers/login_button_controller.dart';
 import 'package:demo_ui/core/notifiers/password_controller.dart';
 import 'package:demo_ui/core/service/navigation/routes/routes.dart';
-import 'package:demo_ui/core/widgets/action_button.dart';
 import 'package:demo_ui/core/widgets/action_text.dart';
-import 'package:demo_ui/core/widgets/api_links.dart';
 import 'package:demo_ui/core/widgets/custom_textfields.dart';
 import 'package:demo_ui/core/widgets/login_page_logo.dart';
 import 'package:demo_ui/core/widgets/password_field_provider.dart';
@@ -18,7 +14,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:http/http.dart';
 
 class Login extends ConsumerWidget {
   Login({super.key});
@@ -31,9 +26,7 @@ class Login extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     dynamic state = ref.watch(controllerProvider);
     bool loginButtonState = ref.watch(loginButtonControllerProvider);
-    bool emailState = ref.watch(emailControllerProvider);
-    bool passwordState = ref.watch(passwordControllerProvider);
-    
+
     return Scaffold(
       appBar: AppBar(),
       body: SafeArea(
@@ -103,9 +96,15 @@ class Login extends ConsumerWidget {
                 hintText: 'Enter email',
                 controller: emailController,
                 onChanged: (value) {
-                  ref.read(emailControllerProvider.notifier).update();
+                  if(value.isEmpty){
+                    ref.read(emailControllerProvider.notifier).makeFalse();
+                  }
+                  else{
+                    ref.read(emailControllerProvider.notifier).makeTrue();
+                  }
                   ref.read(loginButtonControllerProvider.notifier).update();
-                  print(loginButtonState);
+                  
+                  // print(emailState);
                 },
               ),
               const SizedBox(height: 20),
@@ -114,9 +113,14 @@ class Login extends ConsumerWidget {
                 text: 'Password',
                 hintText: 'Enter password',
                 onChanged: (value){
-                  ref.read(passwordControllerProvider.notifier).update();
+                  if(value.isEmpty){
+                    ref.read(passwordControllerProvider.notifier).makeFalse();
+                  }
+                  else {
+                    ref.read(passwordControllerProvider.notifier).makeTrue();
+                  }
                   ref.read(loginButtonControllerProvider.notifier).update();
-                  print(loginButtonState);
+                  // print(passwordState);
                 },
               ),
               Row(
@@ -166,7 +170,7 @@ class Login extends ConsumerWidget {
                             backgroundColor: Colors.white)
                         : Text(
                             'Login',
-                            style: const TextStyle(color: Color(0xFF797C7B)),
+                            style:loginButtonState?const TextStyle(color: Color.fromARGB(255, 224, 227, 226)): const TextStyle(color: Color(0xFF797C7B)),
                           ),
               ),
               const SizedBox(height: 10),

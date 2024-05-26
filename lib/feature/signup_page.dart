@@ -1,26 +1,21 @@
+import 'package:demo_ui/core/notifiers/controller.dart';
 import 'package:demo_ui/core/service/navigation/routes/routes.dart';
-import 'package:demo_ui/core/widgets/action_button.dart';
 import 'package:demo_ui/core/widgets/action_text.dart';
-import 'package:demo_ui/core/widgets/api_links.dart';
 import 'package:demo_ui/core/widgets/custom_textfields.dart';
 import 'package:demo_ui/core/widgets/password_field_provider.dart';
 import 'package:demo_ui/core/widgets/subtitle.dart';
 import 'package:demo_ui/core/widgets/title.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:http/http.dart';
 
-class Signup extends StatefulWidget {
-  const Signup({super.key});
+class Signup extends ConsumerWidget {
+  Signup({super.key});
 
-  @override
-  State<Signup> createState() => _SignupState();
-}
-
-class _SignupState extends State<Signup> {
   bool isLoading = false;
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    dynamic state = ref.watch(controllerProvider);
     TextEditingController firstName = TextEditingController();
     TextEditingController lastName = TextEditingController();
     TextEditingController email = TextEditingController();
@@ -72,67 +67,27 @@ class _SignupState extends State<Signup> {
                 controller: password,
               ),
               const Spacer(),
-              isLoading?const CircularProgressIndicator(): ActionButton(
-                text: 'Create an account',
-                direction: '',
-                onpress: () async {
-                  setState(() {
-                          isLoading = true;
-                        });
-                  try {
-                    Response response = await post(
-                      Uri.parse(ApiLinks.signup),
-                      body: {
-                        'firstname': firstName.text.toString(),
-                        'lastname': lastName.text.toString(),
-                        'email': email.text.toString(),
-                        'password': password.text.toString(),
-                      },
-                    );
-
-                    if (response.statusCode == 201) {
-                      // ignore: use_build_context_synchronously
-                      String? userEmail = email.text.toString();
-                      String previousPage = 'signup';
-                      // ignore: use_build_context_synchronously
-                      // context.go('/emailConfirmation/$userEmail/$previousPage');
-                      GoRouter.of(context)
-                          .pushNamed(Routes.emailConfirmation, pathParameters: {
-                        'email': userEmail,
-                        'previousPage': previousPage,
-                      });
-                    } else {
-                      // ignore: use_build_context_synchronously
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title:
-                                const Text('User already exist. Please Login'),
-                            content:
-                                const Text('Failed to create new account.'),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                  GoRouter.of(context).pushNamed(Routes.login);
-                                },
-                                child: const Text('OK'),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    }
-                  } catch (e) {
-                    print(e.toString());
-                  }
-                  finally{
-                    setState(() {
-                      isLoading = true;
-                    });
-                  }
+              TextButton(
+                style: const ButtonStyle(
+                  backgroundColor: WidgetStatePropertyAll(
+                    Color(0xFFF3F6F6),
+                  ),
+                  minimumSize: WidgetStatePropertyAll(
+                    Size(double.infinity, 50),
+                  ),
+                ),
+                onPressed: () {
+                  ref.read(controllerProvider.notifier).signUp(firstName.text,
+                      lastName.text, email.text, password.text, context);
                 },
+                child:
+                    (state?.runtimeType.toString() == 'AsyncLoading<dynamic>')
+                        ? const CircularProgressIndicator(
+                            backgroundColor: Colors.white)
+                        : const Text(
+                            'Create an account',
+                            style: TextStyle(color: Color(0xFF797C7B)),
+                          ),
               ),
               const SizedBox(height: 10),
               ActionText(

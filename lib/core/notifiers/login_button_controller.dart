@@ -13,4 +13,7 @@ class LoginButtonController extends _$LoginButtonController{
     bool passwordProvider = ref.watch(passwordControllerProvider);
     state = (emailProvider & passwordProvider);
   }
+  void reset(){
+    state = false;
+  }
 }
