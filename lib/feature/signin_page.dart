@@ -31,6 +31,9 @@ class Login extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     dynamic state = ref.watch(controllerProvider);
     bool loginButtonState = ref.watch(loginButtonControllerProvider);
+    bool emailState = ref.watch(emailControllerProvider);
+    bool passwordState = ref.watch(passwordControllerProvider);
+    
     return Scaffold(
       appBar: AppBar(),
       body: SafeArea(
@@ -99,18 +102,22 @@ class Login extends ConsumerWidget {
                 text: 'Email',
                 hintText: 'Enter email',
                 controller: emailController,
-                // onChanged: () {
-                //   ref.read(emailControllerProvider.notifier).update();
-                // },
+                onChanged: (value) {
+                  ref.read(emailControllerProvider.notifier).update();
+                  ref.read(loginButtonControllerProvider.notifier).update();
+                  print(loginButtonState);
+                },
               ),
               const SizedBox(height: 20),
               PasswordFieldProvider(
                 controller: passwordController,
                 text: 'Password',
                 hintText: 'Enter password',
-                // onChanged: (){
-                //   ref.read(passwordControllerProvider.notifier).update();
-                // },
+                onChanged: (value){
+                  ref.read(passwordControllerProvider.notifier).update();
+                  ref.read(loginButtonControllerProvider.notifier).update();
+                  print(loginButtonState);
+                },
               ),
               Row(
                 children: [
