@@ -2,6 +2,9 @@ import 'dart:convert';
 
 import 'package:demo_ui/core/gen/assets.gen.dart';
 import 'package:demo_ui/core/notifiers/controller.dart';
+import 'package:demo_ui/core/notifiers/email_controller.dart';
+import 'package:demo_ui/core/notifiers/login_button_controller.dart';
+import 'package:demo_ui/core/notifiers/password_controller.dart';
 import 'package:demo_ui/core/service/navigation/routes/routes.dart';
 import 'package:demo_ui/core/widgets/action_button.dart';
 import 'package:demo_ui/core/widgets/action_text.dart';
@@ -27,6 +30,7 @@ class Login extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     dynamic state = ref.watch(controllerProvider);
+    bool loginButtonState = ref.watch(loginButtonControllerProvider);
     return Scaffold(
       appBar: AppBar(),
       body: SafeArea(
@@ -95,12 +99,19 @@ class Login extends ConsumerWidget {
                 text: 'Email',
                 hintText: 'Enter email',
                 controller: emailController,
+                // onChanged: () {
+                //   ref.read(emailControllerProvider.notifier).update();
+                // },
               ),
               const SizedBox(height: 20),
               PasswordFieldProvider(
-                  controller: passwordController,
-                  text: 'Password',
-                  hintText: 'Enter password'),
+                controller: passwordController,
+                text: 'Password',
+                hintText: 'Enter password',
+                // onChanged: (){
+                //   ref.read(passwordControllerProvider.notifier).update();
+                // },
+              ),
               Row(
                 children: [
                   Checkbox(value: false, onChanged: (newValue) {}, shape: null),
@@ -127,12 +138,14 @@ class Login extends ConsumerWidget {
                     Size(double.infinity, 50),
                   ),
                 ),
-                onPressed: () {
-                  ref.read(controllerProvider.notifier).signIn(
-                      emailController.text.toString(),
-                      passwordController.text.toString(),
-                      context);
-                },
+                onPressed: loginButtonState
+                    ? () {
+                        ref.read(controllerProvider.notifier).signIn(
+                            emailController.text.toString(),
+                            passwordController.text.toString(),
+                            context);
+                      }
+                    : null,
                 child:
                     (state?.runtimeType.toString() == 'AsyncLoading<dynamic>')
                         ? const CircularProgressIndicator(
