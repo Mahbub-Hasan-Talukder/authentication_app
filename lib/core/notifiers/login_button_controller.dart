@@ -1,5 +1,5 @@
-import 'package:demo_ui/core/notifiers/email_controller.dart';
-import 'package:demo_ui/core/notifiers/password_controller.dart';
+import 'package:authentication_app/core/notifiers/email_controller.dart';
+import 'package:authentication_app/core/notifiers/password_controller.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'login_button_controller.g.dart';
 @riverpod

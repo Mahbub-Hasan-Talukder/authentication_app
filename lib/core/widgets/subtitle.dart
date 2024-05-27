@@ -1,4 +1,4 @@
-import 'package:demo_ui/core/gen/fonts.gen.dart';
+import 'package:authentication_app/core/gen/fonts.gen.dart';
 import 'package:flutter/material.dart';
 
 class SubTitleText extends StatelessWidget {
