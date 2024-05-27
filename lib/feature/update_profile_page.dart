@@ -1,13 +1,13 @@
 
-import 'package:demo_ui/core/gen/assets.gen.dart';
-import 'package:demo_ui/core/service/navigation/routes/routes.dart';
-import 'package:demo_ui/core/widgets/action_button.dart';
-import 'package:demo_ui/core/widgets/api_links.dart';
-import 'package:demo_ui/core/widgets/birth_date_field_provider.dart';
-import 'package:demo_ui/core/widgets/custom_textfields.dart';
-import 'package:demo_ui/core/widgets/gender_field_provider.dart';
-import 'package:demo_ui/core/widgets/profile_picture_holder.dart';
-import 'package:demo_ui/core/widgets/title.dart';
+import 'package:authentication_app/core/gen/assets.gen.dart';
+import 'package:authentication_app/core/service/navigation/routes/routes.dart';
+import 'package:authentication_app/core/widgets/action_button.dart';
+import 'package:authentication_app/core/widgets/api_links.dart';
+import 'package:authentication_app/core/widgets/birth_date_field_provider.dart';
+import 'package:authentication_app/core/widgets/custom_textfields.dart';
+import 'package:authentication_app/core/widgets/gender_field_provider.dart';
+import 'package:authentication_app/core/widgets/profile_picture_holder.dart';
+import 'package:authentication_app/core/widgets/title.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart';

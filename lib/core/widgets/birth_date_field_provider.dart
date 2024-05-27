@@ -1,4 +1,4 @@
-import 'package:demo_ui/core/gen/assets.gen.dart';
+import 'package:authentication_app/core/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 
 class DateOfBirthProvier extends StatelessWidget {

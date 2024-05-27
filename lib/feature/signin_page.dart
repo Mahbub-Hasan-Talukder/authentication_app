@@ -1,3 +1,4 @@
+
 import 'package:demo_ui/core/gen/assets.gen.dart';
 import 'package:demo_ui/core/notifiers/controller.dart';
 import 'package:demo_ui/core/notifiers/email_controller.dart';
@@ -5,6 +6,7 @@ import 'package:demo_ui/core/notifiers/login_button_controller.dart';
 import 'package:demo_ui/core/notifiers/password_controller.dart';
 import 'package:demo_ui/core/service/navigation/routes/routes.dart';
 import 'package:demo_ui/core/widgets/action_text.dart';
+import 'package:demo_ui/core/widgets/api_links.dart';
 import 'package:demo_ui/core/widgets/custom_textfields.dart';
 import 'package:demo_ui/core/widgets/login_page_logo.dart';
 import 'package:demo_ui/core/widgets/password_field_provider.dart';
@@ -15,17 +17,66 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
-class Login extends ConsumerWidget {
-  Login({super.key});
-  bool isLoading = false;
-  TextEditingController emailController = TextEditingController();
+class Login extends ConsumerStatefulWidget {
+  const Login({super.key});
 
+  @override
+  ConsumerState<Login> createState() => _LoginState();
+}
+
+class _LoginState extends ConsumerState<Login> {
+  TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    dynamic state = ref.watch(controllerProvider);
-    bool loginButtonState = ref.watch(loginButtonControllerProvider);
+  Widget build(BuildContext context) {
+    final state = ref.watch(signInProvider);
+    ref.listen(signInProvider, (_, next) {
+      if (next.value ?? false) {
+        context.pushNamed(Routes.profile);
+      } else if (next.hasError && !next.isLoading) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Error! Bad request.'),
+              content: const Text('Invalid Email or Password'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      }
+    });
+    // bool loginButtonState = ref.watch(loginButtonControllerProvider);
+    ({bool email, bool password}) enableButtonNotifier =
+        (email: false, password: false);
+    @override
+    void initState() {
+      super.initState();
+      emailController.addListener(() {
+        setState(() {
+          enableButtonNotifier = (
+            email: emailController.value.text.isNotEmpty,
+            password: passwordController.value.text.isNotEmpty
+          );
+        });
+      });
+      passwordController.addListener(() {
+        setState(() {
+          enableButtonNotifier = (
+            email: emailController.value.text.isNotEmpty,
+            password: passwordController.value.text.isNotEmpty
+          );
+        });
+      });
+    }
 
     return Scaffold(
       appBar: AppBar(),
@@ -95,33 +146,31 @@ class Login extends ConsumerWidget {
                 text: 'Email',
                 hintText: 'Enter email',
                 controller: emailController,
-                onChanged: (value) {
-                  if(value.isEmpty){
-                    ref.read(emailControllerProvider.notifier).makeFalse();
-                  }
-                  else{
-                    ref.read(emailControllerProvider.notifier).makeTrue();
-                  }
-                  ref.read(loginButtonControllerProvider.notifier).update();
-                  
-                  // print(emailState);
-                },
+                // onChanged: (value) {
+                //   if (value.isEmpty) {
+                //     ref.read(emailControllerProvider.notifier).makeFalse();
+                //   } else {
+                //     ref.read(emailControllerProvider.notifier).makeTrue();
+                //   }
+                //   ref.read(loginButtonControllerProvider.notifier).update();
+
+                //   // print(emailState);
+                // },
               ),
               const SizedBox(height: 20),
               PasswordFieldProvider(
                 controller: passwordController,
                 text: 'Password',
                 hintText: 'Enter password',
-                onChanged: (value){
-                  if(value.isEmpty){
-                    ref.read(passwordControllerProvider.notifier).makeFalse();
-                  }
-                  else {
-                    ref.read(passwordControllerProvider.notifier).makeTrue();
-                  }
-                  ref.read(loginButtonControllerProvider.notifier).update();
-                  // print(passwordState);
-                },
+                // onChanged: (value) {
+                //   if (value.isEmpty) {
+                //     ref.read(passwordControllerProvider.notifier).makeFalse();
+                //   } else {
+                //     ref.read(passwordControllerProvider.notifier).makeTrue();
+                //   }
+                //   ref.read(loginButtonControllerProvider.notifier).update();
+                //   // print(passwordState);
+                // },
               ),
               Row(
                 children: [
@@ -134,50 +183,56 @@ class Login extends ConsumerWidget {
                   ActionText(
                     text: 'Forgot password',
                     ontap: () {
-                      GoRouter.of(context).pushNamed(Routes.forgetPassword);
+                      context.pushNamed(Routes.forgetPassword);
                     },
                   )
                 ],
               ),
               const Spacer(),
               TextButton(
-                style:!loginButtonState? const ButtonStyle(
-                  backgroundColor:  WidgetStatePropertyAll(
-                    Color(0xFFF3F6F6),
-                  ),
-                  minimumSize: WidgetStatePropertyAll(
-                    Size(double.infinity, 50),
-                  ),
-                ):const ButtonStyle(
-                  backgroundColor:  WidgetStatePropertyAll(
-                    Color.fromARGB(255, 97, 145, 122),
-                  ),
-                  minimumSize: WidgetStatePropertyAll(
-                    Size(double.infinity, 50),
-                  ),
-                ),
-                onPressed: loginButtonState
-                    ? () {
-                        ref.read(controllerProvider.notifier).signIn(
-                            emailController.text.toString(),
-                            passwordController.text.toString(),
-                            context);
-                      }
-                    : null,
-                child:
-                    (state?.runtimeType.toString() == 'AsyncLoading<dynamic>')
-                        ? const CircularProgressIndicator(
-                            backgroundColor: Colors.white)
-                        : Text(
-                            'Login',
-                            style:loginButtonState?const TextStyle(color: Color.fromARGB(255, 224, 227, 226)): const TextStyle(color: Color(0xFF797C7B)),
+                style:
+                    !(enableButtonNotifier.email & enableButtonNotifier.password)
+                        ? const ButtonStyle(
+                            backgroundColor: WidgetStatePropertyAll(
+                              Color(0xFFF3F6F6),
+                            ),
+                            minimumSize: WidgetStatePropertyAll(
+                              Size(double.infinity, 50),
+                            ),
+                          )
+                        : const ButtonStyle(
+                            backgroundColor: WidgetStatePropertyAll(
+                              Color.fromARGB(255, 97, 145, 122),
+                            ),
+                            minimumSize: WidgetStatePropertyAll(
+                              Size(double.infinity, 50),
+                            ),
                           ),
+                onPressed:
+                    (enableButtonNotifier.email & enableButtonNotifier.password)
+                        ? () {
+                            ref.read(signInProvider.notifier).signin(
+                                email: emailController.text.toString(),
+                                password: passwordController.text.toString());
+                          }
+                        : null,
+                child: (state.isLoading)
+                    ? const CircularProgressIndicator(
+                        backgroundColor: Colors.white)
+                    : Text(
+                        'Login',
+                        style: !(enableButtonNotifier.email &
+                                enableButtonNotifier.password)
+                            ? const TextStyle(
+                                color: Color.fromARGB(255, 224, 227, 226))
+                            : const TextStyle(color: Color(0xFF797C7B)),
+                      ),
               ),
               const SizedBox(height: 10),
               ActionText(
                 text: "Don't have any account? Sign up",
                 ontap: () {
-                  GoRouter.of(context).pushNamed(Routes.signup);
+                  context.pushNamed(Routes.signup);
                 },
               ),
               const SizedBox(height: 20),
@@ -188,5 +243,3 @@ class Login extends ConsumerWidget {
     );
   }
 }
-// moshi.bs23@gmail.com
-// password123

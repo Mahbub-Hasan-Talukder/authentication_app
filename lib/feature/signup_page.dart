@@ -1,10 +1,10 @@
-import 'package:demo_ui/core/notifiers/controller.dart';
-import 'package:demo_ui/core/service/navigation/routes/routes.dart';
-import 'package:demo_ui/core/widgets/action_text.dart';
-import 'package:demo_ui/core/widgets/custom_textfields.dart';
-import 'package:demo_ui/core/widgets/password_field_provider.dart';
-import 'package:demo_ui/core/widgets/subtitle.dart';
-import 'package:demo_ui/core/widgets/title.dart';
+import 'package:authentication_app/core/notifiers/controller.dart';
+import 'package:authentication_app/core/service/navigation/routes/routes.dart';
+import 'package:authentication_app/core/widgets/action_text.dart';
+import 'package:authentication_app/core/widgets/custom_textfields.dart';
+import 'package:authentication_app/core/widgets/password_field_provider.dart';
+import 'package:authentication_app/core/widgets/subtitle.dart';
+import 'package:authentication_app/core/widgets/title.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -15,7 +15,7 @@ class Signup extends ConsumerWidget {
   bool isLoading = false;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    dynamic state = ref.watch(controllerProvider);
+    dynamic state = ref.watch(signInProvider);
     TextEditingController firstName = TextEditingController();
     TextEditingController lastName = TextEditingController();
     TextEditingController email = TextEditingController();
@@ -77,8 +77,8 @@ class Signup extends ConsumerWidget {
                   ),
                 ),
                 onPressed: () {
-                  ref.read(controllerProvider.notifier).signUp(firstName.text,
-                      lastName.text, email.text, password.text, context);
+                  // ref.read(signInProvider.notifier).signin(firstName.text,
+                  //     lastName.text, email.text, password.text);
                 },
                 child:
                     (state?.runtimeType.toString() == 'AsyncLoading<dynamic>')

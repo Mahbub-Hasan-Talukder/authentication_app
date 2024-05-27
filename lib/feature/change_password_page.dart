@@ -1,8 +1,8 @@
 
-import 'package:demo_ui/core/widgets/action_button.dart';
-import 'package:demo_ui/core/widgets/password_field_provider.dart';
-import 'package:demo_ui/core/widgets/subtitle.dart';
-import 'package:demo_ui/core/widgets/title.dart';
+import 'package:authentication_app/core/widgets/action_button.dart';
+import 'package:authentication_app/core/widgets/password_field_provider.dart';
+import 'package:authentication_app/core/widgets/subtitle.dart';
+import 'package:authentication_app/core/widgets/title.dart';
 import 'package:flutter/material.dart';
 
 class ChangePassword extends StatelessWidget {

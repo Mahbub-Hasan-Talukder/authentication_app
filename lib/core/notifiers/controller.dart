@@ -1,96 +1,38 @@
-import 'package:demo_ui/core/notifiers/email_controller.dart';
-import 'package:demo_ui/core/notifiers/login_button_controller.dart';
-import 'package:demo_ui/core/notifiers/password_controller.dart';
-import 'package:demo_ui/core/service/navigation/routes/routes.dart';
-import 'package:demo_ui/core/widgets/api_links.dart';
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:authentication_app/core/notifiers/email_controller.dart';
+import 'package:authentication_app/core/notifiers/login_button_controller.dart';
+import 'package:authentication_app/core/notifiers/password_controller.dart';
+import 'package:authentication_app/core/service/navigation/routes/routes.dart';
+import 'package:authentication_app/core/widgets/api_links.dart';
 import 'package:http/http.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'controller.g.dart';
 
 @riverpod
-class Controller extends _$Controller {
+class SignIn extends _$SignIn {
   @override
-  dynamic build() {}
-  dynamic signIn(String email, String pass, BuildContext context) async {
+  FutureOr<bool?> build() {
+    return null;
+  }
+  void signin({required String email, required String password})async{
     state = const AsyncLoading();
-    state = await post(
-      Uri.parse(ApiLinks.login),
-      body: {
-        'email': email,
-        'password': pass,
-        'OS': 'IOS',
-        'model': 'iPhone 15',
-        'FCMToken': 'Token1',
-      },
-    );
-
-    if (state!.statusCode == 201) {
-      GoRouter.of(context).pushNamed(Routes.profile);
-    } else {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Invalid username/password'),
-            content: const Text('Try again.'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  ref.read(loginButtonControllerProvider.notifier).reset();
-                  ref.read(emailControllerProvider.notifier).makeFalse();
-                  ref.read(passwordControllerProvider.notifier).makeFalse();
-
-                  Navigator.of(context).pop();
-                  GoRouter.of(context).pushNamed(Routes.login);
-                },
-                child: const Text('OK'),
-              ),
-            ],
-          );
+    state = await AsyncValue.guard(()async{
+      final response = await post(
+        Uri.parse('http://34.72.136.54:4067/api/v1/auth/login'),
+        body: {
+          'email': email,
+          'password': password,
+          'OS': 'IOS',
+          'model': 'iPhone 15',
+          'FCMToken': 'Token1',
         },
       );
-    }
-  }
+      if(response.statusCode!=201){
+        throw Exception('Something went wrong');
+      }else{
+        return true;
+      }
 
-  //signup
-  dynamic signUp(
-      String firstName, String lastName, String email, String password, BuildContext context) async {
-    state = const AsyncLoading();
-    state = await post(
-      Uri.parse(ApiLinks.signup),
-      body: {
-        'firstname': firstName,
-        'lastname': lastName,
-        'email': email,
-        'password': password,
-      },
-    );
-
-    if (state!.statusCode == 201) {
-      GoRouter.of(context).pushNamed(Routes.profile);///
-    } else {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('User already exists'),
-            content: const Text('Please login'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  GoRouter.of(context).pushNamed(Routes.login);
-                },
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
-    }
+    });
   }
-  
 }
