@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 class PasswordFieldProvider extends StatefulWidget {
   final String text, hintText;
   TextEditingController? controller;
+  dynamic onChanged;
    PasswordFieldProvider(
-      {super.key, required this.text, required this.hintText, this.controller});
+      {super.key, required this.text, required this.hintText, this.controller, this.onChanged});
 
   @override
   State<PasswordFieldProvider> createState() => _PasswordFieldProviderState();
@@ -27,6 +28,7 @@ class _PasswordFieldProviderState extends State<PasswordFieldProvider> {
             SizedBox(
               width: 360,
               child: TextField(
+                onChanged: widget.onChanged,
                 controller: widget.controller,
                 obscureText: _obsecureText,
                 decoration: InputDecoration(

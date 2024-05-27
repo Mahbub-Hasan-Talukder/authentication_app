@@ -41,7 +41,7 @@ class MyRouterConfig {
         name: Routes.signup,
         path: '/signup',
         pageBuilder: (contexct, state) {
-          return const MaterialPage(child: Signup());
+          return MaterialPage(child: Signup());
         },
       ),
       GoRoute(
