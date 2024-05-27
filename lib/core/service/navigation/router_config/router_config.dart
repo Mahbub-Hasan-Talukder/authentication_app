@@ -9,11 +9,13 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class MyRouterConfig {
+  
   GoRouter router = GoRouter(
+    initialLocation: '/login',
     routes: [
       GoRoute(
         name: Routes.login,
-        path: '/',
+        path: '/login',
         pageBuilder: (contexct, state) {
           return MaterialPage(child: Login());
         },
