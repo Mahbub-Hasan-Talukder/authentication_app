@@ -14,7 +14,7 @@ class GenderFieldProvider extends StatelessWidget {
             Text(
               'Select Gender',
               style: TextStyle(
-                  color: Theme.of(context).colorScheme.tertiary, fontWeight: FontWeight.w600),
+                  color: Theme.of(context).colorScheme.primary, fontWeight: FontWeight.w600),
             ),
             SizedBox(
               width: 360,
@@ -33,7 +33,7 @@ class GenderFieldProvider extends StatelessWidget {
                   ),
                   focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
-                      color: Theme.of(context).colorScheme.tertiary,
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
                 ),

@@ -94,7 +94,8 @@ class ResetPassword extends StatelessWidget {
                               actions: [
                                 TextButton(
                                   onPressed: () {
-                                    GoRouter.of(context).clearStackAndNavigate(Routes.login);
+                                    Navigator.of(context).pop();
+                                    GoRouter.of(context).pushNamed(Routes.login);
                                   },
                                   child: const Text('OK'),
                                 ),

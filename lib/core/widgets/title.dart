@@ -9,16 +9,14 @@ class TitleText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Stack(
-
         children: [
-          
           Positioned(
             bottom: 0,
             left: 0,
             child: Container(
               height: 10,
               width: 60,
-              color: Theme.of(context).colorScheme.tertiary.withOpacity(0.7),
+              color: Theme.of(context).colorScheme.primary.withOpacity(0.7),
             ),
           ),
           Text(

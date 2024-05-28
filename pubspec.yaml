@@ -85,10 +85,10 @@ flutter:
   fonts:
     - family: Caros
       fonts:
-        - asset: fonts/Caros.otf
+        - asset: assets/fonts/Caros.otf
     - family: CircularStd-Book
       fonts:
-        - asset: fonts/CircularStd-Book.otf
+        - asset: assets/fonts/CircularStd-Book.otf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

@@ -10,20 +10,14 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: theme,
-      // home: const Login(),
       routerConfig: MyRouterConfig().router,
-      // routeInformationParser: MyRouterConfig().router.routeInformationParser,
-      // routerDelegate: MyRouterConfig().router.routerDelegate,
     );
-    // return NewLoginPage();
   }
 
 }

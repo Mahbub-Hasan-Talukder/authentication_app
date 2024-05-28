@@ -1,10 +1,8 @@
-
 import 'package:authentication_app/core/gen/assets.gen.dart';
 import 'package:authentication_app/core/service/navigation/routes/routes.dart';
 import 'package:authentication_app/core/widgets/action_button.dart';
 import 'package:authentication_app/core/service/api/endpoints.dart';
 import 'package:authentication_app/core/widgets/birth_date_field_provider.dart';
-import 'package:authentication_app/core/widgets/custom_textfields.dart';
 import 'package:authentication_app/core/widgets/gender_field_provider.dart';
 import 'package:authentication_app/core/widgets/profile_picture_holder.dart';
 import 'package:authentication_app/core/widgets/title.dart';
@@ -82,19 +80,41 @@ class UpdateProfile extends StatelessWidget {
               Center(
                 child: ProfilePictureHolder(image: Assets.profile.provider()),
               ),
-              CustomTextField(
-                text: 'First Name',
-                hintText: '',
+              const SizedBox(height: 40),
+              const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'First Name',
+                    style: TextStyle(
+                        color: Color(0xFF24786D), fontWeight: FontWeight.w600),
+                  ),
+                  TextField(),
+                ],
               ),
               const SizedBox(height: 40),
-              CustomTextField(
-                text: 'Last Name',
-                hintText: '',
+              const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Last Name',
+                    style: TextStyle(
+                        color: Color(0xFF24786D), fontWeight: FontWeight.w600),
+                  ),
+                  TextField(),
+                ],
               ),
               const SizedBox(height: 40),
-              CustomTextField(
-                text: 'Phone number',
-                hintText: '',
+              const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Phone number',
+                    style: TextStyle(
+                        color: Color(0xFF24786D), fontWeight: FontWeight.w600),
+                  ),
+                  TextField(),
+                ],
               ),
               const SizedBox(height: 40),
               const GenderFieldProvider(),
