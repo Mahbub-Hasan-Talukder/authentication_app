@@ -2,10 +2,9 @@ import 'package:authentication_app/core/gen/assets.gen.dart';
 import 'package:authentication_app/core/service/navigation/routes/routes.dart';
 import 'package:authentication_app/core/widgets/action_button.dart';
 import 'package:authentication_app/core/service/api/endpoints.dart';
-import 'package:authentication_app/core/widgets/birth_date_field_provider.dart';
-import 'package:authentication_app/core/widgets/gender_field_provider.dart';
+import 'package:authentication_app/feature/update_profile/presentation/widgets/birth_date_field_provider.dart';
+import 'package:authentication_app/feature/update_profile/presentation/widgets/gender_field_provider.dart';
 import 'package:authentication_app/core/widgets/profile_picture_holder.dart';
-import 'package:authentication_app/core/widgets/title.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart';
@@ -70,7 +69,10 @@ class UpdateProfile extends StatelessWidget {
                 icon: const Icon(Icons.logout)),
           )
         ],
-        title: const TitleText(text: "Update Profile"),
+        title: Text(
+          "Update Profile",
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
       ),
       body: SafeArea(
         child: Padding(

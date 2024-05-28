@@ -1,11 +1,8 @@
 import 'package:authentication_app/core/gen/assets.gen.dart';
 import 'package:authentication_app/feature/login/controller/controller.dart';
 import 'package:authentication_app/core/service/navigation/routes/routes.dart';
-import 'package:authentication_app/core/widgets/action_text.dart';
 import 'package:authentication_app/feature/login/presentation/widgets/login_page_logo.dart';
 import 'package:authentication_app/core/widgets/password_field_provider.dart';
-import 'package:authentication_app/core/widgets/subtitle.dart';
-import 'package:authentication_app/core/widgets/title.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -34,7 +31,6 @@ class _LoginState extends ConsumerState<Login> {
           password: passwordController.value.text.isNotEmpty
         );
       });
-      print(enableButtonNotifier.email);
     });
     passwordController.addListener(() {
       setState(() {
@@ -43,7 +39,6 @@ class _LoginState extends ConsumerState<Login> {
           password: passwordController.value.text.isNotEmpty
         );
       });
-      print(enableButtonNotifier.email);
     });
   }
 
@@ -84,11 +79,15 @@ class _LoginState extends ConsumerState<Login> {
               const SizedBox(
                 height: 145,
               ),
-              const TitleText(text: 'Login to Authy'),
+              Text(
+                'Login to Authy',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
               const SizedBox(height: 37),
-              const SubTitleText(
-                text:
-                    'Welcome back! Sign in using your social\n account or email to continue us',
+              Text(
+                'Welcome back! Sign in using your social\n account or email to continue us',
+                style: Theme.of(context).textTheme.titleSmall,
+                textAlign: TextAlign.center,
               ),
               const SizedBox(height: 50),
               Row(
@@ -139,22 +138,20 @@ class _LoginState extends ConsumerState<Login> {
                 ),
               ),
               Column(
-                crossAxisAlignment:CrossAxisAlignment.start ,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     'Email',
-                    style: TextStyle(
-                        color: Color(0xFF24786D), fontWeight: FontWeight.w600),
+                    style: Theme.of(context).textTheme.displaySmall,
                   ),
                   TextField(
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Enter email',
                     ),
                     controller: emailController,
                   ),
                 ],
               ),
-
               const SizedBox(height: 20),
               PasswordFieldProvider(
                 controller: passwordController,
@@ -164,17 +161,18 @@ class _LoginState extends ConsumerState<Login> {
               Row(
                 children: [
                   Checkbox(value: false, onChanged: (newValue) {}, shape: null),
-                  ActionText(
-                    text: 'Remember me',
-                    ontap: () {},
+                  Text(
+                    'Remember me',
+                    style: Theme.of(context).textTheme.displaySmall,
                   ),
                   const Spacer(),
-                  ActionText(
-                    text: 'Forgot password',
-                    ontap: () {
-                      context.pushNamed(Routes.forgetPassword);
-                    },
-                  )
+                  GestureDetector(
+                    child: Text(
+                      'Forgot password',
+                      style: Theme.of(context).textTheme.displaySmall,
+                    ),
+                    onTap: () => context.pushNamed(Routes.forgetPassword),
+                  ),
                 ],
               ),
               const Spacer(),
@@ -197,7 +195,6 @@ class _LoginState extends ConsumerState<Login> {
                           Size(double.infinity, 50),
                         ),
                       ),
-                
                 onPressed:
                     (enableButtonNotifier.email & enableButtonNotifier.password)
                         ? () {
@@ -219,11 +216,12 @@ class _LoginState extends ConsumerState<Login> {
                       ),
               ),
               const SizedBox(height: 10),
-              ActionText(
-                text: "Don't have any account? Sign up",
-                ontap: () {
-                  context.pushNamed(Routes.signup);
-                },
+              GestureDetector(
+                child: Text(
+                  "Don't have any account? Sign up",
+                  style: Theme.of(context).textTheme.displaySmall,
+                ),
+                onTap: () => context.pushNamed(Routes.signup),
               ),
               const SizedBox(height: 20),
             ],

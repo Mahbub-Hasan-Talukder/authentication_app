@@ -11,7 +11,7 @@ class ActionText extends StatelessWidget {
       onTap: ontap,
       child: Text(
         text,
-        style: const TextStyle(color: Color(0xFF24786D), fontWeight: FontWeight.w600),
+        style: Theme.of(context).textTheme.displaySmall,
       ),
     );
   }
