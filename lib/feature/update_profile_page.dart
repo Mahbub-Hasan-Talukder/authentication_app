@@ -24,7 +24,6 @@ class UpdateProfile extends StatelessWidget {
               // exit(0);
             },
             icon: const Icon(Icons.arrow_back_ios)),
-        // leading: const Icon(Icons.arrow_back),
         actions: [
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -34,8 +33,6 @@ class UpdateProfile extends StatelessWidget {
                     Response response = await post(
                       Uri.parse(API.logout),
                     );
-
-                    // ignore: use_build_context_synchronously
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {

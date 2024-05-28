@@ -22,7 +22,6 @@ class Signup extends ConsumerWidget {
     TextEditingController password = TextEditingController();
     return Scaffold(
       appBar: AppBar(
-          // leading: const Icon(Icons.arrow_back),
           ),
       body: SafeArea(
         child: Padding(
@@ -77,8 +76,6 @@ class Signup extends ConsumerWidget {
                   ),
                 ),
                 onPressed: () {
-                  // ref.read(signInProvider.notifier).signin(firstName.text,
-                  //     lastName.text, email.text, password.text);
                 },
                 child:
                     (state?.runtimeType.toString() == 'AsyncLoading<dynamic>')
@@ -104,5 +101,3 @@ class Signup extends ConsumerWidget {
     );
   }
 }
-// moshi.bs23@gmail.com
-// password123

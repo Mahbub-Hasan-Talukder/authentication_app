@@ -56,7 +56,7 @@ class _LoginState extends ConsumerState<Login> {
         );
       }
     });
-    // bool loginButtonState = ref.watch(loginButtonControllerProvider);
+    
     ({bool email, bool password}) enableButtonNotifier =
         (email: false, password: false);
     @override
@@ -150,31 +150,12 @@ class _LoginState extends ConsumerState<Login> {
                 text: 'Email',
                 hintText: 'Enter email',
                 controller: emailController,
-                // onChanged: (value) {
-                //   if (value.isEmpty) {
-                //     ref.read(emailControllerProvider.notifier).makeFalse();
-                //   } else {
-                //     ref.read(emailControllerProvider.notifier).makeTrue();
-                //   }
-                //   ref.read(loginButtonControllerProvider.notifier).update();
-
-                //   // print(emailState);
-                // },
               ),
               const SizedBox(height: 20),
               PasswordFieldProvider(
                 controller: passwordController,
                 text: 'Password',
                 hintText: 'Enter password',
-                // onChanged: (value) {
-                //   if (value.isEmpty) {
-                //     ref.read(passwordControllerProvider.notifier).makeFalse();
-                //   } else {
-                //     ref.read(passwordControllerProvider.notifier).makeTrue();
-                //   }
-                //   ref.read(loginButtonControllerProvider.notifier).update();
-                //   // print(passwordState);
-                // },
               ),
               Row(
                 children: [

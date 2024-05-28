@@ -85,7 +85,6 @@ class ResetPassword extends StatelessWidget {
                       });
 
                       if (response.statusCode == 201) {
-                        // ignore: use_build_context_synchronously
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
@@ -96,8 +95,6 @@ class ResetPassword extends StatelessWidget {
                                 TextButton(
                                   onPressed: () {
                                     GoRouter.of(context).clearStackAndNavigate(Routes.login);
-                                    // GoRouter.of(context)
-                                    //     .pushNamed(Routes.login);
                                   },
                                   child: const Text('OK'),
                                 ),
@@ -106,7 +103,6 @@ class ResetPassword extends StatelessWidget {
                           },
                         );
                       } else {
-                        // ignore: use_build_context_synchronously
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {

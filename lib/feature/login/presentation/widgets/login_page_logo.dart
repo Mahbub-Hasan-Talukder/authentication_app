@@ -7,14 +7,14 @@ class LoginPageLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-                    height: 55,
-                    width: 55,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.black, width: 1),
-                    ),
-                    child: logo
-                  );
+      height: 55,
+      width: 55,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(color: Colors.black, width: 1),
+      ),
+      child: logo,
+    );
   }
 }
