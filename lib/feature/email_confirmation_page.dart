@@ -32,14 +32,12 @@ class EmailConfirmationState extends State<EmailConfirmation> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     startTimer();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _timer!.cancel();
   }
@@ -136,8 +134,6 @@ class EmailConfirmationState extends State<EmailConfirmation> {
                               TextButton(
                                 onPressed: () {
                                   Navigator.of(context).pop();
-                                  // context.go('/resetPassword/${widget.email}');
-
                                   GoRouter.of(context).pushNamed(
                                       Routes.resetPassword,
                                       pathParameters: {
@@ -151,7 +147,6 @@ class EmailConfirmationState extends State<EmailConfirmation> {
                         },
                       );
                     } else {
-                      // ignore: use_build_context_synchronously
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
@@ -179,7 +174,6 @@ class EmailConfirmationState extends State<EmailConfirmation> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Text('Resend Email in ${_countDown.toString()}'),
                   canResend
                       ? InkWell(
                           onTap: () async {
@@ -194,15 +188,12 @@ class EmailConfirmationState extends State<EmailConfirmation> {
                                 },
                               );
 
-                              // ignore: use_build_context_synchronously
-                              // context.go('/emailConfirmation/${widget.email}/${widget.previousPage}');
                               GoRouter.of(context).pushNamed(
-                                Routes.emailConfirmation,
-                                pathParameters: {
-                                  'email': widget.email,
-                                  'previousPage': widget.previousPage,
-                                }
-                              );
+                                  Routes.emailConfirmation,
+                                  pathParameters: {
+                                    'email': widget.email,
+                                    'previousPage': widget.previousPage,
+                                  });
                             } catch (e) {
                               print(e.toString());
                             }

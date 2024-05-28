@@ -50,7 +50,6 @@ class ForgotPassword extends StatelessWidget {
                     );
                     String? userEmail = email.text.toString();
                     String previousPage = 'forgotPassword';
-                    // ignore: use_build_context_synchronously
                     GoRouter.of(context).pushNamed(Routes.emailConfirmation, pathParameters: {
                       'email':userEmail,
                       'previousPage':previousPage,
