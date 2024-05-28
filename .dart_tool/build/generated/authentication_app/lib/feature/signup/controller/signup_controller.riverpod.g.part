@@ -2,7 +2,7 @@
 // RiverpodGenerator
 // **************************************************************************
 
-String _$signUpControllerHash() => r'df34dae20524bf7419034e197389db06d2cddc98';
+String _$signUpControllerHash() => r'ce1ba57e8ef73b318cbd3aef05b2538f35d6a9f5';
 
 /// See also [SignUpController].
 @ProviderFor(SignUpController)

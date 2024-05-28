@@ -4,16 +4,15 @@ import 'package:authentication_app/core/service/api/endpoints.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart';
 
-class LoginRepository{
-  static FutureOr<bool?> signIn(String email, String password)async{
+class SignupRepository{
+  static FutureOr<bool?> signUp(String firstName, String lastName, String email, String password)async{
     Response response = await post(
-          Uri.parse(API.login),
+          Uri.parse(API.signup),
           body: {
+            'firstName': firstName,
+            'lastName': lastName,
             'email': email,
-            'password': password,
-            'OS': 'IOS',
-            'model': 'iPhone 15',
-            'FCMToken': 'Token1',
+            'password': password
           },
         );
         if (response.statusCode != 201) {
