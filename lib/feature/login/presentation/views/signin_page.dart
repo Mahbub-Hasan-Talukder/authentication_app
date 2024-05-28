@@ -1,14 +1,7 @@
-import 'dart:math';
-
 import 'package:authentication_app/core/gen/assets.gen.dart';
 import 'package:authentication_app/feature/login/controller/controller.dart';
-import 'package:authentication_app/core/notifiers/email_controller.dart';
-import 'package:authentication_app/core/notifiers/login_button_controller.dart';
-import 'package:authentication_app/core/notifiers/password_controller.dart';
 import 'package:authentication_app/core/service/navigation/routes/routes.dart';
 import 'package:authentication_app/core/widgets/action_text.dart';
-import 'package:authentication_app/core/service/api/endpoints.dart';
-import 'package:authentication_app/core/widgets/custom_textfields.dart';
 import 'package:authentication_app/feature/login/presentation/widgets/login_page_logo.dart';
 import 'package:authentication_app/core/widgets/password_field_provider.dart';
 import 'package:authentication_app/core/widgets/subtitle.dart';
@@ -19,7 +12,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 class Login extends ConsumerStatefulWidget {
-  Login({super.key});
+  const Login({super.key});
 
   @override
   ConsumerState<Login> createState() => _LoginState();
@@ -28,7 +21,31 @@ class Login extends ConsumerStatefulWidget {
 class _LoginState extends ConsumerState<Login> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  
+  ({bool email, bool password}) enableButtonNotifier =
+      (email: false, password: false);
+
+  @override
+  void initState() {
+    super.initState();
+    emailController.addListener(() {
+      setState(() {
+        enableButtonNotifier = (
+          email: emailController.value.text.isNotEmpty,
+          password: passwordController.value.text.isNotEmpty
+        );
+      });
+      print(enableButtonNotifier.email);
+    });
+    passwordController.addListener(() {
+      setState(() {
+        enableButtonNotifier = (
+          email: emailController.value.text.isNotEmpty,
+          password: passwordController.value.text.isNotEmpty
+        );
+      });
+      print(enableButtonNotifier.email);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,31 +73,6 @@ class _LoginState extends ConsumerState<Login> {
         );
       }
     });
-    
-    ({bool email, bool password}) enableButtonNotifier =
-        (email: false, password: false);
-    @override
-    void initState() {
-      super.initState();
-      emailController.addListener(() {
-        setState(() {
-          enableButtonNotifier = (
-            email: emailController.value.text.isNotEmpty,
-            password: passwordController.value.text.isNotEmpty
-          );
-        });
-        print(enableButtonNotifier.email);
-      });
-      passwordController.addListener(() {
-        setState(() {
-          enableButtonNotifier = (
-            email: emailController.value.text.isNotEmpty,
-            password: passwordController.value.text.isNotEmpty
-          );
-        });
-        print(enableButtonNotifier.email);
-      });
-    }
 
     return Scaffold(
       appBar: AppBar(),
@@ -146,11 +138,23 @@ class _LoginState extends ConsumerState<Login> {
                   ],
                 ),
               ),
-              CustomTextField(
-                text: 'Email',
-                hintText: 'Enter email',
-                controller: emailController,
+              Column(
+                crossAxisAlignment:CrossAxisAlignment.start ,
+                children: [
+                  Text(
+                    'Email',
+                    style: TextStyle(
+                        color: Color(0xFF24786D), fontWeight: FontWeight.w600),
+                  ),
+                  TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Enter email',
+                    ),
+                    controller: emailController,
+                  ),
+                ],
               ),
+
               const SizedBox(height: 20),
               PasswordFieldProvider(
                 controller: passwordController,
@@ -175,24 +179,25 @@ class _LoginState extends ConsumerState<Login> {
               ),
               const Spacer(),
               TextButton(
-                style:
-                    !(enableButtonNotifier.email & enableButtonNotifier.password)
-                        ? const ButtonStyle(
-                            backgroundColor: WidgetStatePropertyAll(
-                              Color(0xFFF3F6F6),
-                            ),
-                            minimumSize: WidgetStatePropertyAll(
-                              Size(double.infinity, 50),
-                            ),
-                          )
-                        : const ButtonStyle(
-                            backgroundColor: WidgetStatePropertyAll(
-                              Color.fromARGB(255, 97, 145, 122),
-                            ),
-                            minimumSize: WidgetStatePropertyAll(
-                              Size(double.infinity, 50),
-                            ),
-                          ),
+                style: !(enableButtonNotifier.email &
+                        enableButtonNotifier.password)
+                    ? const ButtonStyle(
+                        backgroundColor: WidgetStatePropertyAll(
+                          Color(0xFFF3F6F6),
+                        ),
+                        minimumSize: WidgetStatePropertyAll(
+                          Size(double.infinity, 50),
+                        ),
+                      )
+                    : const ButtonStyle(
+                        backgroundColor: WidgetStatePropertyAll(
+                          Color.fromARGB(255, 97, 145, 122),
+                        ),
+                        minimumSize: WidgetStatePropertyAll(
+                          Size(double.infinity, 50),
+                        ),
+                      ),
+                
                 onPressed:
                     (enableButtonNotifier.email & enableButtonNotifier.password)
                         ? () {
@@ -206,10 +211,10 @@ class _LoginState extends ConsumerState<Login> {
                         backgroundColor: Colors.white)
                     : Text(
                         'Login',
-                        style: !(enableButtonNotifier.email &
+                        style: (enableButtonNotifier.email &
                                 enableButtonNotifier.password)
                             ? const TextStyle(
-                                color: Color.fromARGB(255, 224, 227, 226))
+                                color: Color.fromARGB(255, 234, 237, 236))
                             : const TextStyle(color: Color(0xFF797C7B)),
                       ),
               ),

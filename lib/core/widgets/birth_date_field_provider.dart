@@ -36,7 +36,7 @@ class DateOfBirthProvier extends StatelessWidget {
                   ),
                   focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
-                      color: Theme.of(context).colorScheme.tertiary,
+                      color: Theme.of(context).colorScheme.primary,
                     )
                   ),
 

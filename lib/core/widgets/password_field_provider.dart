@@ -23,7 +23,7 @@ class _PasswordFieldProviderState extends State<PasswordFieldProvider> {
             Text(
               widget.text,
               style: TextStyle(
-                  color: Theme.of(context).colorScheme.tertiary, fontWeight: FontWeight.w600),
+                  color: Theme.of(context).colorScheme.primary, fontWeight: FontWeight.w600),
             ),
             SizedBox(
               width: 360,

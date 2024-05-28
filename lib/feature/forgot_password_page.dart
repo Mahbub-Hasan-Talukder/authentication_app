@@ -3,7 +3,6 @@ import 'package:authentication_app/core/service/navigation/routes/routes.dart';
 import 'package:authentication_app/core/widgets/action_button.dart';
 import 'package:authentication_app/core/widgets/action_text.dart';
 import 'package:authentication_app/core/service/api/endpoints.dart';
-import 'package:authentication_app/core/widgets/custom_textfields.dart';
 import 'package:authentication_app/core/widgets/subtitle.dart';
 import 'package:authentication_app/core/widgets/title.dart';
 import 'package:flutter/material.dart';
@@ -31,10 +30,18 @@ class ForgotPassword extends StatelessWidget {
                   text:
                       ' your email address. We will send a code to verify your identity'),
               const SizedBox(height: 40),
-              CustomTextField(
-                text: 'Email',
-                hintText: '',
-                controller: email,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Email',
+                    style: TextStyle(
+                        color: Color(0xFF24786D), fontWeight: FontWeight.w600),
+                  ),
+                  TextField(
+                    controller: email,
+                  )
+                ],
               ),
               const Spacer(),
               ActionButton(

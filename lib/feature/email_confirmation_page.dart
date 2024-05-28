@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:authentication_app/core/service/navigation/routes/routes.dart';
 import 'package:authentication_app/core/widgets/action_button.dart';
 import 'package:authentication_app/core/service/api/endpoints.dart';
-import 'package:authentication_app/core/widgets/custom_textfields.dart';
 import 'package:authentication_app/core/widgets/subtitle.dart';
 import 'package:authentication_app/core/widgets/title.dart';
 import 'package:flutter/material.dart';
@@ -87,10 +86,18 @@ class EmailConfirmationState extends State<EmailConfirmation> {
                     'We’ve sent a code to your email {${widget.email}} address. Please check your inbox',
               ),
               const SizedBox(height: 40),
-              CustomTextField(
-                text: 'Your code',
-                hintText: '',
-                controller: OTP,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Your code',
+                    style: TextStyle(
+                        color: Color(0xFF24786D), fontWeight: FontWeight.w600),
+                  ),
+                  TextField(
+                    controller: OTP,
+                  )
+                ],
               ),
               const Spacer(),
               ActionButton(
@@ -201,7 +208,7 @@ class EmailConfirmationState extends State<EmailConfirmation> {
                           child: Text(
                             'Resend email',
                             style: TextStyle(
-                                color: Theme.of(context).colorScheme.tertiary,
+                                color: Theme.of(context).colorScheme.primary,
                                 fontWeight: FontWeight.bold),
                           ),
                         )
