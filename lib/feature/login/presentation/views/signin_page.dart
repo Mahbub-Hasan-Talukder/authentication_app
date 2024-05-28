@@ -1,15 +1,15 @@
 import 'dart:math';
 
 import 'package:authentication_app/core/gen/assets.gen.dart';
-import 'package:authentication_app/core/notifiers/controller.dart';
+import 'package:authentication_app/feature/login/controller/controller.dart';
 import 'package:authentication_app/core/notifiers/email_controller.dart';
 import 'package:authentication_app/core/notifiers/login_button_controller.dart';
 import 'package:authentication_app/core/notifiers/password_controller.dart';
 import 'package:authentication_app/core/service/navigation/routes/routes.dart';
 import 'package:authentication_app/core/widgets/action_text.dart';
-import 'package:authentication_app/core/widgets/api_links.dart';
+import 'package:authentication_app/core/service/api/endpoints.dart';
 import 'package:authentication_app/core/widgets/custom_textfields.dart';
-import 'package:authentication_app/core/widgets/login_page_logo.dart';
+import 'package:authentication_app/feature/login/presentation/widgets/login_page_logo.dart';
 import 'package:authentication_app/core/widgets/password_field_provider.dart';
 import 'package:authentication_app/core/widgets/subtitle.dart';
 import 'package:authentication_app/core/widgets/title.dart';

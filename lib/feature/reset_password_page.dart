@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:authentication_app/core/service/navigation/routes/routes.dart';
 import 'package:authentication_app/core/widgets/action_button.dart';
-import 'package:authentication_app/core/widgets/api_links.dart';
+import 'package:authentication_app/core/service/api/endpoints.dart';
 import 'package:authentication_app/core/widgets/password_field_provider.dart';
 import 'package:authentication_app/core/widgets/subtitle.dart';
 import 'package:authentication_app/core/widgets/title.dart';
@@ -78,7 +78,7 @@ class ResetPassword extends StatelessWidget {
                   } else {
                     try {
                       Response response =
-                          await post(Uri.parse(ApiLinks.setNewPassword), body: {
+                          await post(Uri.parse(API.setNewPassword), body: {
                         "email": email,
                         "password": password.text.toString(),
                         "confirmPassword": confirmPassword.text.toString(),

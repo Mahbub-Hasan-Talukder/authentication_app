@@ -2,7 +2,7 @@
 import 'package:authentication_app/core/gen/assets.gen.dart';
 import 'package:authentication_app/core/service/navigation/routes/routes.dart';
 import 'package:authentication_app/core/widgets/action_button.dart';
-import 'package:authentication_app/core/widgets/api_links.dart';
+import 'package:authentication_app/core/service/api/endpoints.dart';
 import 'package:authentication_app/core/widgets/birth_date_field_provider.dart';
 import 'package:authentication_app/core/widgets/custom_textfields.dart';
 import 'package:authentication_app/core/widgets/gender_field_provider.dart';
@@ -32,7 +32,7 @@ class UpdateProfile extends StatelessWidget {
                 onPressed: () async {
                   try {
                     Response response = await post(
-                      Uri.parse(ApiLinks.logout),
+                      Uri.parse(API.logout),
                     );
 
                     // ignore: use_build_context_synchronously
