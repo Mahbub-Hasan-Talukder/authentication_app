@@ -2,7 +2,7 @@
 import 'package:authentication_app/core/service/navigation/routes/routes.dart';
 import 'package:authentication_app/core/widgets/action_button.dart';
 import 'package:authentication_app/core/widgets/action_text.dart';
-import 'package:authentication_app/core/widgets/api_links.dart';
+import 'package:authentication_app/core/service/api/endpoints.dart';
 import 'package:authentication_app/core/widgets/custom_textfields.dart';
 import 'package:authentication_app/core/widgets/subtitle.dart';
 import 'package:authentication_app/core/widgets/title.dart';
@@ -43,7 +43,7 @@ class ForgotPassword extends StatelessWidget {
                 onpress: () async {
                   try {
                     Response response = await post(
-                      Uri.parse(ApiLinks.forgetPassword),
+                      Uri.parse(API.forgetPassword),
                       body: {
                         'email': email.text.toString(),
                       },

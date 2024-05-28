@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:authentication_app/core/service/navigation/routes/routes.dart';
 import 'package:authentication_app/core/widgets/action_button.dart';
-import 'package:authentication_app/core/widgets/api_links.dart';
+import 'package:authentication_app/core/service/api/endpoints.dart';
 import 'package:authentication_app/core/widgets/custom_textfields.dart';
 import 'package:authentication_app/core/widgets/subtitle.dart';
 import 'package:authentication_app/core/widgets/title.dart';
@@ -101,7 +101,7 @@ class EmailConfirmationState extends State<EmailConfirmation> {
                 onpress: () async {
                   try {
                     Response response = await post(
-                      Uri.parse(ApiLinks.verifyOtp),
+                      Uri.parse(API.verifyOtp),
                       body: {
                         'email': widget.email,
                         'otp': OTP.text.toString(),
@@ -110,7 +110,6 @@ class EmailConfirmationState extends State<EmailConfirmation> {
                     print(response.statusCode);
                     if (response.statusCode == 201 ||
                         response.statusCode == 200) {
-                      // ignore: use_build_context_synchronously
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
@@ -189,7 +188,7 @@ class EmailConfirmationState extends State<EmailConfirmation> {
 
                             try {
                               Response response = await post(
-                                Uri.parse(ApiLinks.resendOtp),
+                                Uri.parse(API.resendOtp),
                                 body: {
                                   'email': widget.email,
                                 },

@@ -2,7 +2,7 @@ import 'package:authentication_app/core/notifiers/email_controller.dart';
 import 'package:authentication_app/core/notifiers/login_button_controller.dart';
 import 'package:authentication_app/core/notifiers/password_controller.dart';
 import 'package:authentication_app/core/service/navigation/routes/routes.dart';
-import 'package:authentication_app/core/widgets/api_links.dart';
+import 'package:authentication_app/core/service/api/endpoints.dart';
 import 'package:http/http.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
