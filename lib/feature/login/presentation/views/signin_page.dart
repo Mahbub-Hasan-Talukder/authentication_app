@@ -1,4 +1,5 @@
 import 'package:authentication_app/core/gen/assets.gen.dart';
+import 'package:authentication_app/core/widgets/green_line.dart';
 import 'package:authentication_app/feature/login/controller/controller.dart';
 import 'package:authentication_app/core/service/navigation/routes/routes.dart';
 import 'package:authentication_app/feature/login/presentation/widgets/login_page_logo.dart';
@@ -47,7 +48,7 @@ class _LoginState extends ConsumerState<Login> {
     final state = ref.watch(signInProvider);
     ref.listen(signInProvider, (_, next) {
       if (next.value ?? false) {
-        context.pushNamed(Routes.profile);
+        context.go('/${Routes.home}');
       } else if (next.hasError && !next.isLoading) {
         showDialog(
           context: context,
@@ -79,9 +80,14 @@ class _LoginState extends ConsumerState<Login> {
               const SizedBox(
                 height: 145,
               ),
-              Text(
-                'Login to Authy',
-                style: Theme.of(context).textTheme.titleMedium,
+              Stack(
+                children: [
+                  Text(
+                    'Log in to Authy',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const Underline(right: 80),
+                ],
               ),
               const SizedBox(height: 37),
               Text(
@@ -205,7 +211,8 @@ class _LoginState extends ConsumerState<Login> {
                         : null,
                 child: (state.isLoading)
                     ? const CircularProgressIndicator(
-                        backgroundColor: Colors.white)
+                        backgroundColor: Colors.white,
+                      )
                     : Text(
                         'Login',
                         style: (enableButtonNotifier.email &

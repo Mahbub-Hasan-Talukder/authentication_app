@@ -1,15 +1,12 @@
 import 'package:authentication_app/core/service/navigation/routes/routes.dart';
-import 'package:authentication_app/core/widgets/action_button.dart';
-import 'package:authentication_app/core/widgets/action_text.dart';
-import 'package:authentication_app/core/service/api/endpoints.dart';
+import 'package:authentication_app/core/widgets/green_line.dart';
 import 'package:authentication_app/feature/forgot_password/controller/forgot_password_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:http/http.dart';
 
 class ForgotPassword extends ConsumerStatefulWidget {
-  ForgotPassword({super.key});
+  const ForgotPassword({super.key});
 
   @override
   ConsumerState<ForgotPassword> createState() => _ForgotPasswordState();
@@ -53,10 +50,13 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
           child: Column(
             children: [
               const SizedBox(height: 145),
-              Text(
+              Stack(children: [
+                Text(
                 'Forgot Password',
                 style: Theme.of(context).textTheme.titleMedium,
               ),
+              const Underline(right: 90),
+              ],),
               const SizedBox(height: 30),
               Text(
                 textAlign: TextAlign.center,

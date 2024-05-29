@@ -1,5 +1,4 @@
 import 'package:authentication_app/core/service/navigation/router_config/router_config.dart';
-
 import 'package:authentication_app/core/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,9 +15,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: theme,
-      routerConfig: MyRouterConfig().router,
+      routerConfig: MyRouterConfig.router,
     );
   }
-
 }
 
