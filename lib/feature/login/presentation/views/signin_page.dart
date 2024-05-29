@@ -47,8 +47,9 @@ class _LoginState extends ConsumerState<Login> {
   Widget build(BuildContext context) {
     final state = ref.watch(signInProvider);
     ref.listen(signInProvider, (_, next) {
-      if (next.value ?? false) {
-        context.go('/${Routes.home}');
+      if (next.value?.getState() ?? false) {
+
+        context.go('/${Routes.home}/${next.value?.getToken()}');
       } else if (next.hasError && !next.isLoading) {
         showDialog(
           context: context,

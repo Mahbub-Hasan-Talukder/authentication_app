@@ -8,10 +8,10 @@ class HomeController extends _$HomeController {
   FutureOr<Converter?> build() {
     return null;
   }
-  FutureOr<Converter?> getInfo() async {
+  FutureOr<Converter?> getInfo(String? token) async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
-      return HomeRepository.getInfo();
+      return HomeRepository.getInfo(token);
     });
     return null;
   }

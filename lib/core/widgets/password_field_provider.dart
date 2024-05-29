@@ -32,7 +32,7 @@ class _PasswordFieldProviderState extends State<PasswordFieldProvider> {
                 obscureText: _obsecureText,
                 decoration: InputDecoration(
                   suffixIcon: IconButton(
-                    icon: _obsecureText? const Icon(Icons.visibility) :const Icon( Icons.visibility_off),
+                    icon: _obsecureText? const Icon(Icons.visibility):const Icon( Icons.visibility_off),
                    onPressed: (){
                     setState(() {
                       _obsecureText = !_obsecureText;

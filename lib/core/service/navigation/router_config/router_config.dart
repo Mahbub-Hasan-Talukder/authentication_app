@@ -64,10 +64,10 @@ class MyRouterConfig {
       ),
       GoRoute(
         name: Routes.home,
-        path: '/home',
+        path: '/home/:token',
         pageBuilder: (contexct, state) {
-          return const MaterialPage(
-              child: HomePage());
+          return MaterialPage(
+              child: HomePage(token: state.pathParameters['token']));
         },
       )
     ],
