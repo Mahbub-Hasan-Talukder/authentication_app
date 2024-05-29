@@ -1,7 +1,5 @@
-import 'package:authentication_app/core/theme/theme.dart';
-import 'package:authentication_app/feature/login/controller/controller.dart';
 import 'package:authentication_app/core/service/navigation/routes/routes.dart';
-import 'package:authentication_app/core/widgets/action_text.dart';
+import 'package:authentication_app/core/widgets/green_line.dart';
 import 'package:authentication_app/core/widgets/password_field_provider.dart';
 import 'package:authentication_app/feature/signup/controller/signup_controller.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 class Signup extends ConsumerStatefulWidget {
-  Signup({super.key});
+  const Signup({super.key});
   @override
   ConsumerState<Signup> createState() => _SignupState();
 }
@@ -118,9 +116,14 @@ class _SignupState extends ConsumerState<Signup> {
           child: Column(
             children: [
               const SizedBox(height: 100),
-              Text(
-                'Signup with email',
-                style: Theme.of(context).textTheme.titleMedium,
+              Stack(
+                children: [
+                  Text(
+                    'Signup with email',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const Underline(right: 80),
+                ],
               ),
               const SizedBox(height: 30),
               Text(
@@ -137,7 +140,8 @@ class _SignupState extends ConsumerState<Signup> {
                     style: Theme.of(context).textTheme.displaySmall,
                   ),
                   TextField(
-                    decoration: InputDecoration(hintText: 'Enter first name'),
+                    decoration:
+                        const InputDecoration(hintText: 'Enter first name'),
                     controller: firstName,
                   )
                 ],
@@ -151,7 +155,8 @@ class _SignupState extends ConsumerState<Signup> {
                     style: Theme.of(context).textTheme.displaySmall,
                   ),
                   TextField(
-                    decoration: InputDecoration(hintText: 'Enter last name'),
+                    decoration:
+                        const InputDecoration(hintText: 'Enter last name'),
                     controller: lastName,
                   ),
                 ],
@@ -165,7 +170,7 @@ class _SignupState extends ConsumerState<Signup> {
                     style: Theme.of(context).textTheme.displaySmall,
                   ),
                   TextField(
-                    decoration: InputDecoration(hintText: 'Enter email'),
+                    decoration: const InputDecoration(hintText: 'Enter email'),
                     controller: email,
                   )
                 ],

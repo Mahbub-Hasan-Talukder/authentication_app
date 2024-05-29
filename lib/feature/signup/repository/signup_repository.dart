@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:authentication_app/core/service/api/endpoints.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart';
 
 class SignupRepository{

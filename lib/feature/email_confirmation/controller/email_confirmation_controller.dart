@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:authentication_app/feature/email_confirmation/repository/email_confirmation_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
