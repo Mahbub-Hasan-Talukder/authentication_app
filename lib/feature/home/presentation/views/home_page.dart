@@ -8,7 +8,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
  
 class HomePage extends ConsumerStatefulWidget {
-  const HomePage({super.key});
+  String? token;
+  HomePage({super.key, required this.token});
  
   @override
   ConsumerState<HomePage> createState() => _HomePageState();
@@ -21,12 +22,13 @@ class _HomePageState extends ConsumerState<HomePage> {
   void initState() {
     super.initState();
     Future(() {
-      ref.read(homeControllerProvider.notifier).getInfo();
+      ref.read(homeControllerProvider.notifier).getInfo(widget.token);
     });
   }
  
   @override
   Widget build(BuildContext context) {
+    // print(widget.token);
     final state = ref.watch(homeControllerProvider);
     ref.listen(homeControllerProvider, (_, next) {
       if (!next.isLoading) {
@@ -51,7 +53,7 @@ class _HomePageState extends ConsumerState<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              ProfilePictureHolder(image: Assets.profile.provider()),
+              // ProfilePictureHolder(image: Assets.profile.provider()),
               const SizedBox(
                 height: 20
               ),
@@ -75,7 +77,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               ),
               const Spacer(),
 
-              // TextButton(onPressed: (){context.pushNamed(Routes.login);}, child: Text('Logout')),
+              TextButton(onPressed: (){context.go('/');}, child: Text('Logout')),
             ],
           ),
         ),
