@@ -1,22 +1,22 @@
 import 'dart:convert';
 
-import 'package:demo_ui/core/service/navigation/routes/routes.dart';
-import 'package:demo_ui/core/widgets/action_button.dart';
-import 'package:demo_ui/core/widgets/api_links.dart';
-import 'package:demo_ui/core/widgets/password_field_provider.dart';
-import 'package:demo_ui/core/widgets/subtitle.dart';
-import 'package:demo_ui/core/widgets/title.dart';
+import 'package:authentication_app/core/service/navigation/routes/routes.dart';
+import 'package:authentication_app/core/widgets/action_button.dart';
+import 'package:authentication_app/core/service/api/endpoints.dart';
+import 'package:authentication_app/core/widgets/password_field_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart';
-extension GoRouterExtension on GoRouter{
-  void clearStackAndNavigate(String location){
-    while(canPop()){
+
+extension GoRouterExtension on GoRouter {
+  void clearStackAndNavigate(String location) {
+    while (canPop()) {
       pop();
     }
     pushReplacement(location);
   }
 }
+
 class ResetPassword extends StatelessWidget {
   String email;
   TextEditingController password = TextEditingController();
@@ -33,11 +33,15 @@ class ResetPassword extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(height: 145),
-              const TitleText(text: 'Reset password'),
+              Text(
+                'Reset password',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
               const SizedBox(height: 30),
-              const SubTitleText(
-                  text:
-                      'Please enter a new password. Don’t enter your old password.'),
+              Text(
+                'Please enter a new password. Don’t enter your old password.',
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
               const SizedBox(height: 40),
               PasswordFieldProvider(
                 text: 'Password',
@@ -78,14 +82,13 @@ class ResetPassword extends StatelessWidget {
                   } else {
                     try {
                       Response response =
-                          await post(Uri.parse(ApiLinks.setNewPassword), body: {
+                          await post(Uri.parse(API.setNewPassword), body: {
                         "email": email,
                         "password": password.text.toString(),
                         "confirmPassword": confirmPassword.text.toString(),
                       });
 
                       if (response.statusCode == 201) {
-                        // ignore: use_build_context_synchronously
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
@@ -95,9 +98,9 @@ class ResetPassword extends StatelessWidget {
                               actions: [
                                 TextButton(
                                   onPressed: () {
-                                    GoRouter.of(context).clearStackAndNavigate(Routes.login);
-                                    // GoRouter.of(context)
-                                    //     .pushNamed(Routes.login);
+                                    Navigator.of(context).pop();
+                                    GoRouter.of(context)
+                                        .pushNamed(Routes.login);
                                   },
                                   child: const Text('OK'),
                                 ),
@@ -106,7 +109,6 @@ class ResetPassword extends StatelessWidget {
                           },
                         );
                       } else {
-                        // ignore: use_build_context_synchronously
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {

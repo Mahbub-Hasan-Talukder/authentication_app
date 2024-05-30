@@ -14,8 +14,6 @@ class ProfilePictureHolder extends StatelessWidget {
           Container(
             width: 85,
             height: 85,
-
-            // padding:const EdgeInsets.all(10),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(50),
               color: const Color(0xFFFFC746),

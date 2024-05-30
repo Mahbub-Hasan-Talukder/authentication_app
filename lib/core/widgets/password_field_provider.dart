@@ -22,8 +22,7 @@ class _PasswordFieldProviderState extends State<PasswordFieldProvider> {
           children: [
             Text(
               widget.text,
-              style: TextStyle(
-                  color: Theme.of(context).colorScheme.tertiary, fontWeight: FontWeight.w600),
+              style: Theme.of(context).textTheme.displaySmall,
             ),
             SizedBox(
               width: 360,
