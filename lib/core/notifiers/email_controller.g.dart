@@ -6,7 +6,7 @@ part of 'email_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$emailControllerHash() => r'ea9a6221863d0448fa7f984e0d07fa64c2ae4265';
+String _$emailControllerHash() => r'87453a39a334ed9a81d2799c738910bf9af51cd2';
 
 /// See also [EmailController].
 @ProviderFor(EmailController)

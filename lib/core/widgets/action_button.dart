@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ActionButton extends StatelessWidget {
-  static Color color = Color(0xFFF3F6F6);
+  static Color color = const Color(0xFFF3F6F6);
   final String text;
   String? direction;
   dynamic onpress;
@@ -15,7 +15,7 @@ class ActionButton extends StatelessWidget {
         backgroundColor: WidgetStatePropertyAll(
           color
         ),
-        minimumSize: WidgetStatePropertyAll(
+        minimumSize: const WidgetStatePropertyAll(
           Size(double.infinity, 50),
         ),
       ),
