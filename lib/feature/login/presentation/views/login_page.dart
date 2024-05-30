@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends ConsumerStatefulWidget {
   const Login({super.key});
@@ -46,10 +47,11 @@ class _LoginState extends ConsumerState<Login> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(signInProvider);
-    ref.listen(signInProvider, (_, next) {
+    ref.listen(signInProvider, (_, next) async {
       if (next.value?.getState() ?? false) {
-
-        context.go('/${Routes.home}/${next.value?.getToken()}');
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString('token', next.value!.getToken());
+        context.go('/${Routes.home}');
       } else if (next.hasError && !next.isLoading) {
         showDialog(
           context: context,
