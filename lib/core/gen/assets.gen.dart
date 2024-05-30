@@ -12,10 +12,10 @@ import 'package:flutter/widgets.dart';
 class Assets {
   Assets._();
 
-  static const AssetGenImage calender = AssetGenImage('assets/calender.png');
+  static const AssetGenImage calender = AssetGenImage('assets/images/calender.png');
   static const AssetGenImage googleLogo =
-      AssetGenImage('assets/google-logo.png');
-  static const AssetGenImage profile = AssetGenImage('assets/profile.png');
+      AssetGenImage('assets/images/google-logo.png');
+  static const AssetGenImage profile = AssetGenImage('assets/images/profile.png');
 
   /// List of all assets
   static List<AssetGenImage> get values => [calender, googleLogo, profile];
