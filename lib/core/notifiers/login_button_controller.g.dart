@@ -7,7 +7,7 @@ part of 'login_button_controller.dart';
 // **************************************************************************
 
 String _$loginButtonControllerHash() =>
-    r'6cf97e91608f90f92c682d1cf8fa8664f4e578aa';
+    r'dc0f52d8dc577f16ea5c3197b253a145ce810ab1';
 
 /// See also [LoginButtonController].
 @ProviderFor(LoginButtonController)

@@ -1,28 +1,31 @@
-import 'package:demo_ui/core/service/navigation/routes/routes.dart';
-import 'package:demo_ui/feature/email_confirmation_page.dart';
-import 'package:demo_ui/feature/forgot_password_page.dart';
-import 'package:demo_ui/feature/reset_password_page.dart';
-import 'package:demo_ui/feature/signin_page.dart';
-import 'package:demo_ui/feature/signup_page.dart';
-import 'package:demo_ui/feature/update_profile_page.dart';
+import 'package:authentication_app/core/service/navigation/routes/routes.dart';
+import 'package:authentication_app/feature/email_confirmation/presentation/views/email_confirmation_page.dart';
+import 'package:authentication_app/feature/forgot_password/presentation/views/forgot_password_page.dart';
+import 'package:authentication_app/feature/home/presentation/views/home_page.dart';
+import 'package:authentication_app/feature/reset_password/presentation/views/reset_password_page.dart';
+import 'package:authentication_app/feature/login/presentation/views/login_page.dart';
+import 'package:authentication_app/feature/signup/presentation/views/signup_page.dart';
+import 'package:authentication_app/feature/update_profile/presentation/views/update_profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class MyRouterConfig {
-  GoRouter router = GoRouter(
+  
+   static GoRouter router = GoRouter(
+    initialLocation: '/',
     routes: [
       GoRoute(
         name: Routes.login,
         path: '/',
         pageBuilder: (contexct, state) {
-          return MaterialPage(child: Login());
+          return const MaterialPage(child: Login());
         },
       ),
       GoRoute(
         name: Routes.forgetPassword,
         path: '/forgetPassword',
         pageBuilder: (contexct, state) {
-          return MaterialPage(child: ForgotPassword());
+          return const MaterialPage(child: ForgotPassword());
         },
        
       ),
@@ -41,7 +44,7 @@ class MyRouterConfig {
         name: Routes.signup,
         path: '/signup',
         pageBuilder: (contexct, state) {
-          return MaterialPage(child: Signup());
+          return const MaterialPage(child: Signup());
         },
       ),
       GoRoute(
@@ -51,12 +54,20 @@ class MyRouterConfig {
           return MaterialPage(child: UpdateProfile());
         },
       ),
-      GoRoute(
+      GoRoute( 
         name: Routes.resetPassword,
         path: '/resetPassword/:email',
         pageBuilder: (contexct, state) {
           return MaterialPage(
               child: ResetPassword(email: state.pathParameters['email']!));
+        },
+      ),
+      GoRoute(
+        name: Routes.home,
+        path: '/home',
+        pageBuilder: (contexct, state) {
+          return MaterialPage(
+              child: HomePage());
         },
       )
     ],
