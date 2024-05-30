@@ -1,6 +1,5 @@
 import 'package:authentication_app/core/gen/assets.gen.dart';
 import 'package:authentication_app/core/service/navigation/routes/routes.dart';
-import 'package:authentication_app/core/widgets/action_button.dart';
 import 'package:authentication_app/core/service/api/endpoints.dart';
 import 'package:authentication_app/feature/update_profile/presentation/widgets/birth_date_field_provider.dart';
 import 'package:authentication_app/feature/update_profile/presentation/widgets/gender_field_provider.dart';
@@ -124,10 +123,10 @@ class UpdateProfile extends StatelessWidget {
               const DateOfBirthProvier(),
               const SizedBox(height: 40),
               const Spacer(),
-              ActionButton(
-                text: "Update profile",
-                direction: '',
-              ),
+              // ActionButton(
+              //   text: "Update profile",
+              //   direction: '',
+              // ),
             ],
           ),
         ),

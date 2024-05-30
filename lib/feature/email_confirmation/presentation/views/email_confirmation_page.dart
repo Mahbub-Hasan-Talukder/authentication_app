@@ -1,9 +1,8 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:authentication_app/core/service/navigation/routes/routes.dart';
-import 'package:authentication_app/core/widgets/action_button.dart';
 import 'package:authentication_app/core/service/api/endpoints.dart';
+import 'package:authentication_app/core/widgets/green_line.dart';
 import 'package:authentication_app/feature/email_confirmation/controller/email_confirmation_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -78,10 +77,11 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
     final state = ref.watch(emailConfirmationControllerProvider);
     ref.listen(emailConfirmationControllerProvider, (_, next) {
       if (next.value ?? false) {
-        if(widget.previousPage=='signup'){
+        if (widget.previousPage == 'signup') {
           context.pushNamed(Routes.login);
-        }else{
-          context.pushNamed(Routes.resetPassword,pathParameters: {'email':widget.email});
+        } else {
+          context.pushNamed(Routes.resetPassword,
+              pathParameters: {'email': widget.email});
         }
       } else if (next.hasError && !next.isLoading) {
         showDialog(
@@ -112,9 +112,14 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
           child: Column(
             children: [
               const SizedBox(height: 145),
-              Text(
-                'Email Confirmation',
-                style: Theme.of(context).textTheme.titleMedium,
+              Stack(
+                children: [
+                  Text(
+                    'Email Confirmation',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const Underline(right: 80),
+                ],
               ),
               const SizedBox(height: 30),
               Text(
@@ -175,7 +180,6 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
                             : const TextStyle(color: Color(0xFF797C7B)),
                       ),
               ),
-
               const SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
