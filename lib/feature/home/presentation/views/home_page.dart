@@ -3,33 +3,36 @@ import 'package:authentication_app/core/service/navigation/routes/routes.dart';
 import 'package:authentication_app/core/widgets/green_line.dart';
 import 'package:authentication_app/core/widgets/profile_picture_holder.dart';
 import 'package:authentication_app/feature/home/controller/home_controller.dart';
+import 'package:authentication_app/feature/home/controller/logout_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
- 
+import 'package:shared_preferences/shared_preferences.dart';
+
 class HomePage extends ConsumerStatefulWidget {
-  String? token;
-  HomePage({super.key, required this.token});
- 
+  HomePage({super.key});
+
   @override
   ConsumerState<HomePage> createState() => _HomePageState();
 }
- 
+
 class _HomePageState extends ConsumerState<HomePage> {
   bool flag = true;
- 
+  
+
   @override
   void initState() {
     super.initState();
     Future(() {
-      ref.read(homeControllerProvider.notifier).getInfo(widget.token);
+      ref.read(homeControllerProvider.notifier).getInfo();
     });
   }
- 
+
   @override
   Widget build(BuildContext context) {
-    // print(widget.token);
     final state = ref.watch(homeControllerProvider);
+    final logoutFlag = ref.watch(logoutControllerProvider);
+
     ref.listen(homeControllerProvider, (_, next) {
       if (!next.isLoading) {
         setState(() {
@@ -37,12 +40,39 @@ class _HomePageState extends ConsumerState<HomePage> {
         });
       }
     });
- 
+    ref.listen(logoutControllerProvider,(_,next){
+      if(next.value ?? false){
+        context.go('/');
+      }
+      else if (next.hasError && !next.isLoading) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Error! Bad request.'),
+              content: const Text('Logout failed'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      }
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: Stack(
           children: [
-            Text('Home',style: Theme.of(context).textTheme.titleMedium,),
+            Text(
+              'H o m e',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
             const Underline(right: 25),
           ],
         ),
@@ -53,10 +83,8 @@ class _HomePageState extends ConsumerState<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // ProfilePictureHolder(image: Assets.profile.provider()),
-              const SizedBox(
-                height: 20
-              ),
+              ProfilePictureHolder(image: Assets.profile.provider()),
+              const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -70,14 +98,16 @@ class _HomePageState extends ConsumerState<HomePage> {
                             Text(
                               'Email: ${state.value?.getEmail()}',
                             ),
-                            // 
                           ],
                         ),
                 ],
               ),
               const Spacer(),
-
-              TextButton(onPressed: (){context.go('/');}, child: Text('Logout')),
+              TextButton(
+                  onPressed: () {
+                    ref.read(logoutControllerProvider.notifier).signOut();
+                  },
+                  child: (logoutFlag.isLoading)? const CircularProgressIndicator(): const Text('Logout')),
             ],
           ),
         ),

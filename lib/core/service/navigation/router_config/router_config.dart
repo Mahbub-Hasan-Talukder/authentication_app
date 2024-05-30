@@ -3,7 +3,7 @@ import 'package:authentication_app/feature/email_confirmation/presentation/views
 import 'package:authentication_app/feature/forgot_password/presentation/views/forgot_password_page.dart';
 import 'package:authentication_app/feature/home/presentation/views/home_page.dart';
 import 'package:authentication_app/feature/reset_password/presentation/views/reset_password_page.dart';
-import 'package:authentication_app/feature/login/presentation/views/signin_page.dart';
+import 'package:authentication_app/feature/login/presentation/views/login_page.dart';
 import 'package:authentication_app/feature/signup/presentation/views/signup_page.dart';
 import 'package:authentication_app/feature/update_profile/presentation/views/update_profile_page.dart';
 import 'package:flutter/material.dart';
@@ -64,10 +64,10 @@ class MyRouterConfig {
       ),
       GoRoute(
         name: Routes.home,
-        path: '/home/:token',
+        path: '/home',
         pageBuilder: (contexct, state) {
           return MaterialPage(
-              child: HomePage(token: state.pathParameters['token']));
+              child: HomePage());
         },
       )
     ],
