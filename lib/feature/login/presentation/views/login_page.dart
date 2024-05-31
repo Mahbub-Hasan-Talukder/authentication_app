@@ -5,6 +5,7 @@ import 'package:authentication_app/core/service/navigation/routes/routes.dart';
 import 'package:authentication_app/feature/login/presentation/widgets/login_page_logo.dart';
 import 'package:authentication_app/core/widgets/password_field_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
@@ -186,24 +187,16 @@ class _LoginState extends ConsumerState<Login> {
               ),
               const Spacer(),
               TextButton(
-                style: !(enableButtonNotifier.email &
+                style: (enableButtonNotifier.email &
                         enableButtonNotifier.password)
                     ? const ButtonStyle(
-                        backgroundColor: WidgetStatePropertyAll(
-                          Color(0xFFF3F6F6),
-                        ),
-                        minimumSize: WidgetStatePropertyAll(
-                          Size(double.infinity, 50),
-                        ),
-                      )
-                    : const ButtonStyle(
                         backgroundColor: WidgetStatePropertyAll(
                           Color.fromARGB(255, 97, 145, 122),
                         ),
                         minimumSize: WidgetStatePropertyAll(
                           Size(double.infinity, 50),
                         ),
-                      ),
+                      ): null,
                 onPressed:
                     (enableButtonNotifier.email & enableButtonNotifier.password)
                         ? () {
@@ -222,7 +215,7 @@ class _LoginState extends ConsumerState<Login> {
                                 enableButtonNotifier.password)
                             ? const TextStyle(
                                 color: Color.fromARGB(255, 234, 237, 236))
-                            : const TextStyle(color: Color(0xFF797C7B)),
+                            : null,
                       ),
               ),
               const SizedBox(height: 10),
