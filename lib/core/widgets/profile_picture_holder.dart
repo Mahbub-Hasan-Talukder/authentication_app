@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 
 class ProfilePictureHolder extends StatelessWidget {
-  
   final ImageProvider image;
-  
+
   const ProfilePictureHolder({super.key, required this.image});
-  
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       child: Stack(
         children: [
-          
           Container(
             width: 80,
             height: 80,
-            // padding: EdgeInsets.all(5),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(50),
               color: const Color(0xFFFFC746),
