@@ -2,10 +2,16 @@ import 'package:flutter/material.dart';
 
 class PasswordFieldProvider extends StatefulWidget {
   final String text, hintText;
-  TextEditingController? controller;
-  dynamic onChanged;
-   PasswordFieldProvider(
-      {super.key, required this.text, required this.hintText, this.controller, this.onChanged});
+  final TextEditingController? controller;
+  final dynamic onChanged;
+
+  const PasswordFieldProvider({
+    super.key,
+    required this.text,
+    required this.hintText,
+    required this.controller,
+    this.onChanged,
+  });
 
   @override
   State<PasswordFieldProvider> createState() => _PasswordFieldProviderState();
@@ -13,6 +19,7 @@ class PasswordFieldProvider extends StatefulWidget {
 
 class _PasswordFieldProviderState extends State<PasswordFieldProvider> {
   bool _obsecureText = true;
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -25,30 +32,36 @@ class _PasswordFieldProviderState extends State<PasswordFieldProvider> {
               style: Theme.of(context).textTheme.displaySmall,
             ),
             SizedBox(
-              width: 360,
+              width: 370,
               child: TextField(
                 onChanged: widget.onChanged,
                 controller: widget.controller,
                 obscureText: _obsecureText,
                 decoration: InputDecoration(
                   suffixIcon: IconButton(
-                    icon: _obsecureText? const Icon(Icons.visibility):const Icon( Icons.visibility_off),
-                   onPressed: (){
-                    setState(() {
-                      _obsecureText = !_obsecureText;
-                    });
-                   },
-                    color: const Color(0xFFC1CAD0),
+                    icon: _obsecureText
+                        ? const Icon(Icons.visibility)
+                        : const Icon(Icons.visibility_off),
+                    onPressed: () {
+                      setState(() {
+                        _obsecureText = !_obsecureText;
+                      });
+                    },
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
                   hintText: widget.hintText,
-                  hintStyle: const TextStyle(
+                  hintStyle: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
-                    color: Color(0xFFC1CAD0),
+                    color: Theme.of(context)
+                        .colorScheme
+                        .secondary
+                        .withOpacity(0.5),
                   ),
-                  enabledBorder: const UnderlineInputBorder(
+                  enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
-                      color: Color(0xFFC1CAD0),
+                      width: 0.5,
+                      color: Theme.of(context).colorScheme.secondary,
                     ),
                   ),
                   focusedBorder: const UnderlineInputBorder(
@@ -56,9 +69,7 @@ class _PasswordFieldProviderState extends State<PasswordFieldProvider> {
                       color: Color(0xFF24786D),
                     ),
                   ),
-                  
                 ),
-                
               ),
             ),
           ],
