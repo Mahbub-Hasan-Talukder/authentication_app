@@ -50,13 +50,15 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
           child: Column(
             children: [
               const SizedBox(height: 145),
-              Stack(children: [
-                Text(
-                'Forgot Password',
-                style: Theme.of(context).textTheme.titleMedium,
+              Stack(
+                children: [
+                  Text(
+                    'Forgot Password',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const Underline(right: 90),
+                ],
               ),
-              const Underline(right: 90),
-              ],),
               const SizedBox(height: 30),
               Text(
                 textAlign: TextAlign.center,
