@@ -1,20 +1,20 @@
 import 'dart:async';
-
 import 'package:authentication_app/core/service/navigation/routes/routes.dart';
-import 'package:authentication_app/core/service/api/endpoints.dart';
 import 'package:authentication_app/core/widgets/green_line.dart';
 import 'package:authentication_app/feature/email_confirmation/controller/email_confirmation_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:http/http.dart';
 
 class EmailConfirmation extends ConsumerStatefulWidget {
   final String email;
   final String previousPage;
 
-  const EmailConfirmation(
-      {super.key, required this.email, required this.previousPage});
+  const EmailConfirmation({
+    super.key,
+    required this.email,
+    required this.previousPage,
+  });
 
   @override
   ConsumerState<EmailConfirmation> createState() => EmailConfirmationState();
@@ -22,20 +22,19 @@ class EmailConfirmation extends ConsumerStatefulWidget {
 
 class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
   Timer? _timer;
-
   int _countDown = 30;
   bool canResend = false;
 
-  final TextEditingController OTP = TextEditingController();
-  ({bool code}) enableButtonNotifier = (code: false);
+  final TextEditingController otpController = TextEditingController();
+  bool enableButtonNotifier = false;
 
   @override
   void initState() {
     super.initState();
     startTimer();
-    OTP.addListener(() {
+    otpController.addListener(() {
       setState(() {
-        enableButtonNotifier = (code: OTP.value.text.isNotEmpty,);
+        enableButtonNotifier = otpController.text.isNotEmpty;
       });
     });
   }
@@ -75,6 +74,7 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(emailConfirmationControllerProvider);
+
     ref.listen(emailConfirmationControllerProvider, (_, next) {
       if (next.value ?? false) {
         if (widget.previousPage == 'signup') {
@@ -118,7 +118,7 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
                     'Email Confirmation',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
-                  const Underline(right: 80),
+                  const GreenLine(right: 80),
                 ],
               ),
               const SizedBox(height: 30),
@@ -130,53 +130,45 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Your code',
                     style: TextStyle(
-                        color: Color(0xFF24786D), fontWeight: FontWeight.w600),
+                      color: Theme.of(context).colorScheme.primary,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                  TextField(
-                    controller: OTP,
-                  )
+                  TextField(controller: otpController),
                 ],
               ),
               const Spacer(),
               TextButton(
-                style: !(enableButtonNotifier.code)
+                style: (enableButtonNotifier)
                     ? const ButtonStyle(
-                        backgroundColor: WidgetStatePropertyAll(
-                          Color(0xFFF3F6F6),
-                        ),
-                        minimumSize: WidgetStatePropertyAll(
-                          Size(double.infinity, 50),
-                        ),
-                      )
-                    : const ButtonStyle(
                         backgroundColor: WidgetStatePropertyAll(
                           Color.fromARGB(255, 97, 145, 122),
                         ),
-                        minimumSize: WidgetStatePropertyAll(
-                          Size(double.infinity, 50),
-                        ),
-                      ),
-                onPressed: (enableButtonNotifier.code)
+                      )
+                    : null,
+                onPressed: (enableButtonNotifier)
                     ? () {
                         ref
                             .read(emailConfirmationControllerProvider.notifier)
                             .emailConfirmation(
                               email: widget.email,
-                              code: OTP.text,
+                              code: otpController.text,
                             );
                       }
                     : null,
                 child: (state.isLoading)
                     ? const CircularProgressIndicator(
-                        backgroundColor: Colors.white)
+                        backgroundColor: Colors.white,
+                      )
                     : Text(
                         'Submit',
-                        style: (enableButtonNotifier.code)
-                            ? const TextStyle(
-                                color: Color.fromARGB(255, 234, 237, 236))
+                        style: (enableButtonNotifier)
+                            ? TextStyle(
+                                color: Theme.of(context).colorScheme.surface,
+                              )
                             : const TextStyle(color: Color(0xFF797C7B)),
                       ),
               ),
@@ -188,31 +180,23 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
                       ? InkWell(
                           onTap: () async {
                             resendOtp();
-                            try {
-                              Response response = await post(
-                                Uri.parse(API.resendOtp),
-                                body: {
-                                  'email': widget.email,
-                                },
-                              );
-                            } catch (e) {
-                              print(e.toString());
-                            }
                           },
                           child: Text(
                             'Resend email',
                             style: TextStyle(
-                                color: Theme.of(context).colorScheme.primary,
-                                fontWeight: FontWeight.bold),
+                              color: Theme.of(context).colorScheme.primary,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         )
                       : Text(
                           'Resend email in $_countDown',
                           style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary),
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
                         ),
                 ],
-              )
+              ),
             ],
           ),
         ),
