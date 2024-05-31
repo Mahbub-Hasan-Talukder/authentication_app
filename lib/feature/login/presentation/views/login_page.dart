@@ -5,7 +5,6 @@ import 'package:authentication_app/core/service/navigation/routes/routes.dart';
 import 'package:authentication_app/feature/login/presentation/widgets/login_page_logo.dart';
 import 'package:authentication_app/core/widgets/password_field_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
@@ -21,33 +20,38 @@ class Login extends ConsumerStatefulWidget {
 class _LoginState extends ConsumerState<Login> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  ({bool email, bool password}) enableButtonNotifier =
-      (email: false, password: false);
+
+  ({bool email, bool password}) enableButtonNotifier = (
+    email: false,
+    password: false,
+  );
 
   @override
   void initState() {
     super.initState();
     emailController.addListener(() {
-      setState(() {
-        enableButtonNotifier = (
-          email: emailController.value.text.isNotEmpty,
-          password: passwordController.value.text.isNotEmpty
-        );
-      });
+      _setEnableButtonState();
     });
     passwordController.addListener(() {
       setState(() {
-        enableButtonNotifier = (
-          email: emailController.value.text.isNotEmpty,
-          password: passwordController.value.text.isNotEmpty
-        );
+        _setEnableButtonState();
       });
+    });
+  }
+
+  void _setEnableButtonState() {
+    setState(() {
+      enableButtonNotifier = (
+        email: emailController.value.text.isNotEmpty,
+        password: passwordController.value.text.isNotEmpty
+      );
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(signInProvider);
+
     ref.listen(signInProvider, (_, next) async {
       if (next.value?.getState() ?? false) {
         final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -81,16 +85,14 @@ class _LoginState extends ConsumerState<Login> {
           padding: const EdgeInsets.only(left: 30, right: 30),
           child: Column(
             children: [
-              const SizedBox(
-                height: 145,
-              ),
+              const SizedBox(height: 145),
               Stack(
                 children: [
                   Text(
                     'Log in to Authy',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
-                  const Underline(right: 80),
+                  const GreenLine(right: 80),
                 ],
               ),
               const SizedBox(height: 37),
@@ -104,24 +106,27 @@ class _LoginState extends ConsumerState<Login> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const LoginPageLogo(
-                      logo: FaIcon(
-                    FontAwesomeIcons.facebook,
-                    size: 30,
-                    color: Colors.blue,
-                  )),
+                    logo: FaIcon(
+                      FontAwesomeIcons.facebook,
+                      size: 30,
+                      color: Colors.blue,
+                    ),
+                  ),
                   const SizedBox(width: 22),
                   LoginPageLogo(
-                      logo: Image(
-                    image: Assets.googleLogo.provider(),
-                    height: 25,
-                    width: 25,
-                  )),
+                    logo: Image(
+                      image: Assets.googleLogo.provider(),
+                      height: 25,
+                      width: 25,
+                    ),
+                  ),
                   const SizedBox(width: 22),
                   const LoginPageLogo(
-                      logo: FaIcon(
-                    FontAwesomeIcons.apple,
-                    size: 30,
-                  )),
+                    logo: FaIcon(
+                      FontAwesomeIcons.apple,
+                      size: 30,
+                    ),
+                  ),
                   const SizedBox(width: 22),
                 ],
               ),
@@ -164,9 +169,9 @@ class _LoginState extends ConsumerState<Login> {
               ),
               const SizedBox(height: 20),
               PasswordFieldProvider(
-                controller: passwordController,
                 text: 'Password',
                 hintText: 'Enter password',
+                controller: passwordController,
               ),
               Row(
                 children: [
@@ -187,16 +192,17 @@ class _LoginState extends ConsumerState<Login> {
               ),
               const Spacer(),
               TextButton(
-                style: (enableButtonNotifier.email &
-                        enableButtonNotifier.password)
-                    ? const ButtonStyle(
-                        backgroundColor: WidgetStatePropertyAll(
-                          Color.fromARGB(255, 97, 145, 122),
-                        ),
-                        minimumSize: WidgetStatePropertyAll(
-                          Size(double.infinity, 50),
-                        ),
-                      ): null,
+                style:
+                    (enableButtonNotifier.email & enableButtonNotifier.password)
+                        ? const ButtonStyle(
+                            backgroundColor: WidgetStatePropertyAll(
+                              Color.fromARGB(255, 97, 145, 122),
+                            ),
+                            minimumSize: WidgetStatePropertyAll(
+                              Size(double.infinity, 50),
+                            ),
+                          )
+                        : null,
                 onPressed:
                     (enableButtonNotifier.email & enableButtonNotifier.password)
                         ? () {

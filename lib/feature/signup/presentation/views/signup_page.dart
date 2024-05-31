@@ -23,60 +23,39 @@ class _SignupState extends ConsumerState<Signup> {
     bool lastName,
     bool email,
     bool password
-  }) enableButtonNotifier =
-      (firstName: false, lastName: false, email: false, password: false);
+  }) enableButtonNotifier = (
+    firstName: false,
+    lastName: false,
+    email: false,
+    password: false,
+  );
 
   @override
   void initState() {
     super.initState();
-    firstName.addListener(
-      () {
-        setState(() {
-          enableButtonNotifier = (
-            firstName: firstName.text.isNotEmpty,
-            lastName: lastName.text.isNotEmpty,
-            email: email.text.isNotEmpty,
-            password: password.text.isNotEmpty,
-          );
-        });
-      },
-    );
-    lastName.addListener(
-      () {
-        setState(() {
-          enableButtonNotifier = (
-            firstName: firstName.text.isNotEmpty,
-            lastName: lastName.text.isNotEmpty,
-            email: email.text.isNotEmpty,
-            password: password.text.isNotEmpty,
-          );
-        });
-      },
-    );
-    email.addListener(
-      () {
-        setState(() {
-          enableButtonNotifier = (
-            firstName: firstName.text.isNotEmpty,
-            lastName: lastName.text.isNotEmpty,
-            email: email.text.isNotEmpty,
-            password: password.text.isNotEmpty,
-          );
-        });
-      },
-    );
-    password.addListener(
-      () {
-        setState(() {
-          enableButtonNotifier = (
-            firstName: firstName.text.isNotEmpty,
-            lastName: lastName.text.isNotEmpty,
-            email: email.text.isNotEmpty,
-            password: password.text.isNotEmpty,
-          );
-        });
-      },
-    );
+    firstName.addListener(() {
+      _setStateEnableButton();
+    });
+    lastName.addListener(() {
+      _setStateEnableButton();
+    });
+    email.addListener(() {
+      _setStateEnableButton();
+    });
+    password.addListener(() {
+      _setStateEnableButton();
+    });
+  }
+
+  void _setStateEnableButton() {
+    setState(() {
+      enableButtonNotifier = (
+        firstName: firstName.text.isNotEmpty,
+        lastName: lastName.text.isNotEmpty,
+        email: email.text.isNotEmpty,
+        password: password.text.isNotEmpty,
+      );
+    });
   }
 
   @override
@@ -122,7 +101,7 @@ class _SignupState extends ConsumerState<Signup> {
                     'Signup with email',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
-                  const Underline(right: 80),
+                  const GreenLine(right: 80),
                 ],
               ),
               const SizedBox(height: 30),
@@ -143,7 +122,7 @@ class _SignupState extends ConsumerState<Signup> {
                     decoration:
                         const InputDecoration(hintText: 'Enter first name'),
                     controller: firstName,
-                  )
+                  ),
                 ],
               ),
               const SizedBox(height: 40),
@@ -172,7 +151,7 @@ class _SignupState extends ConsumerState<Signup> {
                   TextField(
                     decoration: const InputDecoration(hintText: 'Enter email'),
                     controller: email,
-                  )
+                  ),
                 ],
               ),
               const SizedBox(height: 40),
@@ -183,26 +162,19 @@ class _SignupState extends ConsumerState<Signup> {
               ),
               const Spacer(),
               TextButton(
-                style: !(enableButtonNotifier.firstName &
+                style: (enableButtonNotifier.firstName &
                         enableButtonNotifier.lastName &
                         enableButtonNotifier.email &
                         enableButtonNotifier.password)
                     ? const ButtonStyle(
-                        backgroundColor: WidgetStatePropertyAll(
-                          Color(0xFFF3F6F6),
-                        ),
-                        minimumSize: WidgetStatePropertyAll(
-                          Size(double.infinity, 50),
-                        ),
-                      )
-                    : const ButtonStyle(
                         backgroundColor: WidgetStatePropertyAll(
                           Color.fromARGB(255, 97, 145, 122),
                         ),
                         minimumSize: WidgetStatePropertyAll(
                           Size(double.infinity, 50),
                         ),
-                      ),
+                      )
+                    : null,
                 onPressed: (enableButtonNotifier.firstName &
                         enableButtonNotifier.lastName &
                         enableButtonNotifier.email &
@@ -225,15 +197,20 @@ class _SignupState extends ConsumerState<Signup> {
                                 enableButtonNotifier.lastName &
                                 enableButtonNotifier.email &
                                 enableButtonNotifier.password)
-                            ? const TextStyle(
-                                color: Color.fromARGB(255, 234, 237, 236))
-                            : const TextStyle(color: Color(0xFF797C7B)),
+                            ? TextStyle(
+                                color: Theme.of(context).colorScheme.surface,
+                              )
+                            : TextStyle(
+                                color: Theme.of(context).colorScheme.secondary,
+                              ),
                       ),
               ),
               const SizedBox(height: 10),
               GestureDetector(
-                child: Text('Already have an account? Login',
-                    style: Theme.of(context).textTheme.displaySmall),
+                child: Text(
+                  'Already have an account? Login',
+                  style: Theme.of(context).textTheme.displaySmall,
+                ),
                 onTap: () => GoRouter.of(context).pushNamed(Routes.login),
               ),
               const SizedBox(height: 20),
