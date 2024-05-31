@@ -6,7 +6,7 @@ import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeRepository {
-  static FutureOr<ModelClass?> getInfo() async {
+  static FutureOr<HomeModelState?> getInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
     Response response = await get(
@@ -18,7 +18,7 @@ class HomeRepository {
     );
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-      return ModelClass(data['data']['firstname'], data['data']['lastname'],
+      return HomeModelState(data['data']['firstname'], data['data']['lastname'],
           data['data']['email']);
     } else {
       throw Exception('Something went wrong');

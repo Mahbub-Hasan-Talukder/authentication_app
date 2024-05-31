@@ -5,7 +5,7 @@ import 'package:authentication_app/feature/login/presentation/widgets/login_mode
 import 'package:http/http.dart';
 
 class LoginRepository {
-  static FutureOr<ModelClass?> signIn(
+  static FutureOr<LoginModelState?> signIn(
       {required email, required password}) async {
     Response response = await post(
       Uri.parse(API.login),
@@ -20,7 +20,7 @@ class LoginRepository {
     if (response.statusCode != 201) {
       throw Exception('Something went wrong');
     } else {
-      return ModelClass(true, jsonDecode(response.body)['token']);
+      return LoginModelState(true, jsonDecode(response.body)['token']);
     }
   }
 }
