@@ -1,7 +1,7 @@
-class ModelClass {
+class HomeModelState {
   final String _firstName, _lastName, _email;
 
-  ModelClass(this._firstName, this._lastName, this._email);
+  HomeModelState(this._firstName, this._lastName, this._email);
 
   String getFirstName() {
     return _firstName;

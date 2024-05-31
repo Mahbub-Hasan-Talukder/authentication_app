@@ -1,8 +1,8 @@
-class ModelClass {
+class LoginModelState {
   final bool _flag;
   final String _token;
 
-  ModelClass(this._flag, this._token);
+  LoginModelState(this._flag, this._token);
 
   bool getState() {
     return _flag;
