@@ -7,7 +7,7 @@ ThemeData theme = ThemeData(
   useMaterial3: true,
   colorScheme: const ColorScheme.light(
     primary: Color(0xFF24786D),
-    secondary: Color(0xFF797C7B),
+    secondary: Color.fromARGB(255, 121, 121, 124),
     surface: Colors.white,
     tertiary: Color.fromARGB(255, 81, 81, 81),
   ),
