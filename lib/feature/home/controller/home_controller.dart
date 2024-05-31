@@ -7,11 +7,11 @@ part 'home_controller.g.dart';
 @riverpod
 class HomeController extends _$HomeController {
   @override
-  FutureOr<ModelClass?> build() {
+  FutureOr<HomeModelState?> build() {
     return null;
   }
 
-  FutureOr<ModelClass?> getInfo() async {
+  FutureOr<HomeModelState?> getInfo() async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
       return HomeRepository.getInfo();

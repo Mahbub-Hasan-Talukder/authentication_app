@@ -2,6 +2,7 @@ import 'package:authentication_app/core/service/navigation/routes/routes.dart';
 import 'package:authentication_app/core/widgets/green_line.dart';
 import 'package:authentication_app/core/widgets/password_field_provider.dart';
 import 'package:authentication_app/feature/signup/controller/signup_controller.dart';
+import 'package:authentication_app/feature/signup/presentation/widgets/profile_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -181,10 +182,12 @@ class _SignupState extends ConsumerState<Signup> {
                         enableButtonNotifier.password)
                     ? () {
                         ref.read(signUpControllerProvider.notifier).signup(
-                              firstName: firstName.text,
-                              lastName: lastName.text,
-                              email: email.text,
-                              password: password.text,
+                              ProfileInfo(
+                                firstName: firstName.text,
+                                lastName: lastName.text,
+                                email: email.text,
+                                password: password.text,
+                              ),
                             );
                       }
                     : null,

@@ -7,7 +7,7 @@ part 'controller.g.dart';
 @riverpod
 class SignIn extends _$SignIn {
   @override
-  FutureOr<ModelClass?> build() {
+  FutureOr<LoginModelState?> build() {
     return null;
   }
 

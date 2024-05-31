@@ -22,7 +22,7 @@ class GreenLine extends StatelessWidget {
       bottom: bottom,
       child: Container(
         height: height,
-        color: Theme.of(context).colorScheme.primary,
+        color: Theme.of(context).colorScheme.primary.withOpacity(0.7),
       ),
     );
   }
