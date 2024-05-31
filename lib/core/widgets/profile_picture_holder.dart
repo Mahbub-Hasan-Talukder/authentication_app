@@ -11,9 +11,11 @@ class ProfilePictureHolder extends StatelessWidget {
     return SizedBox(
       child: Stack(
         children: [
+          
           Container(
-            width: 85,
-            height: 85,
+            width: 80,
+            height: 80,
+            // padding: EdgeInsets.all(5),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(50),
               color: const Color(0xFFFFC746),
