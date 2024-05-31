@@ -220,7 +220,7 @@ class _SignupState extends ConsumerState<Signup> {
                     ? const CircularProgressIndicator(
                         backgroundColor: Colors.white)
                     : Text(
-                        'Login',
+                        'Create an account',
                         style: (enableButtonNotifier.firstName &
                                 enableButtonNotifier.lastName &
                                 enableButtonNotifier.email &
