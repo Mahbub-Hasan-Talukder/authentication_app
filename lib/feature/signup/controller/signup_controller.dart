@@ -1,4 +1,4 @@
-
+import 'package:authentication_app/feature/signup/presentation/widgets/profile_info.dart';
 import 'package:authentication_app/feature/signup/repository/signup_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -10,10 +10,11 @@ class SignUpController extends _$SignUpController {
   FutureOr<bool?> build() {
     return null;
   }
-  void signup({required String firstName, required String lastName,required String email, required String password}) async {
+
+  void signup(ProfileInfo profileInfo) async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
-      return SignupRepository.signUp(firstName, lastName, email, password);
+      return SignupRepository.signUp(profileInfo);
     });
   }
 }

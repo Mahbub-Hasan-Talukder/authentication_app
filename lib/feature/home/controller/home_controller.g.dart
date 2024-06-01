@@ -11,7 +11,7 @@ String _$homeControllerHash() => r'5108981c44de942c440eab3fcae26c208538979a';
 /// See also [HomeController].
 @ProviderFor(HomeController)
 final homeControllerProvider =
-    AutoDisposeAsyncNotifierProvider<HomeController, Converter?>.internal(
+    AutoDisposeAsyncNotifierProvider<HomeController, HomeModelState?>.internal(
   HomeController.new,
   name: r'homeControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -21,6 +21,6 @@ final homeControllerProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$HomeController = AutoDisposeAsyncNotifier<Converter?>;
+typedef _$HomeController = AutoDisposeAsyncNotifier<HomeModelState?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

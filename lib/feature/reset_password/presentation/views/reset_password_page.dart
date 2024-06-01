@@ -8,7 +8,9 @@ import 'package:go_router/go_router.dart';
 
 class ResetPassword extends ConsumerStatefulWidget {
   final String email;
+
   const ResetPassword({super.key, required this.email});
+
   @override
   ConsumerState<ResetPassword> createState() => _ResetPasswordState();
 }
@@ -16,6 +18,7 @@ class ResetPassword extends ConsumerStatefulWidget {
 class _ResetPasswordState extends ConsumerState<ResetPassword> {
   TextEditingController password = TextEditingController();
   TextEditingController confirmPassword = TextEditingController();
+
   ({bool password, bool confirmPassword}) enableButtonNotifier =
       (password: false, confirmPassword: false);
 
@@ -23,20 +26,19 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
   void initState() {
     super.initState();
     password.addListener(() {
-      setState(() {
-        enableButtonNotifier = (
-          password: password.text.isNotEmpty,
-          confirmPassword: confirmPassword.text.isNotEmpty,
-        );
-      });
+      _setSateEnableButton();
     });
     confirmPassword.addListener(() {
-      setState(() {
-        enableButtonNotifier = (
-          password: password.text.isNotEmpty,
-          confirmPassword: confirmPassword.text.isNotEmpty,
-        );
-      });
+      _setSateEnableButton();
+    });
+  }
+
+  void _setSateEnableButton() {
+    setState(() {
+      enableButtonNotifier = (
+        password: password.text.isNotEmpty,
+        confirmPassword: confirmPassword.text.isNotEmpty,
+      );
     });
   }
 
@@ -80,7 +82,7 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                     'Reset password',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
-                  const Underline(right: 80),
+                  const GreenLine(right: 80),
                 ],
               ),
               const SizedBox(height: 30),
@@ -101,106 +103,18 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                 controller: confirmPassword,
               ),
               const Spacer(),
-              // ActionButton(
-              //   text: 'Reset Password',
-              //   direction: '',
-              //   onpress: () async {
-              //     if (password.text != confirmPassword.text) {
-              //       showDialog(
-              //         context: context,
-              //         builder: (BuildContext context) {
-              //           return AlertDialog(
-              //             title: const Text(
-              //                 'Passwords from two fields are must be same'),
-              //             content:
-              //                 const Text('Enter same password into the fields'),
-              //             actions: [
-              //               TextButton(
-              //                 onPressed: () {
-              //                   Navigator.of(context).pop();
-              //                 },
-              //                 child: const Text('OK'),
-              //               ),
-              //             ],
-              //           );
-              //         },
-              //       );
-              //     } else {
-              //       try {
-              //         Response response =
-              //             await post(Uri.parse(API.setNewPassword), body: {
-              //           "email": widget.email,
-              //           "password": password.text.toString(),
-              //           "confirmPassword": confirmPassword.text.toString(),
-              //         });
-
-              //         if (response.statusCode == 201) {
-              //           showDialog(
-              //             context: context,
-              //             builder: (BuildContext context) {
-              //               return AlertDialog(
-              //                 title: const Text('Reset password done'),
-              //                 content: const Text('Login again'),
-              //                 actions: [
-              //                   TextButton(
-              //                     onPressed: () {
-              //                       Navigator.of(context).pop();
-              //                       GoRouter.of(context)
-              //                           .pushNamed(Routes.login);
-              //                     },
-              //                     child: const Text('OK'),
-              //                   ),
-              //                 ],
-              //               );
-              //             },
-              //           );
-              //         } else {
-              //           showDialog(
-              //             context: context,
-              //             builder: (BuildContext context) {
-              //               return AlertDialog(
-              //                 title: Text(
-              //                   jsonDecode(response.body)["message"],
-              //                 ),
-              //                 content: const Text('Try again'),
-              //                 actions: [
-              //                   TextButton(
-              //                     onPressed: () {
-              //                       Navigator.of(context).pop();
-              //                     },
-              //                     child: const Text('OK'),
-              //                   ),
-              //                 ],
-              //               );
-              //             },
-              //           );
-              //         }
-              //       } catch (e) {
-              //         print(e.toString());
-              //       }
-              //     }
-              //   },
-              // ),
-
               TextButton(
-                style: !(enableButtonNotifier.password &
+                style: (enableButtonNotifier.password &
                         enableButtonNotifier.confirmPassword)
                     ? const ButtonStyle(
-                        backgroundColor: WidgetStatePropertyAll(
-                          Color(0xFFF3F6F6),
-                        ),
-                        minimumSize: WidgetStatePropertyAll(
-                          Size(double.infinity, 50),
-                        ),
-                      )
-                    : const ButtonStyle(
                         backgroundColor: WidgetStatePropertyAll(
                           Color.fromARGB(255, 97, 145, 122),
                         ),
                         minimumSize: WidgetStatePropertyAll(
                           Size(double.infinity, 50),
                         ),
-                      ),
+                      )
+                    : null,
                 onPressed: (enableButtonNotifier.password &
                         enableButtonNotifier.confirmPassword)
                     ? () {
@@ -218,15 +132,17 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                         backgroundColor: Colors.white,
                       )
                     : Text(
-                        'Login',
+                        'Submit',
                         style: (enableButtonNotifier.password &
                                 enableButtonNotifier.confirmPassword)
                             ? const TextStyle(
-                                color: Color.fromARGB(255, 234, 237, 236))
-                            : const TextStyle(color: Color(0xFF797C7B)),
+                                color: Color.fromARGB(255, 234, 237, 236),
+                              )
+                            : const TextStyle(
+                                color: Color(0xFF797C7B),
+                              ),
                       ),
               ),
-
               const SizedBox(height: 20),
             ],
           ),

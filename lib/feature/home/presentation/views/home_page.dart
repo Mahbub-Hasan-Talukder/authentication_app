@@ -1,5 +1,4 @@
 import 'package:authentication_app/core/gen/assets.gen.dart';
-import 'package:authentication_app/core/service/navigation/routes/routes.dart';
 import 'package:authentication_app/core/widgets/green_line.dart';
 import 'package:authentication_app/core/widgets/profile_picture_holder.dart';
 import 'package:authentication_app/feature/home/controller/home_controller.dart';
@@ -7,10 +6,9 @@ import 'package:authentication_app/feature/home/controller/logout_controller.dar
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends ConsumerStatefulWidget {
-  HomePage({super.key});
+  const HomePage({super.key});
 
   @override
   ConsumerState<HomePage> createState() => _HomePageState();
@@ -18,7 +16,6 @@ class HomePage extends ConsumerStatefulWidget {
 
 class _HomePageState extends ConsumerState<HomePage> {
   bool flag = true;
-  
 
   @override
   void initState() {
@@ -40,11 +37,10 @@ class _HomePageState extends ConsumerState<HomePage> {
         });
       }
     });
-    ref.listen(logoutControllerProvider,(_,next){
-      if(next.value ?? false){
+    ref.listen(logoutControllerProvider, (_, next) {
+      if (next.value ?? false) {
         context.go('/');
-      }
-      else if (next.hasError && !next.isLoading) {
+      } else if (next.hasError && !next.isLoading) {
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -73,13 +69,13 @@ class _HomePageState extends ConsumerState<HomePage> {
               'H o m e',
               style: Theme.of(context).textTheme.titleMedium,
             ),
-            const Underline(right: 25),
+            const GreenLine(right: 25),
           ],
         ),
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: const EdgeInsets.only(left: 24, right: 24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -94,7 +90,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
-                                'Name: ${state.value?.getFirstName()} ${state.value?.getLastName()}'),
+                              'Name: ${state.value?.getFirstName()} ${state.value?.getLastName()}',
+                            ),
                             Text(
                               'Email: ${state.value?.getEmail()}',
                             ),
@@ -104,10 +101,13 @@ class _HomePageState extends ConsumerState<HomePage> {
               ),
               const Spacer(),
               TextButton(
-                  onPressed: () {
-                    ref.read(logoutControllerProvider.notifier).signOut();
-                  },
-                  child: (logoutFlag.isLoading)? const CircularProgressIndicator(): const Text('Logout')),
+                onPressed: () {
+                  ref.read(logoutControllerProvider.notifier).signOut();
+                },
+                child: (logoutFlag.isLoading)
+                    ? const CircularProgressIndicator()
+                    : const Text('Logout'),
+              ),
             ],
           ),
         ),
