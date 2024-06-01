@@ -10,66 +10,65 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class MyRouterConfig {
-  
-   static GoRouter router = GoRouter(
+  static GoRouter router = GoRouter(
     initialLocation: '/',
     routes: [
       GoRoute(
         name: Routes.login,
         path: '/',
-        pageBuilder: (contexct, state) {
+        pageBuilder: (context, state) {
           return const MaterialPage(child: Login());
         },
       ),
       GoRoute(
         name: Routes.forgetPassword,
         path: '/forgetPassword',
-        pageBuilder: (contexct, state) {
+        pageBuilder: (context, state) {
           return const MaterialPage(child: ForgotPassword());
         },
-       
       ),
       GoRoute(
         name: Routes.emailConfirmation,
         path: '/emailConfirmation/:email/:previousPage',
-        pageBuilder: (contexct, state) {
+        pageBuilder: (context, state) {
           return MaterialPage(
-              child: EmailConfirmation(
-            email: state.pathParameters['email']!,
-            previousPage: state.pathParameters['previousPage']!,
-          ));
+            child: EmailConfirmation(
+              email: state.pathParameters['email']!,
+              previousPage: state.pathParameters['previousPage']!,
+            ),
+          );
         },
       ),
       GoRoute(
         name: Routes.signup,
         path: '/signup',
-        pageBuilder: (contexct, state) {
+        pageBuilder: (context, state) {
           return const MaterialPage(child: Signup());
         },
       ),
       GoRoute(
         name: Routes.profile,
         path: '/profile',
-        pageBuilder: (contexct, state) {
+        pageBuilder: (context, state) {
           return MaterialPage(child: UpdateProfile());
         },
       ),
-      GoRoute( 
+      GoRoute(
         name: Routes.resetPassword,
         path: '/resetPassword/:email',
-        pageBuilder: (contexct, state) {
+        pageBuilder: (context, state) {
           return MaterialPage(
-              child: ResetPassword(email: state.pathParameters['email']!));
+            child: ResetPassword(email: state.pathParameters['email']!),
+          );
         },
       ),
       GoRoute(
         name: Routes.home,
         path: '/home',
-        pageBuilder: (contexct, state) {
-          return MaterialPage(
-              child: HomePage());
+        pageBuilder: (context, state) {
+          return const MaterialPage(child: HomePage());
         },
-      )
+      ),
     ],
   );
 }

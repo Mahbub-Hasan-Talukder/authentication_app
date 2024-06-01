@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:authentication_app/core/service/api/endpoints.dart';
-import 'package:authentication_app/feature/login/presentation/widgets/state_type.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,7 +19,6 @@ class LogoutRepository {
       throw Exception('Something went wrong');
     } else {
       prefs.clear();
-      print(prefs.getString('token'));
       return true;
     }
   }

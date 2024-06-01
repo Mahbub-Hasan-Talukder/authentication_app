@@ -14,16 +14,14 @@ class ForgotPassword extends ConsumerStatefulWidget {
 
 class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
   TextEditingController email = TextEditingController();
-  ({
-    bool email,
-  }) enableButtonNotifier = (email: false);
+  bool enableButtonNotifier = false;
 
   @override
   void initState() {
     super.initState();
     email.addListener(() {
       setState(() {
-        enableButtonNotifier = (email: email.value.text.isNotEmpty,);
+        enableButtonNotifier = email.text.isNotEmpty;
       });
     });
   }
@@ -31,13 +29,14 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(forgotPasswordControllerProvider);
+
     ref.listen(forgotPasswordControllerProvider, (_, next) {
       if (next.value ?? false) {
         context.pushNamed(
           Routes.emailConfirmation,
           pathParameters: {
             'email': email.text,
-            'previousPage': 'forgotPassword'
+            'previousPage': 'forgotPassword',
           },
         );
       }
@@ -56,7 +55,7 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
                     'Forgot Password',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
-                  const Underline(right: 90),
+                  const GreenLine(right: 90),
                 ],
               ),
               const SizedBox(height: 30),
@@ -72,33 +71,26 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
                   const Text(
                     'Email',
                     style: TextStyle(
-                        color: Color(0xFF24786D), fontWeight: FontWeight.w600),
+                      color: Color(0xFF24786D),
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                  TextField(
-                    controller: email,
-                  )
+                  TextField(controller: email),
                 ],
               ),
               const Spacer(),
               TextButton(
-                style: !(enableButtonNotifier.email)
+                style: (enableButtonNotifier)
                     ? const ButtonStyle(
-                        backgroundColor: WidgetStatePropertyAll(
-                          Color(0xFFF3F6F6),
-                        ),
-                        minimumSize: WidgetStatePropertyAll(
-                          Size(double.infinity, 50),
-                        ),
-                      )
-                    : const ButtonStyle(
                         backgroundColor: WidgetStatePropertyAll(
                           Color.fromARGB(255, 97, 145, 122),
                         ),
                         minimumSize: WidgetStatePropertyAll(
                           Size(double.infinity, 50),
                         ),
-                      ),
-                onPressed: (enableButtonNotifier.email)
+                      )
+                    : null,
+                onPressed: (enableButtonNotifier)
                     ? () {
                         ref
                             .read(forgotPasswordControllerProvider.notifier)
@@ -109,13 +101,15 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
                     : null,
                 child: (state.isLoading)
                     ? const CircularProgressIndicator(
-                        backgroundColor: Colors.white)
+                        backgroundColor: Colors.white,
+                      )
                     : Text(
-                        'Login',
-                        style: (enableButtonNotifier.email)
+                        'Submit',
+                        style: (enableButtonNotifier)
                             ? const TextStyle(
-                                color: Color.fromARGB(255, 234, 237, 236))
-                            : const TextStyle(color: Color(0xFF797C7B)),
+                                color: Color.fromARGB(255, 234, 237, 236),
+                              )
+                            : null,
                       ),
               ),
               const SizedBox(height: 10),
