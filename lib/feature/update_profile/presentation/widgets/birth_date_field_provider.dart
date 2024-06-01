@@ -25,7 +25,7 @@ class DateOfBirthProvier extends StatelessWidget {
                     width: 25,
                     padding: const EdgeInsets.all(8),
                     child: Image(
-                      image: Assets.calender.provider(),
+                      image: Assets.images.calender.provider(),
                     ),
                   ),
                   labelText: "",

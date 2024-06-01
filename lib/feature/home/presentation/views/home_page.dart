@@ -79,7 +79,7 @@ class _HomePageState extends ConsumerState<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              ProfilePictureHolder(image: Assets.profile.provider()),
+              ProfilePictureHolder(image: Assets.images.profile.provider()),
               const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

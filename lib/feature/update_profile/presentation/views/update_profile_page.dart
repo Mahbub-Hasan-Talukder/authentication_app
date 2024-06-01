@@ -79,7 +79,7 @@ class UpdateProfile extends StatelessWidget {
           child: Column(
             children: [
               Center(
-                child: ProfilePictureHolder(image: Assets.profile.provider()),
+                child: ProfilePictureHolder(image: Assets.images.profile.provider()),
               ),
               const SizedBox(height: 40),
               const Column(

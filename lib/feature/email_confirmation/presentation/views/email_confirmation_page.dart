@@ -1,7 +1,9 @@
 import 'dart:async';
+
 import 'package:authentication_app/core/service/navigation/routes/routes.dart';
 import 'package:authentication_app/core/widgets/green_line.dart';
 import 'package:authentication_app/feature/email_confirmation/controller/email_confirmation_controller.dart';
+import 'package:authentication_app/feature/email_confirmation/controller/otp_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -24,9 +26,9 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
   Timer? _timer;
   int _countDown = 30;
   bool canResend = false;
+  bool enableButtonNotifier = false;
 
   final TextEditingController otpController = TextEditingController();
-  bool enableButtonNotifier = false;
 
   @override
   void initState() {
@@ -63,6 +65,7 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
 
   void resendOtp() {
     if (canResend == true) {
+      ref.read(otpControllerProvider.notifier).resendEmail(widget.email);
       setState(() {
         _countDown = 30;
         canResend = false;
@@ -74,6 +77,7 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(emailConfirmationControllerProvider);
+    final resendOtpState = ref.watch(otpControllerProvider);
 
     ref.listen(emailConfirmationControllerProvider, (_, next) {
       if (next.value ?? false) {
@@ -103,6 +107,15 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
         );
       }
     });
+    ref.listen(otpControllerProvider, (_, next) {
+      print(next.value);
+      if (next.value == true) {
+        _showDialog(context, 'OTP sent to your email.');
+      } else if (next.value == false) {
+        _showDialog(context, 'Invalid user email');
+      }
+      
+    });
 
     return Scaffold(
       appBar: AppBar(),
@@ -111,7 +124,7 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
           padding: const EdgeInsets.only(left: 30, right: 30),
           child: Column(
             children: [
-              const SizedBox(height: 145),
+              const Spacer(),
               Stack(
                 children: [
                   Text(
@@ -123,7 +136,7 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
               ),
               const SizedBox(height: 30),
               Text(
-                'We’ve sent a code to your email {${widget.email}} address. Please check your inbox',
+                'We’ve sent a code to your email ${widget.email} address. Please check your inbox',
                 style: Theme.of(context).textTheme.titleSmall,
               ),
               const SizedBox(height: 40),
@@ -179,6 +192,7 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
                   canResend
                       ? InkWell(
                           onTap: () async {
+
                             resendOtp();
                           },
                           child: Text(
@@ -199,6 +213,17 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  void _showDialog(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(
+          seconds: 2,
         ),
       ),
     );
