@@ -88,8 +88,9 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
               ),
               const SizedBox(height: 30),
               Text(
-                'Please enter a new password. Don’t enter your old password.',
+                'Please enter a new password. Don’t enter \nyour old password.',
                 style: Theme.of(context).textTheme.titleSmall,
+                textAlign: TextAlign.center,
               ),
               const SizedBox(height: 40),
               Column(

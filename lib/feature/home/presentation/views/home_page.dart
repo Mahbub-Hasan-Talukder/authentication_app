@@ -63,13 +63,18 @@ class _HomePageState extends ConsumerState<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Stack(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              'H o m e',
-              style: Theme.of(context).textTheme.titleMedium,
+            Stack(
+              children: [
+                Text(
+                  'H o m e',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                const GreenLine(right: 25),
+              ],
             ),
-            const GreenLine(right: 25),
           ],
         ),
       ),

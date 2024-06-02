@@ -77,7 +77,6 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(emailConfirmationControllerProvider);
-    final resendOtpState = ref.watch(otpControllerProvider);
 
     ref.listen(emailConfirmationControllerProvider, (_, next) {
       if (next.value ?? false) {
@@ -108,13 +107,11 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
       }
     });
     ref.listen(otpControllerProvider, (_, next) {
-      print(next.value);
       if (next.value == true) {
         _showDialog(context, 'OTP sent to your email.');
       } else if (next.value == false) {
         _showDialog(context, 'Invalid user email');
       }
-      
     });
 
     return Scaffold(
@@ -135,9 +132,12 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
                 ],
               ),
               const SizedBox(height: 30),
-              Text(
-                'We’ve sent a code to your email ${widget.email} address. Please check your inbox',
-                style: Theme.of(context).textTheme.titleSmall,
+              Center(
+                child: Text(
+                  'We’ve sent a code to your email address. \nPlease check your inbox',
+                  style: Theme.of(context).textTheme.titleSmall,
+                  textAlign: TextAlign.center,
+                ),
               ),
               const SizedBox(height: 40),
               Column(
@@ -192,7 +192,6 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
                   canResend
                       ? InkWell(
                           onTap: () async {
-
                             resendOtp();
                           },
                           child: Text(

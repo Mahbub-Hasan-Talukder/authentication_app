@@ -14,3 +14,33 @@ _book
 *.epub
 *.mobi
 *.pdf
+
+# Flutter/Dart specific
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+
+# IDE files
+.idea/
+.project
+.classpath
+.settings/
+*.iml
+
+# Android specific
+local.properties
+.gradle/
+.idea/
+**/*.iml
+**/*.hprof
+**/*.so
+**/*.dll
+**/*.dylib
+*.keystore
+gradle-app.setting
