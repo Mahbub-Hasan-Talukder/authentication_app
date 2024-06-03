@@ -69,13 +69,14 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
       }
     });
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(left: 30, right: 30),
+          padding: const EdgeInsets.only(left: 24, right: 24),
           child: Column(
             children: [
-              const SizedBox(height: 145),
+              const Spacer(),
               Stack(
                 children: [
                   Text(
@@ -87,20 +88,37 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
               ),
               const SizedBox(height: 30),
               Text(
-                'Please enter a new password. Don’t enter your old password.',
+                'Please enter a new password. Don’t enter \nyour old password.',
                 style: Theme.of(context).textTheme.titleSmall,
+                textAlign: TextAlign.center,
               ),
               const SizedBox(height: 40),
-              PasswordFieldProvider(
-                text: 'Password',
-                hintText: '',
-                controller: password,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Password',
+                    style: Theme.of(context).textTheme.displaySmall,
+                  ),
+                  PasswordFieldProvider(
+                    hintText: '',
+                    controller: password,
+                  ),
+                ],
               ),
               const SizedBox(height: 40),
-              PasswordFieldProvider(
-                text: 'Confirm Password',
-                hintText: '',
-                controller: confirmPassword,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Confirm password',
+                    style: Theme.of(context).textTheme.displaySmall,
+                  ),
+                  PasswordFieldProvider(
+                    hintText: '',
+                    controller: confirmPassword,
+                  ),
+                ],
               ),
               const Spacer(),
               TextButton(

@@ -79,13 +79,14 @@ class _LoginState extends ConsumerState<Login> {
     });
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(left: 30, right: 30),
           child: Column(
             children: [
-              const SizedBox(height: 145),
+              const Spacer(),
               Stack(
                 children: [
                   Text(
@@ -115,7 +116,7 @@ class _LoginState extends ConsumerState<Login> {
                   const SizedBox(width: 22),
                   LoginPageLogo(
                     logo: Image(
-                      image: Assets.googleLogo.provider(),
+                      image: Assets.images.googleLogo.provider(),
                       height: 25,
                       width: 25,
                     ),
@@ -168,10 +169,15 @@ class _LoginState extends ConsumerState<Login> {
                 ],
               ),
               const SizedBox(height: 20),
-              PasswordFieldProvider(
-                text: 'Password',
-                hintText: 'Enter password',
-                controller: passwordController,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Password',style: Theme.of(context).textTheme.displaySmall,),
+                  PasswordFieldProvider(
+                    hintText: 'Enter password',
+                    controller: passwordController,
+                  ),
+                ],
               ),
               Row(
                 children: [
