@@ -1,10 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:authentication_app/core/service/api/endpoints.dart';
-import 'package:authentication_app/feature/login/data/datasources/local_data_source.dart';
 import 'package:authentication_app/feature/login/data/models/login_model.dart';
 import 'package:http/http.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginRemoteDataSource {
   FutureOr<LoginModel?> signIn({required email, required password}) async {

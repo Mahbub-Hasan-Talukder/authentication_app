@@ -5,9 +5,16 @@ import 'package:authentication_app/feature/login/domain/repository/login_reposit
 
 class LoginUsecase {
   final LoginRepository loginRepository;
+
   LoginUsecase(this.loginRepository);
-  FutureOr<LoginEntity?> userLogin(
-      {required String email, required String password}) async {
-    return await loginRepository.getUserLogin(email: email, password: password);
+
+  FutureOr<LoginEntity?> userLogin({
+    required String email,
+    required String password,
+  }) async {
+    return await loginRepository.getUserLogin(
+      email: email,
+      password: password,
+    );
   }
 }

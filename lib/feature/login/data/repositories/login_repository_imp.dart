@@ -6,10 +6,17 @@ import 'package:authentication_app/feature/login/domain/repository/login_reposit
 
 class LoginRepositoryImp implements LoginRepository {
   LoginRemoteDataSource loginRemoteDataSource;
+
   LoginRepositoryImp({required this.loginRemoteDataSource});
+
   @override
-  FutureOr<LoginEntity?> getUserLogin(
-      {required String email, required String password}) {
-    return loginRemoteDataSource.signIn(email: email, password: password);
+  FutureOr<LoginEntity?> getUserLogin({
+    required String email,
+    required String password,
+  }) {
+    return loginRemoteDataSource.signIn(
+      email: email,
+      password: password,
+    );
   }
 }

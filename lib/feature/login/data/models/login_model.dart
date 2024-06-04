@@ -12,13 +12,22 @@ class LoginModel extends LoginEntity {
   }
 
   static LoginModel fromJson(Map<String, dynamic> json) {
-    String message = json['message'];
-    String token = json['token'];
-    String firstName = json['user']['firstname'];
-    String lastName = json['user']['lastname'];
-    String email = json['user']['email'];
-    User user = User(firstName: firstName, lastName: lastName, email: email);
+    final String message = json['message'];
+    final String token = json['token'];
+    final String firstName = json['user']['firstname'];
+    final String lastName = json['user']['lastname'];
+    final String email = json['user']['email'];
 
-    return LoginModel(message: message, token: token, user: user);
+    User user = User(
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+    );
+
+    return LoginModel(
+      message: message,
+      token: token,
+      user: user,
+    );
   }
 }

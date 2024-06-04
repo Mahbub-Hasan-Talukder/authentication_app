@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends ConsumerStatefulWidget {
   const Login({super.key});
@@ -43,7 +42,7 @@ class _LoginState extends ConsumerState<Login> {
     setState(() {
       enableButtonNotifier = (
         email: emailController.value.text.isNotEmpty,
-        password: passwordController.value.text.isNotEmpty
+        password: passwordController.value.text.isNotEmpty,
       );
     });
   }
@@ -54,8 +53,6 @@ class _LoginState extends ConsumerState<Login> {
 
     ref.listen(signInProvider, (_, next) async {
       if (next.value != null) {
-        // final SharedPreferences prefs = await SharedPreferences.getInstance();
-        // prefs.setString('token', next.value!.getToken());
         context.go('/${Routes.home}');
       } else if (next.hasError && !next.isLoading) {
         showDialog(
@@ -83,26 +80,28 @@ class _LoginState extends ConsumerState<Login> {
       appBar: AppBar(),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(left: 30, right: 30),
+          padding: const EdgeInsets.only(left: 24, right: 24),
           child: Column(
             children: [
-              const Spacer(),
+              const SizedBox(
+                height: 45,
+              ),
               Stack(
                 children: [
                   Text(
-                    'Log in to Authyy',
+                    'Log in to Authy',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const GreenLine(right: 80),
                 ],
               ),
-              const SizedBox(height: 37),
+              const SizedBox(height: 16),
               Text(
                 'Welcome back! Sign in using your social\n account or email to continue us',
                 style: Theme.of(context).textTheme.titleSmall,
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 50),
+              const SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -132,13 +131,13 @@ class _LoginState extends ConsumerState<Login> {
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 20, bottom: 20),
+                padding: const EdgeInsets.only(top: 30, bottom: 30),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Container(
                       height: 1,
-                      width: 150,
+                      width: 135,
                       color: const Color(0xFFCDD1D0),
                     ),
                     const Text(
@@ -147,7 +146,7 @@ class _LoginState extends ConsumerState<Login> {
                     ),
                     Container(
                       height: 1,
-                      width: 150,
+                      width: 135,
                       color: const Color(0xFFCDD1D0),
                     ),
                   ],
@@ -168,7 +167,7 @@ class _LoginState extends ConsumerState<Login> {
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 30),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -233,7 +232,7 @@ class _LoginState extends ConsumerState<Login> {
                             : null,
                       ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 15),
               GestureDetector(
                 child: Text(
                   "Don't have any account? Sign up",
@@ -241,7 +240,7 @@ class _LoginState extends ConsumerState<Login> {
                 ),
                 onTap: () => context.pushNamed(Routes.signup),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 30),
             ],
           ),
         ),

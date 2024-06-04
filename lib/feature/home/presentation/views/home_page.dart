@@ -113,6 +113,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                     ? const CircularProgressIndicator()
                     : const Text('Logout'),
               ),
+              const SizedBox(height: 30),
             ],
           ),
         ),
