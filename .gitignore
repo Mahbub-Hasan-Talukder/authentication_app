@@ -25,6 +25,8 @@ _book
 build/
 ios/Flutter/Flutter.framework
 ios/Flutter/Flutter.podspec
+.DS_Store
+
 
 # IDE files
 .idea/
