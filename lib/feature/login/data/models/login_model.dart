@@ -1,11 +1,15 @@
-import 'dart:convert';
-
+import 'package:authentication_app/feature/login/data/datasources/local_data_source.dart';
 import 'package:authentication_app/feature/login/domain/entities/login_entity.dart';
 import 'package:authentication_app/feature/login/domain/entities/sub_entities.dart';
 
 class LoginModel extends LoginEntity {
-  LoginModel(
-      {required super.message, required super.token, required super.user});
+  LoginModel({
+    required super.message,
+    required super.token,
+    required super.user,
+  }) {
+    LoginLocalDataSource(key: 'token', value: token).setCacheData();
+  }
 
   static LoginModel fromJson(Map<String, dynamic> json) {
     String message = json['message'];

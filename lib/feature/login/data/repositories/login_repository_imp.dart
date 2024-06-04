@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:authentication_app/feature/login/data/datasources/local_data_source.dart';
 import 'package:authentication_app/feature/login/data/datasources/remote_data_source.dart';
 import 'package:authentication_app/feature/login/domain/entities/login_entity.dart';
 import 'package:authentication_app/feature/login/domain/repository/login_repository.dart';
