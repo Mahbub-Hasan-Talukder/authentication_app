@@ -9,16 +9,28 @@
 
 import 'package:flutter/widgets.dart';
 
+class $AssetsImagesGen {
+  const $AssetsImagesGen();
+
+  /// File path: assets/images/calender.png
+  AssetGenImage get calender =>
+      const AssetGenImage('assets/images/calender.png');
+
+  /// File path: assets/images/google-logo.png
+  AssetGenImage get googleLogo =>
+      const AssetGenImage('assets/images/google-logo.png');
+
+  /// File path: assets/images/profile.png
+  AssetGenImage get profile => const AssetGenImage('assets/images/profile.png');
+
+  /// List of all assets
+  List<AssetGenImage> get values => [calender, googleLogo, profile];
+}
+
 class Assets {
   Assets._();
 
-  static const AssetGenImage calender = AssetGenImage('assets/calender.png');
-  static const AssetGenImage googleLogo =
-      AssetGenImage('assets/google-logo.png');
-  static const AssetGenImage profile = AssetGenImage('assets/profile.png');
-
-  /// List of all assets
-  static List<AssetGenImage> get values => [calender, googleLogo, profile];
+  static const $AssetsImagesGen images = $AssetsImagesGen();
 }
 
 class AssetGenImage {
