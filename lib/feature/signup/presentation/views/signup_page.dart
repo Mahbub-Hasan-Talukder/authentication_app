@@ -89,6 +89,7 @@ class _SignupState extends ConsumerState<Signup> {
       }
     });
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(),
       body: SafeArea(
         child: Padding(
@@ -156,10 +157,15 @@ class _SignupState extends ConsumerState<Signup> {
                 ],
               ),
               const SizedBox(height: 40),
-              PasswordFieldProvider(
-                text: 'Password',
-                hintText: 'Enter password',
-                controller: password,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('Password'),
+                  PasswordFieldProvider(
+                    controller: password,
+                    hintText: 'Enter password',
+                  ),
+                ],
               ),
               const Spacer(),
               TextButton(

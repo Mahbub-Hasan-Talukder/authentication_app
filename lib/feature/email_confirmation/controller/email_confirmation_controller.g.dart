@@ -7,7 +7,7 @@ part of 'email_confirmation_controller.dart';
 // **************************************************************************
 
 String _$emailConfirmationControllerHash() =>
-    r'8b47ca15acdc89be2d58e35ee470f7e66922883d';
+    r'beeaf73105f1b011ba6942a98b65db956d6207f0';
 
 /// See also [EmailConfirmationController].
 @ProviderFor(EmailConfirmationController)
