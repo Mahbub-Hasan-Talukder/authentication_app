@@ -47,7 +47,7 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
     final state = ref.watch(resetPasswordControllerProvider);
     ref.listen(resetPasswordControllerProvider, (_, next) {
       if (next.value ?? false) {
-        context.pushNamed(Routes.login);
+        context.go('/');
       } else if (next.hasError && !next.isLoading) {
         showDialog(
           context: context,
@@ -76,7 +76,7 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
           padding: const EdgeInsets.only(left: 24, right: 24),
           child: Column(
             children: [
-              const Spacer(),
+              const SizedBox(height: 45),
               Stack(
                 children: [
                   Text(
@@ -150,7 +150,7 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                         backgroundColor: Colors.white,
                       )
                     : Text(
-                        'Submit',
+                        'Reset Password',
                         style: (enableButtonNotifier.password &
                                 enableButtonNotifier.confirmPassword)
                             ? const TextStyle(

@@ -96,7 +96,7 @@ class _SignupState extends ConsumerState<Signup> {
           padding: const EdgeInsets.only(left: 30, right: 30),
           child: Column(
             children: [
-              const SizedBox(height: 100),
+              const SizedBox(height: 45),
               Stack(
                 children: [
                   Text(
