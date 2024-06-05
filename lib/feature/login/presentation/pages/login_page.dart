@@ -19,6 +19,7 @@ class Login extends ConsumerStatefulWidget {
 class _LoginState extends ConsumerState<Login> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  bool? enableCheckbox = false;
 
   ({bool email, bool password}) enableButtonNotifier = (
     email: false,
@@ -181,9 +182,48 @@ class _LoginState extends ConsumerState<Login> {
                   ),
                 ],
               ),
+              const SizedBox(height: 15),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Checkbox(value: false, onChanged: (newValue) {}, shape: null),
+                  SizedBox(
+                    height: 10,
+                    width: 10,
+                    child: Checkbox(
+                      value: enableCheckbox,
+                      onChanged: (newValue) {
+                        setState(() {
+                          enableCheckbox = newValue;
+                        });
+                      },
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      fillColor: (enableCheckbox!)
+                          ? WidgetStatePropertyAll(
+                              Theme.of(context).colorScheme.primary,
+                            )
+                          : WidgetStatePropertyAll(
+                              Theme.of(context)
+                                  .colorScheme
+                                  .secondary
+                                  .withOpacity(0.5),
+                            ),
+                      side: (enableCheckbox!)
+                          ? BorderSide(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primary
+                                  .withOpacity(0.1),
+                              width: 2,
+                            )
+                          : BorderSide(
+                              color: Theme.of(context).colorScheme.primary,
+                              width: 2,
+                            ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
                   Text(
                     'Remember me',
                     style: Theme.of(context).textTheme.displaySmall,
@@ -215,8 +255,9 @@ class _LoginState extends ConsumerState<Login> {
                     (enableButtonNotifier.email & enableButtonNotifier.password)
                         ? () {
                             ref.read(signInProvider.notifier).signin(
-                                email: emailController.text.toString(),
-                                password: passwordController.text.toString());
+                                  email: emailController.text.toString(),
+                                  password: passwordController.text.toString(),
+                                );
                           }
                         : null,
                 child: (state.isLoading)

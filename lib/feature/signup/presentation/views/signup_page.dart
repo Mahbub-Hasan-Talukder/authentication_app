@@ -160,7 +160,10 @@ class _SignupState extends ConsumerState<Signup> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Password'),
+                  Text(
+                    'Password',
+                    style: Theme.of(context).textTheme.displaySmall,
+                  ),
                   PasswordFieldProvider(
                     controller: password,
                     hintText: 'Enter password',

@@ -272,6 +272,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "get_it",
+      "rootUri": "file:///Users/bs00849/.pub-cache/hosted/pub.dev/get_it-7.7.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "glob",
       "rootUri": "file:///Users/bs00849/.pub-cache/hosted/pub.dev/glob-2.1.2",
       "packageUri": "lib/",
@@ -692,7 +698,7 @@
       "languageVersion": "3.2"
     }
   ],
-  "generated": "2024-06-04T10:44:04.829345Z",
+  "generated": "2024-06-05T10:04:19.901486Z",
   "generator": "pub",
   "generatorVersion": "3.4.0",
   "flutterRoot": "file:///Users/bs00849/FlutterDev/flutter",

@@ -1,14 +1,14 @@
 import 'package:authentication_app/feature/login/data/datasources/local_data_source.dart';
 import 'package:authentication_app/feature/login/domain/entities/login_entity.dart';
-import 'package:authentication_app/feature/login/domain/entities/sub_entities.dart';
+import 'package:authentication_app/feature/login/domain/entities/user_entity.dart';
 
 class LoginModel extends LoginEntity {
   LoginModel({
     required super.message,
-    required super.token,
-    required super.user,
+    super.token,
+    super.user,
   }) {
-    LoginLocalDataSource(key: 'token', value: token).setCacheData();
+    LoginLocalDataSource(key: 'token', value: token!).setCacheData();
   }
 
   static LoginModel fromJson(Map<String, dynamic> json) {
@@ -17,11 +17,15 @@ class LoginModel extends LoginEntity {
     final String firstName = json['user']['firstname'];
     final String lastName = json['user']['lastname'];
     final String email = json['user']['email'];
+    final String id = json['user']['_id'];
+    final String role = json['user']['role'];
 
     User user = User(
       firstName: firstName,
       lastName: lastName,
       email: email,
+      id: id,
+      role: role,
     );
 
     return LoginModel(
