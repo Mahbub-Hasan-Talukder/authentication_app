@@ -61,7 +61,7 @@ class _LoginState extends ConsumerState<Login> {
           builder: (BuildContext context) {
             return AlertDialog(
               title: const Text('Error! Bad request.'),
-              content: const Text('Invalid Email or Password'),
+              content: Text(next.error.toString()),
               actions: [
                 TextButton(
                   onPressed: () {

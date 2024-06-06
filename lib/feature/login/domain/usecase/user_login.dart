@@ -1,9 +1,6 @@
-import 'dart:async';
 
 import 'package:authentication_app/feature/login/data/repositories/login_repository_imp.dart';
 import 'package:authentication_app/feature/login/domain/entities/login_entity.dart';
-import 'package:authentication_app/feature/login/domain/repository/login_repository.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'user_login.g.dart';

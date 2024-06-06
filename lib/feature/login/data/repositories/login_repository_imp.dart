@@ -1,5 +1,5 @@
-import 'dart:async';
 
+import 'package:authentication_app/feature/login/data/datasources/local_data_source.dart';
 import 'package:authentication_app/feature/login/data/datasources/remote_data_source.dart';
 import 'package:authentication_app/feature/login/data/models/login_model.dart';
 import 'package:authentication_app/feature/login/domain/repository/login_repository.dart';
@@ -10,8 +10,8 @@ part 'login_repository_imp.g.dart';
 
 @riverpod
 LoginRepositoryImp loginRepostoryImp(Ref ref) {
-  final datasource = ref.read(loginRemoteDataSourceProvider);
-  return LoginRepositoryImp(datasource);
+  final remoteDatasource = ref.read(loginRemoteDataSourceProvider);
+  return LoginRepositoryImp(remoteDatasource);
 }
 
 class LoginRepositoryImp implements LoginRepository {
@@ -23,10 +23,16 @@ class LoginRepositoryImp implements LoginRepository {
   FutureOr<LoginModel?> getUserLogin({
     required String email,
     required String password,
-  }) {
-    return loginRemoteDataSource.signIn(
+  }) async {
+    LoginModel? loginModel = await loginRemoteDataSource.signIn(
       email: email,
       password: password,
     );
+    LoginLocalDataSource loginLocalDataSource = LoginLocalDataSource(
+      key: 'token',
+      value: loginModel!.getToken() ?? "",
+    );
+    loginLocalDataSource.setCacheData();
+    return loginModel;
   }
 }
