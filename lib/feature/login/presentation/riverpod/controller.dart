@@ -16,13 +16,10 @@ class SignIn extends _$SignIn {
   void signin({required String email, required String password}) async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
-      LoginRepositoryImp loginRepositoryImp = LoginRepositoryImp(
-        loginRemoteDataSource: LoginRemoteDataSource(),
-      );
-      return LoginUsecase(loginRepositoryImp).userLogin(
-        email: email,
-        password: password,
-      );
+      return await ref.read(loginUsecaseProvider).userLogin(
+            email: email,
+            password: password,
+          );
     });
   }
 }
