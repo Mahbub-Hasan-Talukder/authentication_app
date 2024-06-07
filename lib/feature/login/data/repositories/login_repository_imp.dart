@@ -1,4 +1,3 @@
-
 import 'package:authentication_app/feature/login/data/datasources/local_data_source.dart';
 import 'package:authentication_app/feature/login/data/datasources/remote_data_source.dart';
 import 'package:authentication_app/feature/login/data/models/login_model.dart';
@@ -28,6 +27,7 @@ class LoginRepositoryImp implements LoginRepository {
       email: email,
       password: password,
     );
+    print('sign repo imp ${loginModel?.message}');
     LoginLocalDataSource loginLocalDataSource = LoginLocalDataSource(
       key: 'token',
       value: loginModel!.getToken() ?? "",
