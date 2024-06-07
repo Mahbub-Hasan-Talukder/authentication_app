@@ -7,7 +7,8 @@ import 'package:http/http.dart';
 
 class SignUpRemoteDataSource {
   FutureOr<(SignUpModel?, String?)> signUp(ProfileInfo profileInfo) async {
-     Response response = await post(
+    try {
+      Response response = await post(
         Uri.parse(API.signup),
         body: {
           'firstname': profileInfo.firstName,
@@ -16,10 +17,13 @@ class SignUpRemoteDataSource {
           'password': profileInfo.password,
         },
       );
-      if(response.statusCode==201) {
+      if (response.statusCode == 201) {
         return (SignUpModel.fromJson(jsonDecode(response.body)), null);
       } else {
         return (null, jsonDecode(response.body)['message'].toString());
       }
+    } catch (e) {
+      return (null, e.toString());
+    }
   }
 }
