@@ -25,23 +25,6 @@ class ProfilePictureHolder extends StatelessWidget {
               ),
             ),
           ),
-          // Positioned(
-          //   right: 10,
-          //   bottom: 0,
-          //   child: Container(
-          //     height: 30,
-          //     width: 30,
-          //     decoration: BoxDecoration(
-          //       borderRadius: BorderRadius.circular(50),
-          //       color: const Color(0xFF24786D),
-          //     ),
-          //     child: const Icon(
-          //       Icons.camera_alt,
-          //       color: Colors.white,
-          //       size: 15,
-          //     ),
-          //   ),
-          // ),
         ],
       ),
     );

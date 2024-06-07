@@ -7,21 +7,20 @@ part 'user_login.g.dart';
 
 @riverpod
 LoginUsecase loginUsecase(LoginUsecaseRef ref) {
-  // ignore: avoid_manual_providers_as_generated_provider_dependency
-  final loginImp = ref.read(loginRepostoryImpProvider);
-  return LoginUsecase(loginImp: loginImp);
+  final loginRepositoryImp = ref.read(loginRepostoryImpProvider);
+  return LoginUsecase(loginRepositoryImp: loginRepositoryImp);
 }
 
 class LoginUsecase {
-  final LoginRepositoryImp loginImp;
+  final LoginRepositoryImp loginRepositoryImp;
 
-  LoginUsecase({required this.loginImp});
+  LoginUsecase({required this.loginRepositoryImp});
 
   FutureOr<LoginEntity?> userLogin({
     required String email,
     required String password,
   }) async {
-    return await loginImp.getUserLogin(
+    return await loginRepositoryImp.getUserLogin(
       email: email,
       password: password,
     );

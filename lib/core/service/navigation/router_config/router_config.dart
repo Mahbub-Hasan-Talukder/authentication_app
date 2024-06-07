@@ -5,7 +5,6 @@ import 'package:authentication_app/feature/home/presentation/views/home_page.dar
 import 'package:authentication_app/feature/login/presentation/pages/login_page.dart';
 import 'package:authentication_app/feature/reset_password/presentation/views/reset_password_page.dart';
 import 'package:authentication_app/feature/signup/presentation/pages/signup_page.dart';
-import 'package:authentication_app/feature/update_profile/presentation/views/update_profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -44,13 +43,6 @@ class MyRouterConfig {
         path: '/signup',
         pageBuilder: (context, state) {
           return const MaterialPage(child: SignUp());
-        },
-      ),
-      GoRoute(
-        name: Routes.profile,
-        path: '/profile',
-        pageBuilder: (context, state) {
-          return MaterialPage(child: UpdateProfile());
         },
       ),
       GoRoute(
