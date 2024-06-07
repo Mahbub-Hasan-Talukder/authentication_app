@@ -27,7 +27,6 @@ class LoginRepositoryImp implements LoginRepository {
       email: email,
       password: password,
     );
-    print('sign repo imp ${loginModel?.message}');
     LoginLocalDataSource loginLocalDataSource = LoginLocalDataSource(
       key: 'token',
       value: loginModel!.getToken() ?? "",
