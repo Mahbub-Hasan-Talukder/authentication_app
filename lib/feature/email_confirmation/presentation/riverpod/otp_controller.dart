@@ -17,7 +17,7 @@ class OtpController extends _$OtpController {
     state = const AsyncValue.data((null, null));
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
-      return ResendOtpUseCase.resendOtp(email: email);
+      return ref.read(resendOtpUseCaseProvider).resendOtp(email: email);
     });
   }
 }

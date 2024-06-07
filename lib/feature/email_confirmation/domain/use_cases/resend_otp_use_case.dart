@@ -2,6 +2,7 @@ import 'package:authentication_app/feature/email_confirmation/data/repositories/
 import 'package:authentication_app/feature/email_confirmation/data/repositories/resend_otp_repository_imp.dart';
 import 'package:authentication_app/feature/email_confirmation/domain/entities/email_confirmation_entity.dart';
 import 'package:authentication_app/feature/email_confirmation/domain/entities/resend_otp_entity.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'resend_otp_use_case.g.dart';
@@ -17,7 +18,7 @@ class ResendOtpUseCase {
 
   ResendOtpUseCase({required this.resendOtpImp});
 
-  static FutureOr<(ResendOtpEntity?, String?)> resendOtp({
+  FutureOr<(ResendOtpEntity?, String?)> resendOtp({
     required email,
   }) async {
     return await resendOtpImp.resendOtp(
