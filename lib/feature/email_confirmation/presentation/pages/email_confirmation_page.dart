@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:authentication_app/core/service/navigation/routes/routes.dart';
 import 'package:authentication_app/core/widgets/green_line.dart';
-import 'package:authentication_app/feature/email_confirmation/controller/email_confirmation_controller.dart';
-import 'package:authentication_app/feature/email_confirmation/controller/otp_controller.dart';
+import 'package:authentication_app/feature/email_confirmation/presentation/riverpod/email_confirmation_controller.dart';
+import 'package:authentication_app/feature/email_confirmation/presentation/riverpod/otp_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -79,7 +79,7 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
     final state = ref.watch(emailConfirmationControllerProvider);
 
     ref.listen(emailConfirmationControllerProvider, (_, next) {
-      if (next.value ?? false) {
+      if (next.value?.$1 != null) {
         if (widget.previousPage == 'signup') {
           context.pushNamed(Routes.login);
         } else {
@@ -168,7 +168,7 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
                             .read(emailConfirmationControllerProvider.notifier)
                             .emailConfirmation(
                               email: widget.email,
-                              code: otpController.text,
+                              otp: otpController.text,
                             );
                       }
                     : null,

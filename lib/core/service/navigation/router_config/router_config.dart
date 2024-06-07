@@ -1,5 +1,5 @@
 import 'package:authentication_app/core/service/navigation/routes/routes.dart';
-import 'package:authentication_app/feature/email_confirmation/presentation/views/email_confirmation_page.dart';
+import 'package:authentication_app/feature/email_confirmation/presentation/pages/email_confirmation_page.dart';
 import 'package:authentication_app/feature/forgot_password/presentation/pages/forgot_password_page.dart';
 import 'package:authentication_app/feature/home/presentation/views/home_page.dart';
 import 'package:authentication_app/feature/login/presentation/pages/login_page.dart';
