@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:authentication_app/feature/email_confirmation/domain/entities/resend_otp_entity.dart';
-import 'package:authentication_app/feature/email_confirmation/domain/repositories/resend_otp_repository.dart';
 import 'package:authentication_app/feature/email_confirmation/domain/use_cases/resend_otp_use_case.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

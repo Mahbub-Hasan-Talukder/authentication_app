@@ -1,6 +1,4 @@
-import 'package:authentication_app/feature/email_confirmation/data/repositories/email_confirmation_repository_imp.dart';
 import 'package:authentication_app/feature/email_confirmation/data/repositories/resend_otp_repository_imp.dart';
-import 'package:authentication_app/feature/email_confirmation/domain/entities/email_confirmation_entity.dart';
 import 'package:authentication_app/feature/email_confirmation/domain/entities/resend_otp_entity.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

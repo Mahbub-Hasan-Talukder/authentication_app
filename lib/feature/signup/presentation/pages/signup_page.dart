@@ -63,7 +63,6 @@ class _SignUpState extends ConsumerState<SignUp> {
   Widget build(BuildContext context) {
     final state = ref.watch(signUpControllerProvider);
     ref.listen(signUpControllerProvider, (_, next) {
-      print('${next.value?.$1} and ${next.value?.$2}');
       if (next.value?.$1!=null && next.value?.$2==null) {
         context.pushNamed(
           Routes.emailConfirmation,

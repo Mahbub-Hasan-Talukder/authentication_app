@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:convert';
 
 import 'package:authentication_app/core/service/api/endpoints.dart';
