@@ -1,27 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'reset_password_controller.dart';
+part of 'reset_password_use_case.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$resetPasswordControllerHash() =>
-    r'd078153d15b5e7e413e9c9f82bbf064502651ea6';
+String _$resetPasswordUseCaseHash() =>
+    r'b89006a8c380032ea56d23dd882a8102197f5286';
 
-/// See also [ResetPasswordController].
-@ProviderFor(ResetPasswordController)
-final resetPasswordControllerProvider =
-    AutoDisposeAsyncNotifierProvider<ResetPasswordController, bool?>.internal(
-  ResetPasswordController.new,
-  name: r'resetPasswordControllerProvider',
+/// See also [resetPasswordUseCase].
+@ProviderFor(resetPasswordUseCase)
+final resetPasswordUseCaseProvider =
+    AutoDisposeProvider<ResetPasswordUseCase>.internal(
+  resetPasswordUseCase,
+  name: r'resetPasswordUseCaseProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$resetPasswordControllerHash,
+      : _$resetPasswordUseCaseHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$ResetPasswordController = AutoDisposeAsyncNotifier<bool?>;
+typedef ResetPasswordUseCaseRef = AutoDisposeProviderRef<ResetPasswordUseCase>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

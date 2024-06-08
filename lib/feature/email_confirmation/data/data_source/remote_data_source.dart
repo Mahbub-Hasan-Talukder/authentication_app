@@ -9,7 +9,7 @@ class EmailConfirmationRemoteDataSource {
       {required email, required otp}) async {
     try {
       Response response = await post(
-        Uri.parse(API.resendOtp),
+        Uri.parse(API.verifyOtp),
         body: {
           "email": email,
           "otp": otp,

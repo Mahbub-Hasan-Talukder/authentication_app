@@ -1,6 +1,6 @@
 import 'package:authentication_app/core/widgets/green_line.dart';
 import 'package:authentication_app/core/widgets/password_field_provider.dart';
-import 'package:authentication_app/feature/reset_password/controller/reset_password_controller.dart';
+import 'package:authentication_app/feature/reset_password/presentation/riverpod/reset_password_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -45,15 +45,15 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
   Widget build(BuildContext context) {
     final state = ref.watch(resetPasswordControllerProvider);
     ref.listen(resetPasswordControllerProvider, (_, next) {
-      if (next.value ?? false) {
+      if (next.value?.$1 != null) {
         context.go('/');
-      } else if (next.hasError && !next.isLoading) {
+      } else if (next.value?.$2 != null) {
         showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
               title: const Text('Error! Bad request.'),
-              content: const Text('Something went wrong'),
+              content: Text(next.value!.$2.toString()),
               actions: [
                 TextButton(
                   onPressed: () {

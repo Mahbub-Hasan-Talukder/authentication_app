@@ -39,6 +39,24 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
             'previousPage': 'forgotPassword',
           },
         );
+      }else if (next.value?.$2 != null) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Error! Bad request.'),
+              content: Text(next.value!.$2.toString()),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
       }
     });
     return Scaffold(

@@ -3,7 +3,7 @@ import 'package:authentication_app/feature/email_confirmation/presentation/pages
 import 'package:authentication_app/feature/forgot_password/presentation/pages/forgot_password_page.dart';
 import 'package:authentication_app/feature/home/presentation/views/home_page.dart';
 import 'package:authentication_app/feature/login/presentation/pages/login_page.dart';
-import 'package:authentication_app/feature/reset_password/presentation/views/reset_password_page.dart';
+import 'package:authentication_app/feature/reset_password/presentation/pages/reset_password_page.dart';
 import 'package:authentication_app/feature/signup/presentation/pages/signup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';

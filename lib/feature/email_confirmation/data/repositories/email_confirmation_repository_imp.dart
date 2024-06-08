@@ -22,6 +22,8 @@ class EmailConfirmationRepositoryImp implements EmailConfirmationRepository {
     required otp,
   }) async {
     return await EmailConfirmationRemoteDataSource.emailConfirmation(
-        email: email, otp: otp);
+      email: email,
+      otp: otp,
+    );
   }
 }
