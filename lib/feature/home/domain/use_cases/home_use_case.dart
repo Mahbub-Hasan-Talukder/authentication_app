@@ -1,5 +1,6 @@
 import 'package:authentication_app/feature/home/data/repositories/home_repository_imp.dart';
 import 'package:authentication_app/feature/home/domain/entities/home_entity.dart';
+import 'package:authentication_app/feature/home/domain/entities/logout_entity.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'home_use_case.g.dart';
@@ -17,5 +18,9 @@ class HomeUseCase {
 
   FutureOr<(HomeEntity?, String?)> getProfileInfo() async {
     return await homeRepositoryImp.getProfileInfo();
+  }
+
+  FutureOr<(LogoutEntity?, String?)> logout() async {
+    return await homeRepositoryImp.logout();
   }
 }

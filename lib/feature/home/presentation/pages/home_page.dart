@@ -106,11 +106,20 @@ class _HomePageState extends ConsumerState<HomePage> {
               ),
               const Spacer(),
               TextButton(
+                style: ButtonStyle(
+                    backgroundColor: WidgetStatePropertyAll(
+                      Theme.of(context).colorScheme.primary.withOpacity(0.7),
+                    ),
+                    foregroundColor: WidgetStatePropertyAll(
+                      Theme.of(context).colorScheme.surface,
+                    )),
                 onPressed: () {
                   ref.read(logoutControllerProvider.notifier).logout();
                 },
                 child: (logoutFlag.isLoading)
-                    ? const CircularProgressIndicator()
+                    ? const CircularProgressIndicator(
+                        color: Colors.white,
+                      )
                     : const Text('Logout'),
               ),
               const SizedBox(height: 30),
