@@ -21,14 +21,11 @@ class ResetPasswordRemoteDataSource {
       );
 
       if (response.statusCode == 201) {
-        print('$email - $password - $confirmPassword - ${response.statusCode}');
         return (ResetPasswordModel.fromJson(jsonDecode(response.body)), null);
       } else {
-        print('$email - $password - $confirmPassword - ${response.statusCode}');
         return (null, jsonDecode(response.body)['message'].toString());
       }
     } catch (e) {
-      print('$email - $password - $confirmPassword - in exception');
       return (null, e.toString());
     }
   }

@@ -1,8 +1,8 @@
 import 'package:authentication_app/core/gen/assets.gen.dart';
 import 'package:authentication_app/core/widgets/green_line.dart';
 import 'package:authentication_app/core/widgets/profile_picture_holder.dart';
-import 'package:authentication_app/feature/home/controller/home_controller.dart';
-import 'package:authentication_app/feature/home/controller/logout_controller.dart';
+import 'package:authentication_app/feature/home/presentation/riverpod/home_controller.dart';
+import 'package:authentication_app/feature/home/presentation/riverpod/logout_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -21,7 +21,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   void initState() {
     super.initState();
     Future(() {
-      ref.read(homeControllerProvider.notifier).getInfo();
+      ref.read(homeControllerProvider.notifier).getProfileInfo();
     });
   }
 
@@ -31,7 +31,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     final logoutFlag = ref.watch(logoutControllerProvider);
 
     ref.listen(homeControllerProvider, (_, next) {
-      if (!next.isLoading) {
+      if (next.value?.$1!=null) {
         setState(() {
           flag = false;
         });
@@ -95,10 +95,10 @@ class _HomePageState extends ConsumerState<HomePage> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
-                              'Name: ${state.value?.getFirstName()} ${state.value?.getLastName()}',
+                              'Name: ${state.value?.$1?.firstName} ${state.value?.$1?.lastName}',
                             ),
                             Text(
-                              'Email: ${state.value?.getEmail()}',
+                              'Email: ${state.value?.$1?.email}',
                             ),
                           ],
                         ),

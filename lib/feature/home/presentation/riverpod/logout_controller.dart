@@ -1,4 +1,4 @@
-import 'package:authentication_app/feature/home/repository/logout_repository.dart';
+import 'package:authentication_app/feature/home/zold/repository/logout_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'logout_controller.g.dart';
