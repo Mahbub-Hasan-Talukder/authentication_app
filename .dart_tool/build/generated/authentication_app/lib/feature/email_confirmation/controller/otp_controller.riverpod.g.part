@@ -2,7 +2,7 @@
 // RiverpodGenerator
 // **************************************************************************
 
-String _$otpControllerHash() => r'cf952d8a0dbf8fb56ac8bf2e7fb3c32c9b642c1f';
+String _$otpControllerHash() => r'68a286ba3d4e276240b2f4830c0305c0324a2d87';
 
 /// See also [OtpController].
 @ProviderFor(OtpController)
