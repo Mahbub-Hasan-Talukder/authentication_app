@@ -32,15 +32,6 @@ class EmailConfirmationRepositoryImp implements EmailConfirmationRepository {
   @override
   FutureOr<(EmailConfirmationModel?, String?)> resendOtp(
       {required email}) async {
-    Response response = await post(
-      Uri.parse(API.resendOtp),
-      body: {
-        'email': email,
-      },
-    );
-    if (response.statusCode != 201) {
-      return (null, jsonDecode(response.body)['message'].toString());
-    }
-    return (EmailConfirmationModel.fromJson(jsonDecode(response.body)), null);
+    return await EmailConfirmationRemoteDataSource.resendOtp(email: email);
   }
 }
