@@ -25,4 +25,12 @@ class EmailConfirmationUseCase {
       otp: otp,
     );
   }
+
+  FutureOr<(EmailConfirmationEntity?, String?)> resendOtp({
+    required email,
+  }) async {
+    return await emailConfirmationImp.resendOtp(
+      email: email,
+    );
+  }
 }

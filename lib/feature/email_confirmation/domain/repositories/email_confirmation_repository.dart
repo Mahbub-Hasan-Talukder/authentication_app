@@ -7,4 +7,5 @@ abstract class EmailConfirmationRepository {
     required email,
     required otp,
   });
+  FutureOr<(EmailConfirmationEntity?, String?)> resendOtp({required email});
 }
