@@ -96,7 +96,7 @@ class _SignupState extends ConsumerState<Signup> {
           padding: const EdgeInsets.only(left: 30, right: 30),
           child: Column(
             children: [
-              const SizedBox(height: 100),
+              const SizedBox(height: 45),
               Stack(
                 children: [
                   Text(
@@ -160,7 +160,10 @@ class _SignupState extends ConsumerState<Signup> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Password'),
+                  Text(
+                    'Password',
+                    style: Theme.of(context).textTheme.displaySmall,
+                  ),
                   PasswordFieldProvider(
                     controller: password,
                     hintText: 'Enter password',
