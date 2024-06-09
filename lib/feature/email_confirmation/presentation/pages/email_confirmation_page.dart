@@ -86,7 +86,7 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
           context.pushNamed(Routes.resetPassword,
               pathParameters: {'email': widget.email});
         }
-      } else if (next.hasError && !next.isLoading) {
+      } else if (next.value?.$2 != null) {
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -107,10 +107,10 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
       }
     });
     ref.listen(otpControllerProvider, (_, next) {
-      if (next.value == true) {
-        _showDialog(context, 'OTP sent to your email.');
-      } else if (next.value == false) {
-        _showDialog(context, 'Invalid user email');
+      if (next.value?.$1 != null) {
+        _showDialog(context, '${next.value?.$1?.message.toString()}');
+      } else if (next.value?.$2 != null) {
+        _showDialog(context, '${next.value?.$2?.toString()}');
       }
     });
 
