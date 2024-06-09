@@ -31,16 +31,16 @@ class _HomePageState extends ConsumerState<HomePage> {
     final logoutFlag = ref.watch(logoutControllerProvider);
 
     ref.listen(homeControllerProvider, (_, next) {
-      if (next.value?.$1!=null) {
+      if (next.value?.$1 != null) {
         setState(() {
           flag = false;
         });
       }
     });
     ref.listen(logoutControllerProvider, (_, next) {
-      if (next.value ?? false) {
+      if (next.value?.$1 != null) {
         context.go('/');
-      } else if (next.hasError && !next.isLoading) {
+      } else if (next.value?.$2 != null) {
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -107,7 +107,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               const Spacer(),
               TextButton(
                 onPressed: () {
-                  ref.read(logoutControllerProvider.notifier).signOut();
+                  ref.read(logoutControllerProvider.notifier).logout();
                 },
                 child: (logoutFlag.isLoading)
                     ? const CircularProgressIndicator()

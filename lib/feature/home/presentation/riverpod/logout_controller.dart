@@ -1,4 +1,5 @@
-import 'package:authentication_app/feature/home/zold/repository/logout_repository.dart';
+import 'package:authentication_app/feature/home/domain/entities/logout_entity.dart';
+import 'package:authentication_app/feature/home/domain/use_cases/logout_use_case.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'logout_controller.g.dart';
@@ -6,14 +7,15 @@ part 'logout_controller.g.dart';
 @riverpod
 class LogoutController extends _$LogoutController {
   @override
-  FutureOr<bool?> build() {
-    return null;
+  FutureOr<(LogoutEntity?, String?)> build() {
+    return (null, null);
   }
 
-  void signOut() async {
+  void logout() async {
+    state = const AsyncData((null, null));
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
-      return LogoutRepository.signOut();
+      return await ref.read(logoutUseCaseProvider).logout();
     });
   }
 }

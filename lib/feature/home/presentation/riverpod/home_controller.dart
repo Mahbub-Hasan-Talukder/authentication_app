@@ -15,9 +15,7 @@ class HomeController extends _$HomeController {
     state = const AsyncData((null, null));
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
-      return await ref
-          .read(homeUseCaseProvider)
-          .getProfileInfo();
+      return await ref.read(homeUseCaseProvider).getProfileInfo();
     });
   }
 }

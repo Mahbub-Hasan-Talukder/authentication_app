@@ -1,26 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'logout_controller.dart';
+part of 'logout_repository_imp.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$logoutControllerHash() => r'9ebed037916550388bdd66aac7f60cfa88802f59';
+String _$logoutRepositoryImpHash() =>
+    r'5da6c86b0cbe0aa9b47bcbfdddef3f813cfb125a';
 
-/// See also [LogoutController].
-@ProviderFor(LogoutController)
-final logoutControllerProvider = AutoDisposeAsyncNotifierProvider<
-    LogoutController, (LogoutEntity?, String?)>.internal(
-  LogoutController.new,
-  name: r'logoutControllerProvider',
+/// See also [logoutRepositoryImp].
+@ProviderFor(logoutRepositoryImp)
+final logoutRepositoryImpProvider =
+    AutoDisposeProvider<LogoutRepositoryImp>.internal(
+  logoutRepositoryImp,
+  name: r'logoutRepositoryImpProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$logoutControllerHash,
+      : _$logoutRepositoryImpHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$LogoutController = AutoDisposeAsyncNotifier<(LogoutEntity?, String?)>;
+typedef LogoutRepositoryImpRef = AutoDisposeProviderRef<LogoutRepositoryImp>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

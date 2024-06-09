@@ -1,6 +1,5 @@
 import 'package:authentication_app/feature/home/data/repositories/home_repository_imp.dart';
 import 'package:authentication_app/feature/home/domain/entities/home_entity.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'home_use_case.g.dart';

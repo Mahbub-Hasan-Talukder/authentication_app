@@ -9,7 +9,6 @@ class HomeModel extends HomeEntity {
   });
 
   static (HomeModel?, String?) fromJson(Map<String, dynamic> json) {
-    print(json['data']['firstname']);
     final String message = json['message'];
     final String firstName = json['data']['firstname'];
     final String lastName = json['data']['lastname'];
@@ -18,7 +17,7 @@ class HomeModel extends HomeEntity {
     final String role = json['data']['role'];
     final bool isResetPassVerified = json['data']['isResetPassVerified'];
     final bool isVerified = json['data']['isVerified'];
-    final String avatar = json['data']['avatar'];
+    final String? avatar = json['data']['avatar'];
 
     return (
       HomeModel(
