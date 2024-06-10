@@ -2,6 +2,7 @@ import 'package:authentication_app/core/service/navigation/router_config/router_
 import 'package:authentication_app/core/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   runApp(const ProviderScope(child: MyApp()));
@@ -9,6 +10,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(

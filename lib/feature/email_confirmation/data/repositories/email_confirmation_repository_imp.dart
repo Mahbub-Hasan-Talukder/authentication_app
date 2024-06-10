@@ -1,10 +1,7 @@
-import 'dart:convert';
 
-import 'package:authentication_app/core/service/api/endpoints.dart';
 import 'package:authentication_app/feature/email_confirmation/data/data_source/remote_data_source.dart';
 import 'package:authentication_app/feature/email_confirmation/data/models/email_confirmation_model.dart';
 import 'package:authentication_app/feature/email_confirmation/domain/repositories/email_confirmation_repository.dart';
-import 'package:http/http.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'email_confirmation_repository_imp.g.dart';
