@@ -6,11 +6,6 @@ class LogoutModel extends LogoutEntity {
   static (LogoutModel?, String?) fromJson(Map<String, dynamic> json) {
     final String message = json['message'];
 
-    return (
-      LogoutModel(
-        message: message,
-      ),
-      null
-    );
+    return (LogoutModel(message: message), null);
   }
 }

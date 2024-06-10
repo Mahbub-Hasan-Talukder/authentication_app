@@ -6,7 +6,8 @@ part 'email_confirmation_use_case.g.dart';
 
 @riverpod
 EmailConfirmationUseCase emailConfirmationUseCase(
-    EmailConfirmationUseCaseRef ref) {
+  EmailConfirmationUseCaseRef ref,
+) {
   final emailConfirmationImp = ref.read(emailConfirmationRepositoryImpProvider);
   return EmailConfirmationUseCase(emailConfirmationImp: emailConfirmationImp);
 }

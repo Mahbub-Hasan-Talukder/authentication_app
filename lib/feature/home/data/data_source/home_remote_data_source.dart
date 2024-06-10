@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:authentication_app/core/service/api/endpoints.dart';
 import 'package:authentication_app/feature/home/data/models/home_model.dart';
 import 'package:authentication_app/feature/home/data/models/logout_model.dart';

@@ -2,13 +2,12 @@ import 'package:authentication_app/feature/home/data/data_source/home_remote_dat
 import 'package:authentication_app/feature/home/data/models/home_model.dart';
 import 'package:authentication_app/feature/home/data/models/logout_model.dart';
 import 'package:authentication_app/feature/home/domain/repositories/home_repository.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'home_repository_imp.g.dart';
 
 @riverpod
-HomeRepositoryImp homeRepositoryImp(Ref ref) {
+HomeRepositoryImp homeRepositoryImp(HomeRepositoryImpRef ref) {
   return HomeRepositoryImp(HomeRemoteDataSource());
 }
 

@@ -39,7 +39,7 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
             'previousPage': 'forgotPassword',
           },
         );
-      }else if (next.value?.$2 != null) {
+      } else if (next.value?.$2 != null) {
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -112,9 +112,7 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
                     ? () {
                         ref
                             .read(forgotPasswordControllerProvider.notifier)
-                            .forgotPassword(
-                              email: email.text.toString(),
-                            );
+                            .forgotPassword(email: email.text.toString());
                       }
                     : null,
                 child: (state.isLoading)
