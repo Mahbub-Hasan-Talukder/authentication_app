@@ -69,7 +69,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             Stack(
               children: [
                 Text(
-                  'H o m e',
+                  'Home Page',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const GreenLine(right: 25),
@@ -113,6 +113,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                     ? const CircularProgressIndicator()
                     : const Text('Logout'),
               ),
+              const SizedBox(height: 30),
             ],
           ),
         ),

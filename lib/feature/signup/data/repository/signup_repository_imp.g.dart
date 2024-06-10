@@ -1,26 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'otp_controller.dart';
+part of 'signup_repository_imp.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$otpControllerHash() => r'68a286ba3d4e276240b2f4830c0305c0324a2d87';
+String _$signUpRepositoryImpHash() =>
+    r'749605610ad01e1ec59894014a90d2b14c8a50c2';
 
-/// See also [OtpController].
-@ProviderFor(OtpController)
-final otpControllerProvider =
-    AutoDisposeAsyncNotifierProvider<OtpController, bool?>.internal(
-  OtpController.new,
-  name: r'otpControllerProvider',
+/// See also [signUpRepositoryImp].
+@ProviderFor(signUpRepositoryImp)
+final signUpRepositoryImpProvider =
+    AutoDisposeProvider<SignUpRepositoryImp>.internal(
+  signUpRepositoryImp,
+  name: r'signUpRepositoryImpProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$otpControllerHash,
+      : _$signUpRepositoryImpHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$OtpController = AutoDisposeAsyncNotifier<bool?>;
+typedef SignUpRepositoryImpRef = AutoDisposeProviderRef<SignUpRepositoryImp>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
