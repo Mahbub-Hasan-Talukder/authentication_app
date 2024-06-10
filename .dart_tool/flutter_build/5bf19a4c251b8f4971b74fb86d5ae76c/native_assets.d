@@ -1,0 +1,1 @@
+ /Users/bs00849/FlutterDev/Projects/Authentication-Demo/.dart_tool/flutter_build/5bf19a4c251b8f4971b74fb86d5ae76c/native_assets.yaml: 
