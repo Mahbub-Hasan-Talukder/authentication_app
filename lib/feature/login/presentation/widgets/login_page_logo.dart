@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 class LoginPageLogo extends StatelessWidget {
   final Widget logo;
-
   const LoginPageLogo({super.key, required this.logo});
 
   @override

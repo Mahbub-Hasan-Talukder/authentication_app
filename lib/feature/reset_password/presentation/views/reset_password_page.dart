@@ -1,3 +1,4 @@
+import 'package:authentication_app/core/service/navigation/routes/routes.dart';
 import 'package:authentication_app/core/widgets/green_line.dart';
 import 'package:authentication_app/core/widgets/password_field_provider.dart';
 import 'package:authentication_app/feature/reset_password/controller/reset_password_controller.dart';
@@ -46,7 +47,7 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
     final state = ref.watch(resetPasswordControllerProvider);
     ref.listen(resetPasswordControllerProvider, (_, next) {
       if (next.value ?? false) {
-        context.go('/');
+        context.pushNamed(Routes.login);
       } else if (next.hasError && !next.isLoading) {
         showDialog(
           context: context,
@@ -75,7 +76,7 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
           padding: const EdgeInsets.only(left: 24, right: 24),
           child: Column(
             children: [
-              const SizedBox(height: 45),
+              const Spacer(),
               Stack(
                 children: [
                   Text(
@@ -149,7 +150,7 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                         backgroundColor: Colors.white,
                       )
                     : Text(
-                        'Reset Password',
+                        'Submit',
                         style: (enableButtonNotifier.password &
                                 enableButtonNotifier.confirmPassword)
                             ? const TextStyle(

@@ -13,9 +13,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      title: 'Authentication App',
+      title: 'Flutter Demo',
       theme: theme,
       routerConfig: MyRouterConfig.router,
     );
   }
 }
+

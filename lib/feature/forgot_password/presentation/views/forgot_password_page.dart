@@ -48,7 +48,7 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
           padding: const EdgeInsets.only(left: 30, right: 30),
           child: Column(
             children: [
-              const SizedBox(height: 45),
+              const Spacer(),
               Stack(
                 children: [
                   Text(
