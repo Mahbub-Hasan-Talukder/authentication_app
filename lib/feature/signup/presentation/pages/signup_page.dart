@@ -63,12 +63,12 @@ class _SignUpState extends ConsumerState<SignUp> {
   Widget build(BuildContext context) {
     final state = ref.watch(signUpControllerProvider);
     ref.listen(signUpControllerProvider, (_, next) {
-      if (next.value?.$1!=null && next.value?.$2==null) {
+      if (next.value?.$1 != null && next.value?.$2 == null) {
         context.pushNamed(
           Routes.emailConfirmation,
           pathParameters: {'email': email.text, 'previousPage': 'signup'},
         );
-      } else if(next.value?.$1==null && next.value?.$2!=null){
+      } else if (next.value?.$1 == null && next.value?.$2 != null) {
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -165,6 +165,7 @@ class _SignUpState extends ConsumerState<SignUp> {
                     style: Theme.of(context).textTheme.displaySmall,
                   ),
                   PasswordFieldProvider(
+                    passwordTextFieldError: false,
                     controller: password,
                     hintText: 'Enter password',
                   ),

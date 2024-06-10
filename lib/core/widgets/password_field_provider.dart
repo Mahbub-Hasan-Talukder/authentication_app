@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class PasswordFieldProvider extends StatefulWidget {
   final TextEditingController controller;
   final String hintText;
+  bool passwordTextFieldError;
   final ValueChanged<String>? onChanged;
-  const PasswordFieldProvider({
+  PasswordFieldProvider({
     super.key,
     required this.controller,
     required this.hintText,
+    required this.passwordTextFieldError,
     this.onChanged,
   });
 
@@ -25,6 +27,9 @@ class PasswordFieldProviderState extends State<PasswordFieldProvider> {
       onChanged: widget.onChanged,
       obscureText: _isSecurePassword,
       decoration: InputDecoration(
+        errorText: (widget.passwordTextFieldError)
+            ? 'Password length must be  greater than 6'
+            : null,
         hintText: widget.hintText,
         suffixIcon: IconButton(
           color: Theme.of(context).colorScheme.secondary.withOpacity(0.6),

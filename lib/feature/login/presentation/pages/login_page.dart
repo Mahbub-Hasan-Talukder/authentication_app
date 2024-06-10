@@ -1,4 +1,5 @@
 import 'package:authentication_app/core/gen/assets.gen.dart';
+import 'package:authentication_app/core/theme/theme.dart';
 import 'package:authentication_app/core/widgets/green_line.dart';
 import 'package:authentication_app/core/service/navigation/routes/routes.dart';
 import 'package:authentication_app/core/widgets/password_field_provider.dart';
@@ -22,6 +23,8 @@ class Login extends ConsumerStatefulWidget {
 class _LoginState extends ConsumerState<Login> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  bool emailTextFieldError = false;
+  bool passwordTextFieldError = false;
   bool enableCheckbox = false;
 
   ({bool email, bool password}) enableButtonNotifier = (
@@ -49,6 +52,14 @@ class _LoginState extends ConsumerState<Login> {
         password: passwordController.value.text.isNotEmpty,
       );
     });
+    if (enableButtonNotifier.email) {
+      setState(() {
+        emailTextFieldError = false;
+      });
+    }
+    if (enableButtonNotifier.password) {
+      passwordTextFieldError = false;
+    }
   }
 
   @override
@@ -170,8 +181,10 @@ class _LoginState extends ConsumerState<Login> {
                     style: Theme.of(context).textTheme.displaySmall,
                   ),
                   TextField(
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       hintText: 'Enter email',
+                      errorText:
+                          (emailTextFieldError) ? 'Email must be email' : null,
                     ),
                     controller: emailController,
                   ),
@@ -186,6 +199,7 @@ class _LoginState extends ConsumerState<Login> {
                     style: Theme.of(context).textTheme.displaySmall,
                   ),
                   PasswordFieldProvider(
+                    passwordTextFieldError: passwordTextFieldError,
                     hintText: 'Enter password',
                     controller: passwordController,
                   ),
@@ -260,16 +274,32 @@ class _LoginState extends ConsumerState<Login> {
                             ),
                           )
                         : null,
-                onPressed:
-                    (enableButtonNotifier.email & enableButtonNotifier.password)
-                        ? () {
-                            ref.read(signInProvider.notifier).signin(
-                                  email: emailController.text.toString(),
-                                  password: passwordController.text.toString(),
-                                  enableCheckbox: enableCheckbox,
-                                );
-                          }
-                        : null,
+                onPressed: (enableButtonNotifier.email &&
+                        enableButtonNotifier.password)
+                    ? () {
+                        bool emailValidate =
+                            _validateEmail(emailController.text);
+                        bool passwordValidate =
+                            _validatePassword(passwordController.text);
+                        if (emailValidate && passwordValidate) {
+                          ref.read(signInProvider.notifier).signin(
+                                email: emailController.text.toString(),
+                                password: passwordController.text.toString(),
+                                enableCheckbox: enableCheckbox,
+                              );
+                        }
+                        if (!emailValidate) {
+                          setState(() {
+                            emailTextFieldError = true;
+                          });
+                        }
+                        if (!passwordValidate) {
+                          setState(() {
+                            passwordTextFieldError = true;
+                          });
+                        }
+                      }
+                    : null,
                 child: (state.isLoading)
                     ? const CircularProgressIndicator(
                         backgroundColor: Colors.white,
@@ -297,5 +327,28 @@ class _LoginState extends ConsumerState<Login> {
         ),
       ),
     );
+  }
+
+  bool _validate() {
+    String email = emailController.text;
+    String password = passwordController.text;
+    // bool res = _validateEmail(email) & _validatePassword(password);
+    if (!_validateEmail(email)) {
+      return false;
+    }
+    return true;
+  }
+
+  bool _validateEmail(String value) {
+    final emailRegEx = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+    if (!emailRegEx.hasMatch(value)) {
+      return false;
+    }
+    return true;
+  }
+
+  bool _validatePassword(String password) {
+    if (password.length < 6) return false;
+    return true;
   }
 }

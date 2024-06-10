@@ -100,6 +100,7 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                     style: Theme.of(context).textTheme.displaySmall,
                   ),
                   PasswordFieldProvider(
+                    passwordTextFieldError: false,
                     hintText: '',
                     controller: password,
                   ),
@@ -114,6 +115,7 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                     style: Theme.of(context).textTheme.displaySmall,
                   ),
                   PasswordFieldProvider(
+                    passwordTextFieldError: false,
                     hintText: '',
                     controller: confirmPassword,
                   ),
