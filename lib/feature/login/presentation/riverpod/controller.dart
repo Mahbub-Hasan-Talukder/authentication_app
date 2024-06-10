@@ -11,12 +11,16 @@ class SignIn extends _$SignIn {
     return null;
   }
 
-  void signin({required String email, required String password}) async {
+  void signin(
+      {required String email,
+      required String password,
+      required enableCheckbox}) async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
       return await ref.read(loginUsecaseProvider).userLogin(
             email: email,
             password: password,
+            enableCheckbox: enableCheckbox,
           );
     });
   }

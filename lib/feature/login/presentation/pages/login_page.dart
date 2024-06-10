@@ -2,12 +2,15 @@ import 'package:authentication_app/core/gen/assets.gen.dart';
 import 'package:authentication_app/core/widgets/green_line.dart';
 import 'package:authentication_app/core/service/navigation/routes/routes.dart';
 import 'package:authentication_app/core/widgets/password_field_provider.dart';
+import 'package:authentication_app/feature/home/presentation/pages/home_page.dart';
+import 'package:authentication_app/feature/login/domain/entities/login_entity.dart';
 import 'package:authentication_app/feature/login/presentation/riverpod/controller.dart';
 import 'package:authentication_app/feature/login/presentation/widgets/login_page_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends ConsumerStatefulWidget {
   const Login({super.key});
@@ -19,7 +22,7 @@ class Login extends ConsumerStatefulWidget {
 class _LoginState extends ConsumerState<Login> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  bool? enableCheckbox = false;
+  bool enableCheckbox = false;
 
   ({bool email, bool password}) enableButtonNotifier = (
     email: false,
@@ -76,6 +79,10 @@ class _LoginState extends ConsumerState<Login> {
       }
     });
 
+    return loginPage(context, state);
+  }
+
+  Scaffold loginPage(BuildContext context, AsyncValue<LoginEntity?> state) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -195,7 +202,7 @@ class _LoginState extends ConsumerState<Login> {
                       value: enableCheckbox,
                       onChanged: (newValue) {
                         setState(() {
-                          enableCheckbox = newValue;
+                          enableCheckbox = newValue!;
                         });
                       },
                       shape: RoundedRectangleBorder(
@@ -259,6 +266,7 @@ class _LoginState extends ConsumerState<Login> {
                             ref.read(signInProvider.notifier).signin(
                                   email: emailController.text.toString(),
                                   password: passwordController.text.toString(),
+                                  enableCheckbox: enableCheckbox,
                                 );
                           }
                         : null,

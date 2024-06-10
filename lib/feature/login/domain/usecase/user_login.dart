@@ -16,12 +16,14 @@ class LoginUsecase {
   LoginUsecase({required this.loginImp});
 
   FutureOr<LoginEntity?> userLogin({
-    required String email,
-    required String password,
+    required email,
+    required password,
+    required enableCheckbox,
   }) async {
     return await loginImp.getUserLogin(
       email: email,
       password: password,
+      enableCheckbox: enableCheckbox,
     );
   }
 }

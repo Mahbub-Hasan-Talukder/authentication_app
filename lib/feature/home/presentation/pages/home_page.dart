@@ -46,7 +46,7 @@ class _HomePageState extends ConsumerState<HomePage> {
           builder: (BuildContext context) {
             return AlertDialog(
               title: const Text('Error! Bad request.'),
-              content: const Text('Logout failed'),
+              content: Text('${next.value?.$2}'),
               actions: [
                 TextButton(
                   onPressed: () {

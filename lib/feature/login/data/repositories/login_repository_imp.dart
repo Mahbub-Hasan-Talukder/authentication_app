@@ -20,18 +20,27 @@ class LoginRepositoryImp implements LoginRepository {
 
   @override
   FutureOr<LoginModel?> getUserLogin({
-    required String email,
-    required String password,
+    required email,
+    required password,
+    required enableCheckbox,
   }) async {
     LoginModel? loginModel = await loginRemoteDataSource.signIn(
       email: email,
       password: password,
     );
-    LoginLocalDataSource loginLocalDataSource = LoginLocalDataSource(
-      key: 'token',
-      value: loginModel!.getToken() ?? "",
-    );
-    loginLocalDataSource.setCacheData();
+    if (loginModel != null) {
+      LoginLocalDataSource loginLocalDataSource = LoginLocalDataSource();
+      loginLocalDataSource.setCacheData(
+        key: 'token',
+        value: loginModel.getToken() ?? "",
+      );
+      if (enableCheckbox) {
+        loginLocalDataSource.setCacheData(
+          key: 'loggedInEmail',
+          value: email,
+        );
+      }
+    }
     return loginModel;
   }
 }

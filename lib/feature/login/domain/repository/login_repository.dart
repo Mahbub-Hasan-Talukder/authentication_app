@@ -14,5 +14,6 @@ abstract class LoginRepository {
   FutureOr<LoginEntity?> getUserLogin({
     required String email,
     required String password,
+    required bool enableCheckbox,
   });
 }
