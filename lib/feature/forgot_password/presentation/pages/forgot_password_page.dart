@@ -1,6 +1,7 @@
 import 'package:authentication_app/core/service/navigation/routes/routes.dart';
 import 'package:authentication_app/core/widgets/green_line.dart';
-import 'package:authentication_app/feature/forgot_password/controller/forgot_password_controller.dart';
+import 'package:authentication_app/core/widgets/validation.dart';
+import 'package:authentication_app/feature/forgot_password/presentation/riverpod/forgot_password_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -15,6 +16,7 @@ class ForgotPassword extends ConsumerStatefulWidget {
 class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
   TextEditingController email = TextEditingController();
   bool enableButtonNotifier = false;
+  bool emailTextFieldError = false;
 
   @override
   void initState() {
@@ -22,6 +24,9 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
     email.addListener(() {
       setState(() {
         enableButtonNotifier = email.text.isNotEmpty;
+        if (enableButtonNotifier) {
+          emailTextFieldError = false;
+        }
       });
     });
   }
@@ -31,12 +36,30 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
     final state = ref.watch(forgotPasswordControllerProvider);
 
     ref.listen(forgotPasswordControllerProvider, (_, next) {
-      if (next.value ?? false) {
+      if (next.value?.$1 != null) {
         context.pushNamed(
           Routes.emailConfirmation,
           pathParameters: {
             'email': email.text,
             'previousPage': 'forgotPassword',
+          },
+        );
+      } else if (next.value?.$2 != null) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Error! Bad request.'),
+              content: Text(next.value!.$2.toString()),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            );
           },
         );
       }
@@ -48,7 +71,7 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
           padding: const EdgeInsets.only(left: 30, right: 30),
           child: Column(
             children: [
-              const Spacer(),
+              const SizedBox(height: 45),
               Stack(
                 children: [
                   Text(
@@ -75,7 +98,13 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  TextField(controller: email),
+                  TextField(
+                    controller: email,
+                    decoration: InputDecoration(
+                      errorText:
+                          (emailTextFieldError) ? 'Email must be email' : null,
+                    ),
+                  ),
                 ],
               ),
               const Spacer(),
@@ -92,11 +121,21 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
                     : null,
                 onPressed: (enableButtonNotifier)
                     ? () {
-                        ref
-                            .read(forgotPasswordControllerProvider.notifier)
-                            .forgotPassword(
-                              email: email.text.toString(),
-                            );
+                        Validation validation = Validation();
+                        bool emailValidate =
+                            validation.validateEmail(email.text);
+                        if (emailValidate) {
+                          ref
+                              .read(forgotPasswordControllerProvider.notifier)
+                              .forgotPassword(
+                                email: email.text.toString(),
+                              );
+                        }
+                        if (!emailValidate) {
+                          setState(() {
+                            emailTextFieldError = true;
+                          });
+                        }
                       }
                     : null,
                 child: (state.isLoading)
