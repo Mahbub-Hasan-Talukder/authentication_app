@@ -13,6 +13,7 @@ class SignIn extends _$SignIn {
 
   void signin({required String email, required String password}) async {
     state = const AsyncLoading();
+    int nothing = 0;
     state = await AsyncValue.guard(() async {
       return LoginRepository.signIn(email: email, password: password);
     });
