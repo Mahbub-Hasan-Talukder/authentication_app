@@ -1,14 +1,15 @@
 import 'package:authentication_app/core/gen/assets.gen.dart';
 import 'package:authentication_app/core/widgets/green_line.dart';
-import 'package:authentication_app/feature/login/controller/controller.dart';
 import 'package:authentication_app/core/service/navigation/routes/routes.dart';
-import 'package:authentication_app/feature/login/presentation/widgets/login_page_logo.dart';
 import 'package:authentication_app/core/widgets/password_field_provider.dart';
+import 'package:authentication_app/feature/login/domain/entities/login_entity.dart';
+import 'package:authentication_app/feature/login/presentation/riverpod/controller.dart';
+import 'package:authentication_app/feature/login/presentation/widgets/login_page_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:authentication_app/core/widgets/validation.dart';
 
 class Login extends ConsumerStatefulWidget {
   const Login({super.key});
@@ -20,6 +21,9 @@ class Login extends ConsumerStatefulWidget {
 class _LoginState extends ConsumerState<Login> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  bool emailTextFieldError = false;
+  bool passwordTextFieldError = false;
+  bool enableCheckbox = false;
 
   ({bool email, bool password}) enableButtonNotifier = (
     email: false,
@@ -43,9 +47,15 @@ class _LoginState extends ConsumerState<Login> {
     setState(() {
       enableButtonNotifier = (
         email: emailController.value.text.isNotEmpty,
-        password: passwordController.value.text.isNotEmpty
+        password: passwordController.value.text.isNotEmpty,
       );
     });
+    if (enableButtonNotifier.email) {
+      emailTextFieldError = false;
+    }
+    if (enableButtonNotifier.password) {
+      passwordTextFieldError = false;
+    }
   }
 
   @override
@@ -53,9 +63,7 @@ class _LoginState extends ConsumerState<Login> {
     final state = ref.watch(signInProvider);
 
     ref.listen(signInProvider, (_, next) async {
-      if (next.value?.getState() ?? false) {
-        final SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString('token', next.value!.getToken());
+      if (next.value != null) {
         context.go('/${Routes.home}');
       } else if (next.hasError && !next.isLoading) {
         showDialog(
@@ -63,7 +71,7 @@ class _LoginState extends ConsumerState<Login> {
           builder: (BuildContext context) {
             return AlertDialog(
               title: const Text('Error! Bad request.'),
-              content: const Text('Invalid Email or Password'),
+              content: Text(next.error.toString()),
               actions: [
                 TextButton(
                   onPressed: () {
@@ -78,15 +86,23 @@ class _LoginState extends ConsumerState<Login> {
       }
     });
 
+    return loginPage(context, state);
+  }
+
+  Scaffold loginPage(BuildContext context, AsyncValue<LoginEntity?> state) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+      ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(left: 30, right: 30),
+          padding: const EdgeInsets.only(left: 24, right: 24),
           child: Column(
             children: [
-              const Spacer(),
+              const SizedBox(
+                height: 45,
+              ),
               Stack(
                 children: [
                   Text(
@@ -96,13 +112,13 @@ class _LoginState extends ConsumerState<Login> {
                   const GreenLine(right: 80),
                 ],
               ),
-              const SizedBox(height: 37),
+              const SizedBox(height: 16),
               Text(
                 'Welcome back! Sign in using your social\n account or email to continue us',
                 style: Theme.of(context).textTheme.titleSmall,
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 50),
+              const SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -132,13 +148,13 @@ class _LoginState extends ConsumerState<Login> {
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 20, bottom: 20),
+                padding: const EdgeInsets.only(top: 30, bottom: 30),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Container(
                       height: 1,
-                      width: 150,
+                      width: 135,
                       color: const Color(0xFFCDD1D0),
                     ),
                     const Text(
@@ -147,7 +163,7 @@ class _LoginState extends ConsumerState<Login> {
                     ),
                     Container(
                       height: 1,
-                      width: 150,
+                      width: 135,
                       color: const Color(0xFFCDD1D0),
                     ),
                   ],
@@ -161,27 +177,72 @@ class _LoginState extends ConsumerState<Login> {
                     style: Theme.of(context).textTheme.displaySmall,
                   ),
                   TextField(
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       hintText: 'Enter email',
+                      errorText:
+                          (emailTextFieldError) ? 'Email must be email' : null,
                     ),
                     controller: emailController,
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 30),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Password',style: Theme.of(context).textTheme.displaySmall,),
+                  Text(
+                    'Password',
+                    style: Theme.of(context).textTheme.displaySmall,
+                  ),
                   PasswordFieldProvider(
+                    passwordTextFieldError: passwordTextFieldError,
                     hintText: 'Enter password',
                     controller: passwordController,
                   ),
                 ],
               ),
+              const SizedBox(height: 15),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Checkbox(value: false, onChanged: (newValue) {}, shape: null),
+                  SizedBox(
+                    height: 10,
+                    width: 10,
+                    child: Checkbox(
+                      value: enableCheckbox,
+                      onChanged: (newValue) {
+                        setState(() {
+                          enableCheckbox = newValue!;
+                        });
+                      },
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      fillColor: (enableCheckbox)
+                          ? WidgetStatePropertyAll(
+                              Theme.of(context).colorScheme.primary,
+                            )
+                          : WidgetStatePropertyAll(
+                              Theme.of(context)
+                                  .colorScheme
+                                  .secondary
+                                  .withOpacity(0.5),
+                            ),
+                      side: (enableCheckbox)
+                          ? BorderSide(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primary
+                                  .withOpacity(0.1),
+                              width: 2,
+                            )
+                          : BorderSide(
+                              color: Theme.of(context).colorScheme.primary,
+                              width: 2,
+                            ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
                   Text(
                     'Remember me',
                     style: Theme.of(context).textTheme.displaySmall,
@@ -209,14 +270,33 @@ class _LoginState extends ConsumerState<Login> {
                             ),
                           )
                         : null,
-                onPressed:
-                    (enableButtonNotifier.email & enableButtonNotifier.password)
-                        ? () {
-                            ref.read(signInProvider.notifier).signin(
+                onPressed: (enableButtonNotifier.email &&
+                        enableButtonNotifier.password)
+                    ? () {
+                        Validation validation = Validation();
+                        bool emailValidate =
+                            validation.validateEmail(emailController.text);
+                        bool passwordValidate = validation
+                            .validatePassword(passwordController.text);
+                        if (emailValidate && passwordValidate) {
+                          ref.read(signInProvider.notifier).signin(
                                 email: emailController.text.toString(),
-                                password: passwordController.text.toString());
-                          }
-                        : null,
+                                password: passwordController.text.toString(),
+                                enableCheckbox: enableCheckbox,
+                              );
+                        }
+                        if (!emailValidate) {
+                          setState(() {
+                            emailTextFieldError = true;
+                          });
+                        }
+                        if (!passwordValidate) {
+                          setState(() {
+                            passwordTextFieldError = true;
+                          });
+                        }
+                      }
+                    : null,
                 child: (state.isLoading)
                     ? const CircularProgressIndicator(
                         backgroundColor: Colors.white,
@@ -230,7 +310,7 @@ class _LoginState extends ConsumerState<Login> {
                             : null,
                       ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 15),
               GestureDetector(
                 child: Text(
                   "Don't have any account? Sign up",
@@ -238,7 +318,7 @@ class _LoginState extends ConsumerState<Login> {
                 ),
                 onTap: () => context.pushNamed(Routes.signup),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 30),
             ],
           ),
         ),
