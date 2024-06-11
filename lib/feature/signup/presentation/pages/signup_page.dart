@@ -1,6 +1,7 @@
 import 'package:authentication_app/core/service/navigation/routes/routes.dart';
 import 'package:authentication_app/core/widgets/green_line.dart';
 import 'package:authentication_app/core/widgets/password_field_provider.dart';
+import 'package:authentication_app/core/widgets/validation.dart';
 import 'package:authentication_app/feature/signup/presentation/riverpod/signup_controller.dart';
 import 'package:authentication_app/feature/signup/presentation/widgets/profile_info.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,8 @@ class _SignUpState extends ConsumerState<SignUp> {
   TextEditingController lastName = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
+  bool emailTextFieldError = false;
+  bool passwordTextFieldError = false;
 
   ({
     bool firstName,
@@ -57,6 +60,12 @@ class _SignUpState extends ConsumerState<SignUp> {
         password: password.text.isNotEmpty,
       );
     });
+    if (enableButtonNotifier.email) {
+      emailTextFieldError = false;
+    }
+    if (enableButtonNotifier.password) {
+      passwordTextFieldError = false;
+    }
   }
 
   @override
@@ -151,7 +160,11 @@ class _SignUpState extends ConsumerState<SignUp> {
                     style: Theme.of(context).textTheme.displaySmall,
                   ),
                   TextField(
-                    decoration: const InputDecoration(hintText: 'Enter email'),
+                    decoration: InputDecoration(
+                      hintText: 'Enter email',
+                      errorText:
+                          (emailTextFieldError) ? 'Email must be email' : null,
+                    ),
                     controller: email,
                   ),
                 ],
@@ -165,9 +178,9 @@ class _SignUpState extends ConsumerState<SignUp> {
                     style: Theme.of(context).textTheme.displaySmall,
                   ),
                   PasswordFieldProvider(
-                    passwordTextFieldError: false,
                     controller: password,
                     hintText: 'Enter password',
+                    passwordTextFieldError: passwordTextFieldError,
                   ),
                 ],
               ),
@@ -191,14 +204,31 @@ class _SignUpState extends ConsumerState<SignUp> {
                         enableButtonNotifier.email &
                         enableButtonNotifier.password)
                     ? () {
-                        ref.read(signUpControllerProvider.notifier).signUp(
-                              ProfileInfo(
-                                firstName: firstName.text,
-                                lastName: lastName.text,
-                                email: email.text,
-                                password: password.text,
-                              ),
-                            );
+                        Validation validation = Validation();
+                        bool emailValidate =
+                            validation.validateEmail(email.text);
+                        bool passwordValidate =
+                            validation.validatePassword(password.text);
+                        if (emailValidate && passwordValidate) {
+                          ref.read(signUpControllerProvider.notifier).signUp(
+                                ProfileInfo(
+                                  firstName: firstName.text,
+                                  lastName: lastName.text,
+                                  email: email.text,
+                                  password: password.text,
+                                ),
+                              );
+                        }
+                        if (!emailValidate) {
+                          setState(() {
+                            emailTextFieldError = true;
+                          });
+                        }
+                        if (!passwordValidate) {
+                          setState(() {
+                            passwordTextFieldError = true;
+                          });
+                        }
                       }
                     : null,
                 child: (state.isLoading)

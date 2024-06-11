@@ -17,6 +17,8 @@ class ResetPassword extends ConsumerStatefulWidget {
 class _ResetPasswordState extends ConsumerState<ResetPassword> {
   TextEditingController password = TextEditingController();
   TextEditingController confirmPassword = TextEditingController();
+  bool confirmPassFieldError = false;
+  bool passwordFieldError = false;
 
   ({bool password, bool confirmPassword}) enableButtonNotifier =
       (password: false, confirmPassword: false);
@@ -39,6 +41,12 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
         confirmPassword: confirmPassword.text.isNotEmpty,
       );
     });
+    if (enableButtonNotifier.password) {
+      passwordFieldError = false;
+    }
+    if (enableButtonNotifier.confirmPassword) {
+      confirmPassFieldError = false;
+    }
   }
 
   @override

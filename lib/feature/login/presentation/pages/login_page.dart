@@ -12,6 +12,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:authentication_app/core/widgets/validation.dart';
 
 class Login extends ConsumerStatefulWidget {
   const Login({super.key});
@@ -53,9 +54,7 @@ class _LoginState extends ConsumerState<Login> {
       );
     });
     if (enableButtonNotifier.email) {
-      setState(() {
-        emailTextFieldError = false;
-      });
+      emailTextFieldError = false;
     }
     if (enableButtonNotifier.password) {
       passwordTextFieldError = false;
@@ -277,10 +276,11 @@ class _LoginState extends ConsumerState<Login> {
                 onPressed: (enableButtonNotifier.email &&
                         enableButtonNotifier.password)
                     ? () {
+                        Validation validation = Validation();
                         bool emailValidate =
-                            _validateEmail(emailController.text);
-                        bool passwordValidate =
-                            _validatePassword(passwordController.text);
+                            validation.validateEmail(emailController.text);
+                        bool passwordValidate = validation
+                            .validatePassword(passwordController.text);
                         if (emailValidate && passwordValidate) {
                           ref.read(signInProvider.notifier).signin(
                                 email: emailController.text.toString(),
@@ -327,28 +327,5 @@ class _LoginState extends ConsumerState<Login> {
         ),
       ),
     );
-  }
-
-  bool _validate() {
-    String email = emailController.text;
-    String password = passwordController.text;
-    // bool res = _validateEmail(email) & _validatePassword(password);
-    if (!_validateEmail(email)) {
-      return false;
-    }
-    return true;
-  }
-
-  bool _validateEmail(String value) {
-    final emailRegEx = RegExp(r'^[^@]+@[^@]+\.[^@]+');
-    if (!emailRegEx.hasMatch(value)) {
-      return false;
-    }
-    return true;
-  }
-
-  bool _validatePassword(String password) {
-    if (password.length < 6) return false;
-    return true;
   }
 }
