@@ -1,10 +1,8 @@
 class Validation {
   bool validateEmail(String value) {
     final emailRegEx = RegExp(r'^[^@]+@[^@]+\.[^@]+');
-    if (!emailRegEx.hasMatch(value)) {
-      return false;
-    }
-    return true;
+    bool matched = emailRegEx.hasMatch(value);
+    return matched;
   }
 
   bool validatePassword(String password) {
