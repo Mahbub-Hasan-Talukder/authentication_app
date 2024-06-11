@@ -1,9 +1,7 @@
 import 'package:authentication_app/core/gen/assets.gen.dart';
-import 'package:authentication_app/core/theme/theme.dart';
 import 'package:authentication_app/core/widgets/green_line.dart';
 import 'package:authentication_app/core/service/navigation/routes/routes.dart';
 import 'package:authentication_app/core/widgets/password_field_provider.dart';
-import 'package:authentication_app/feature/home/presentation/pages/home_page.dart';
 import 'package:authentication_app/feature/login/domain/entities/login_entity.dart';
 import 'package:authentication_app/feature/login/presentation/riverpod/controller.dart';
 import 'package:authentication_app/feature/login/presentation/widgets/login_page_logo.dart';
@@ -11,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:authentication_app/core/widgets/validation.dart';
 
 class Login extends ConsumerStatefulWidget {
@@ -221,7 +218,7 @@ class _LoginState extends ConsumerState<Login> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(6),
                       ),
-                      fillColor: (enableCheckbox!)
+                      fillColor: (enableCheckbox)
                           ? WidgetStatePropertyAll(
                               Theme.of(context).colorScheme.primary,
                             )
@@ -231,7 +228,7 @@ class _LoginState extends ConsumerState<Login> {
                                   .secondary
                                   .withOpacity(0.5),
                             ),
-                      side: (enableCheckbox!)
+                      side: (enableCheckbox)
                           ? BorderSide(
                               color: Theme.of(context)
                                   .colorScheme

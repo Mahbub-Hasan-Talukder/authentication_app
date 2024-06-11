@@ -1,5 +1,6 @@
 import 'package:authentication_app/core/widgets/green_line.dart';
 import 'package:authentication_app/core/widgets/password_field_provider.dart';
+import 'package:authentication_app/core/widgets/validation.dart';
 import 'package:authentication_app/feature/reset_password/presentation/riverpod/reset_password_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -108,7 +109,7 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                     style: Theme.of(context).textTheme.displaySmall,
                   ),
                   PasswordFieldProvider(
-                    passwordTextFieldError: false,
+                    passwordTextFieldError: passwordFieldError,
                     hintText: '',
                     controller: password,
                   ),
@@ -123,7 +124,7 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                     style: Theme.of(context).textTheme.displaySmall,
                   ),
                   PasswordFieldProvider(
-                    passwordTextFieldError: false,
+                    passwordTextFieldError: confirmPassFieldError,
                     hintText: '',
                     controller: confirmPassword,
                   ),
@@ -145,13 +146,30 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                 onPressed: (enableButtonNotifier.password &
                         enableButtonNotifier.confirmPassword)
                     ? () {
-                        ref
-                            .read(resetPasswordControllerProvider.notifier)
-                            .resetPassword(
-                              email: widget.email,
-                              password: password.text,
-                              confirmPassword: confirmPassword.text,
-                            );
+                        Validation validation = Validation();
+                        bool confirmPasswordValidate =
+                            validation.validatePassword(password.text);
+                        bool passwordValidate =
+                            validation.validatePassword(confirmPassword.text);
+                        if (confirmPasswordValidate && passwordValidate) {
+                          ref
+                              .read(resetPasswordControllerProvider.notifier)
+                              .resetPassword(
+                                email: widget.email,
+                                password: password.text,
+                                confirmPassword: confirmPassword.text,
+                              );
+                        }
+                        if (!confirmPasswordValidate) {
+                          setState(() {
+                            passwordFieldError = true;
+                          });
+                        }
+                        if (!passwordValidate) {
+                          setState(() {
+                            confirmPassFieldError = true;
+                          });
+                        }
                       }
                     : null,
                 child: (state.isLoading)
