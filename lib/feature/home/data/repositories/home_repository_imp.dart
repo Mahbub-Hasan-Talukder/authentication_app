@@ -2,7 +2,6 @@ import 'package:authentication_app/feature/home/data/data_source/home_remote_dat
 import 'package:authentication_app/feature/home/data/models/home_model.dart';
 import 'package:authentication_app/feature/home/data/models/logout_model.dart';
 import 'package:authentication_app/feature/home/domain/repositories/home_repository.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

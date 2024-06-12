@@ -83,7 +83,7 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
         if (widget.previousPage == 'signup') {
           context.pushNamed(Routes.login);
         } else {
-          context.pushNamed(Routes.ResetPass,
+          context.pushNamed(Routes.resetPass,
               pathParameters: {'email': widget.email});
         }
       } else if (next.value?.$2 != null) {
