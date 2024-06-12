@@ -7,12 +7,12 @@ part of 'forgot_password_controller.dart';
 // **************************************************************************
 
 String _$forgotPasswordControllerHash() =>
-    r'8dde40928172ff57ca54b6e2e347d121329b3788';
+    r'cba1833b06f3b48bb3c23750dc25175e9203dc56';
 
 /// See also [ForgotPasswordController].
 @ProviderFor(ForgotPasswordController)
-final forgotPasswordControllerProvider =
-    AutoDisposeAsyncNotifierProvider<ForgotPasswordController, bool?>.internal(
+final forgotPasswordControllerProvider = AutoDisposeAsyncNotifierProvider<
+    ForgotPasswordController, (ForgotPasswordEntity?, String?)>.internal(
   ForgotPasswordController.new,
   name: r'forgotPasswordControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -22,6 +22,7 @@ final forgotPasswordControllerProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$ForgotPasswordController = AutoDisposeAsyncNotifier<bool?>;
+typedef _$ForgotPasswordController
+    = AutoDisposeAsyncNotifier<(ForgotPasswordEntity?, String?)>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
