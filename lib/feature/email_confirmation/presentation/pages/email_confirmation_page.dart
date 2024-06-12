@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:authentication_app/core/service/navigation/routes/routes.dart';
 import 'package:authentication_app/core/widgets/green_line.dart';
 import 'package:authentication_app/feature/email_confirmation/presentation/riverpod/email_confirmation_controller.dart';
