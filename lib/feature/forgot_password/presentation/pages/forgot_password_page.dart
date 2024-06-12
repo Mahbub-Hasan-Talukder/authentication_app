@@ -14,16 +14,16 @@ class ForgotPassword extends ConsumerStatefulWidget {
 }
 
 class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
-  TextEditingController email = TextEditingController();
+  TextEditingController emailCtr = TextEditingController();
   bool enableButtonNotifier = false;
   bool emailTextFieldError = false;
 
   @override
   void initState() {
     super.initState();
-    email.addListener(() {
+    emailCtr.addListener(() {
       setState(() {
-        enableButtonNotifier = email.text.isNotEmpty;
+        enableButtonNotifier = emailCtr.text.isNotEmpty;
         if (enableButtonNotifier) {
           emailTextFieldError = false;
         }
@@ -40,7 +40,7 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
         context.pushNamed(
           Routes.emailConfirmation,
           pathParameters: {
-            'email': email.text,
+            'email': emailCtr.text,
             'previousPage': 'forgotPassword',
           },
         );
@@ -99,7 +99,7 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
                     ),
                   ),
                   TextField(
-                    controller: email,
+                    controller: emailCtr,
                     decoration: InputDecoration(
                       errorText:
                           (emailTextFieldError) ? 'Email must be email' : null,
@@ -123,12 +123,12 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
                     ? () {
                         Validation validation = Validation();
                         bool emailValidate =
-                            validation.validateEmail(email.text);
+                            validation.validateEmail(emailCtr.text);
                         if (emailValidate) {
                           ref
                               .read(forgotPasswordControllerProvider.notifier)
                               .forgotPassword(
-                                email: email.text.toString(),
+                                email: emailCtr.text.toString(),
                               );
                         }
                         if (!emailValidate) {
