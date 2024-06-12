@@ -3,14 +3,6 @@ import 'package:authentication_app/feature/email_confirmation/data/models/email_
 import 'package:authentication_app/feature/email_confirmation/domain/repositories/email_confirmation_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'email_confirmation_repository_imp.g.dart';
-
-@riverpod
-EmailConfirmationRepositoryImp emailConfirmationRepositoryImp(
-    EmailConfirmationRepositoryImpRef ref) {
-  return EmailConfirmationRepositoryImp(EmailConfirmationRemoteDataSource());
-}
-
 class EmailConfirmationRepositoryImp implements EmailConfirmationRepository {
   EmailConfirmationRemoteDataSource emailConfirmationRemoteDataSource;
 
