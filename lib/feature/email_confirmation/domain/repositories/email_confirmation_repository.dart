@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:authentication_app/feature/email_confirmation/data/data_source/remote_data_source.dart';
 import 'package:authentication_app/feature/email_confirmation/data/repositories/email_confirmation_repository_imp.dart';
 import 'package:authentication_app/feature/email_confirmation/domain/entities/email_confirmation_entity.dart';

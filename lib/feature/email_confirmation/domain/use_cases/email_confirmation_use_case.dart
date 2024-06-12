@@ -1,5 +1,6 @@
 import 'package:authentication_app/feature/email_confirmation/data/repositories/email_confirmation_repository_imp.dart';
 import 'package:authentication_app/feature/email_confirmation/domain/entities/email_confirmation_entity.dart';
+import 'package:authentication_app/feature/email_confirmation/domain/repositories/email_confirmation_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'email_confirmation_use_case.g.dart';
@@ -7,20 +8,22 @@ part 'email_confirmation_use_case.g.dart';
 @riverpod
 EmailConfirmationUseCase emailConfirmationUseCase(
     EmailConfirmationUseCaseRef ref) {
-  final emailConfirmationImp = ref.read(emailConfirmationRepositoryImpProvider);
-  return EmailConfirmationUseCase(emailConfirmationImp: emailConfirmationImp);
+  final emailConfirmationRepository =
+      ref.read(emailConfirmationRepositoryProvider);
+  return EmailConfirmationUseCase(
+      emailConfirmationRepository: emailConfirmationRepository);
 }
 
 class EmailConfirmationUseCase {
-  final EmailConfirmationRepositoryImp emailConfirmationImp;
+  final EmailConfirmationRepository emailConfirmationRepository;
 
-  EmailConfirmationUseCase({required this.emailConfirmationImp});
+  EmailConfirmationUseCase({required this.emailConfirmationRepository});
 
   FutureOr<(EmailConfirmationEntity?, String?)> emailConfirmation({
     required email,
     required otp,
   }) async {
-    return await emailConfirmationImp.emailConfirmation(
+    return await emailConfirmationRepository.emailConfirmation(
       email: email,
       otp: otp,
     );
@@ -29,7 +32,7 @@ class EmailConfirmationUseCase {
   FutureOr<(EmailConfirmationEntity?, String?)> resendOtp({
     required email,
   }) async {
-    return await emailConfirmationImp.resendOtp(
+    return await emailConfirmationRepository.resendOtp(
       email: email,
     );
   }

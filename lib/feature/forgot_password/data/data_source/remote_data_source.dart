@@ -1,15 +1,13 @@
-import 'dart:async';
 import 'dart:convert';
 import 'package:authentication_app/core/service/api/endpoints.dart';
 import 'package:authentication_app/feature/forgot_password/data/model/forgot_password_model.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'remote_data_source.g.dart';
 
 @riverpod
-ForgotPasswordRemoteDataSource forgotPasswordRemoteDataSource(Ref ref) {
+ForgotPasswordRemoteDataSource forgotPasswordRemoteDataSource(ForgotPasswordRemoteDataSourceRef ref) {
   return ForgotPasswordRemoteDataSource();
 }
 
