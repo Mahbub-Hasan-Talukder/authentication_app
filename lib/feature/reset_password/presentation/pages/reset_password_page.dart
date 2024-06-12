@@ -1,34 +1,36 @@
-import 'package:authentication_app/core/service/navigation/routes/routes.dart';
 import 'package:authentication_app/core/widgets/green_line.dart';
 import 'package:authentication_app/core/widgets/password_field_provider.dart';
-import 'package:authentication_app/feature/reset_password/controller/reset_password_controller.dart';
+import 'package:authentication_app/core/widgets/validation.dart';
+import 'package:authentication_app/feature/reset_password/presentation/riverpod/reset_password_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class ResetPassword extends ConsumerStatefulWidget {
+class ResetPass extends ConsumerStatefulWidget {
   final String email;
 
-  const ResetPassword({super.key, required this.email});
+  const ResetPass({super.key, required this.email});
 
   @override
-  ConsumerState<ResetPassword> createState() => _ResetPasswordState();
+  ConsumerState<ResetPass> createState() => _ResetPassState();
 }
 
-class _ResetPasswordState extends ConsumerState<ResetPassword> {
-  TextEditingController password = TextEditingController();
-  TextEditingController confirmPassword = TextEditingController();
+class _ResetPassState extends ConsumerState<ResetPass> {
+  TextEditingController passwordCtr = TextEditingController();
+  TextEditingController confirmPasswordCtr = TextEditingController();
+  bool confirmPassFieldError = false;
+  bool passwordFieldError = false;
 
-  ({bool password, bool confirmPassword}) enableButtonNotifier =
-      (password: false, confirmPassword: false);
+  ({bool isPassEnabled, bool isConfirmPassEnabled}) enableButtonNotifier =
+      (isPassEnabled: false, isConfirmPassEnabled: false);
 
   @override
   void initState() {
     super.initState();
-    password.addListener(() {
+    passwordCtr.addListener(() {
       _setSateEnableButton();
     });
-    confirmPassword.addListener(() {
+    confirmPasswordCtr.addListener(() {
       _setSateEnableButton();
     });
   }
@@ -36,25 +38,31 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
   void _setSateEnableButton() {
     setState(() {
       enableButtonNotifier = (
-        password: password.text.isNotEmpty,
-        confirmPassword: confirmPassword.text.isNotEmpty,
+        isPassEnabled: passwordCtr.text.isNotEmpty,
+        isConfirmPassEnabled: confirmPasswordCtr.text.isNotEmpty,
       );
     });
+    if (enableButtonNotifier.isPassEnabled) {
+      passwordFieldError = false;
+    }
+    if (enableButtonNotifier.isConfirmPassEnabled) {
+      confirmPassFieldError = false;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(resetPasswordControllerProvider);
-    ref.listen(resetPasswordControllerProvider, (_, next) {
-      if (next.value ?? false) {
-        context.pushNamed(Routes.login);
-      } else if (next.hasError && !next.isLoading) {
+    final state = ref.watch(resetPassControllerProvider);
+    ref.listen(resetPassControllerProvider, (_, next) {
+      if (next.value?.$1 != null) {
+        context.go('/');
+      } else if (next.value?.$2 != null) {
         showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: const Text('Error! Bad request.'),
-              content: const Text('Something went wrong'),
+              title: const Text('Error!'),
+              content: Text(next.value!.$2.toString()),
               actions: [
                 TextButton(
                   onPressed: () {
@@ -76,7 +84,7 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
           padding: const EdgeInsets.only(left: 24, right: 24),
           child: Column(
             children: [
-              const Spacer(),
+              const SizedBox(height: 45),
               Stack(
                 children: [
                   Text(
@@ -101,8 +109,9 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                     style: Theme.of(context).textTheme.displaySmall,
                   ),
                   PasswordFieldProvider(
+                    passwordTextFieldError: passwordFieldError,
                     hintText: '',
-                    controller: password,
+                    controller: passwordCtr,
                   ),
                 ],
               ),
@@ -115,15 +124,16 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                     style: Theme.of(context).textTheme.displaySmall,
                   ),
                   PasswordFieldProvider(
+                    passwordTextFieldError: confirmPassFieldError,
                     hintText: '',
-                    controller: confirmPassword,
+                    controller: confirmPasswordCtr,
                   ),
                 ],
               ),
               const Spacer(),
               TextButton(
-                style: (enableButtonNotifier.password &
-                        enableButtonNotifier.confirmPassword)
+                style: (enableButtonNotifier.isPassEnabled &
+                        enableButtonNotifier.isConfirmPassEnabled)
                     ? const ButtonStyle(
                         backgroundColor: WidgetStatePropertyAll(
                           Color.fromARGB(255, 97, 145, 122),
@@ -133,16 +143,33 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                         ),
                       )
                     : null,
-                onPressed: (enableButtonNotifier.password &
-                        enableButtonNotifier.confirmPassword)
+                onPressed: (enableButtonNotifier.isPassEnabled &
+                        enableButtonNotifier.isConfirmPassEnabled)
                     ? () {
-                        ref
-                            .read(resetPasswordControllerProvider.notifier)
-                            .resetPassword(
-                              email: widget.email,
-                              password: password.text,
-                              confirmPassword: confirmPassword.text,
-                            );
+                        Validation validation = Validation();
+                        bool confirmPasswordValidate =
+                            validation.validatePassword(passwordCtr.text);
+                        bool passwordValidate = validation
+                            .validatePassword(confirmPasswordCtr.text);
+                        if (confirmPasswordValidate && passwordValidate) {
+                          ref
+                              .read(resetPassControllerProvider.notifier)
+                              .resetPass(
+                                email: widget.email,
+                                password: passwordCtr.text,
+                                confirmPassword: confirmPasswordCtr.text,
+                              );
+                        }
+                        if (!confirmPasswordValidate) {
+                          setState(() {
+                            passwordFieldError = true;
+                          });
+                        }
+                        if (!passwordValidate) {
+                          setState(() {
+                            confirmPassFieldError = true;
+                          });
+                        }
                       }
                     : null,
                 child: (state.isLoading)
@@ -150,9 +177,9 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                         backgroundColor: Colors.white,
                       )
                     : Text(
-                        'Submit',
-                        style: (enableButtonNotifier.password &
-                                enableButtonNotifier.confirmPassword)
+                        'Reset Password',
+                        style: (enableButtonNotifier.isPassEnabled &
+                                enableButtonNotifier.isConfirmPassEnabled)
                             ? const TextStyle(
                                 color: Color.fromARGB(255, 234, 237, 236),
                               )
