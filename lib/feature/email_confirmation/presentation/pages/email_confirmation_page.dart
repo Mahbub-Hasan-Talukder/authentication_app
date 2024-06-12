@@ -1,9 +1,8 @@
 import 'dart:async';
-
 import 'package:authentication_app/core/service/navigation/routes/routes.dart';
 import 'package:authentication_app/core/widgets/green_line.dart';
-import 'package:authentication_app/feature/email_confirmation/controller/email_confirmation_controller.dart';
-import 'package:authentication_app/feature/email_confirmation/controller/otp_controller.dart';
+import 'package:authentication_app/feature/email_confirmation/presentation/riverpod/email_confirmation_controller.dart';
+import 'package:authentication_app/feature/email_confirmation/presentation/riverpod/otp_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -79,14 +78,14 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
     final state = ref.watch(emailConfirmationControllerProvider);
 
     ref.listen(emailConfirmationControllerProvider, (_, next) {
-      if (next.value ?? false) {
+      if (next.value?.$1 != null) {
         if (widget.previousPage == 'signup') {
           context.pushNamed(Routes.login);
         } else {
           context.pushNamed(Routes.resetPassword,
               pathParameters: {'email': widget.email});
         }
-      } else if (next.hasError && !next.isLoading) {
+      } else if (next.value?.$2 != null) {
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -107,10 +106,10 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
       }
     });
     ref.listen(otpControllerProvider, (_, next) {
-      if (next.value == true) {
-        _showDialog(context, 'OTP sent to your email.');
-      } else if (next.value == false) {
-        _showDialog(context, 'Invalid user email');
+      if (next.value?.$1 != null) {
+        _showDialog(context, '${next.value?.$1?.message.toString()}');
+      } else if (next.value?.$2 != null) {
+        _showDialog(context, '${next.value?.$2?.toString()}');
       }
     });
 
@@ -121,7 +120,7 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
           padding: const EdgeInsets.only(left: 30, right: 30),
           child: Column(
             children: [
-              const Spacer(),
+              const SizedBox(height: 45),
               Stack(
                 children: [
                   Text(
@@ -168,7 +167,7 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
                             .read(emailConfirmationControllerProvider.notifier)
                             .emailConfirmation(
                               email: widget.email,
-                              code: otpController.text,
+                              otp: otpController.text,
                             );
                       }
                     : null,
