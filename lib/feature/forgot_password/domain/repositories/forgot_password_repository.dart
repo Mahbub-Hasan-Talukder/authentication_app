@@ -6,7 +6,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'forgot_password_repository.g.dart';
 
 @riverpod
-ForgotPasswordRepository forgotPasswordRepository(ForgotPasswordRepositoryRef ref) {
+ForgotPasswordRepository forgotPasswordRepository(
+    ForgotPasswordRepositoryRef ref) {
   final forgotPasswordRemoteDataSource =
       ref.read(forgotPasswordRemoteDataSourceProvider);
   return ForgotPasswordRepositoryImp(forgotPasswordRemoteDataSource);
