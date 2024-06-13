@@ -1,16 +1,14 @@
-import 'dart:async';
 import 'dart:convert';
 import 'package:authentication_app/core/service/api/endpoints.dart';
 import 'package:authentication_app/feature/signup/data/model/signup_model.dart';
 import 'package:authentication_app/feature/signup/presentation/widgets/profile_info.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'remote_data_source.g.dart';
 
 @riverpod
-SignUpRemoteDataSource signUpRemoteDataSource(Ref ref) {
+SignUpRemoteDataSource signUpRemoteDataSource(SignUpRemoteDataSourceRef ref) {
   return SignUpRemoteDataSource();
 }
 
