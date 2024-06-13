@@ -1,49 +1,52 @@
 import 'package:authentication_app/core/service/navigation/routes/routes.dart';
 import 'package:authentication_app/core/widgets/green_line.dart';
 import 'package:authentication_app/core/widgets/password_field_provider.dart';
-import 'package:authentication_app/feature/signup/controller/signup_controller.dart';
+import 'package:authentication_app/core/widgets/validation.dart';
+import 'package:authentication_app/feature/signup/presentation/riverpod/signup_controller.dart';
 import 'package:authentication_app/feature/signup/presentation/widgets/profile_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class Signup extends ConsumerStatefulWidget {
-  const Signup({super.key});
+class SignUp extends ConsumerStatefulWidget {
+  const SignUp({super.key});
   @override
-  ConsumerState<Signup> createState() => _SignupState();
+  ConsumerState<SignUp> createState() => _SignUpState();
 }
 
-class _SignupState extends ConsumerState<Signup> {
-  TextEditingController firstName = TextEditingController();
-  TextEditingController lastName = TextEditingController();
-  TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
+class _SignUpState extends ConsumerState<SignUp> {
+  TextEditingController firstNameCtr = TextEditingController();
+  TextEditingController lastNameCtr = TextEditingController();
+  TextEditingController emailCtr = TextEditingController();
+  TextEditingController passwordCtr = TextEditingController();
+  bool emailTextFieldError = false;
+  bool passwordTextFieldError = false;
 
   ({
-    bool firstName,
-    bool lastName,
-    bool email,
-    bool password
+    bool isFirstNameEnabled,
+    bool isLastNameEnabled,
+    bool isEmailEnabled,
+    bool isPasswordEnabled
   }) enableButtonNotifier = (
-    firstName: false,
-    lastName: false,
-    email: false,
-    password: false,
+    isFirstNameEnabled: false,
+    isLastNameEnabled: false,
+    isEmailEnabled: false,
+    isPasswordEnabled: false,
   );
 
   @override
   void initState() {
     super.initState();
-    firstName.addListener(() {
+    firstNameCtr.addListener(() {
       _setStateEnableButton();
     });
-    lastName.addListener(() {
+    lastNameCtr.addListener(() {
       _setStateEnableButton();
     });
-    email.addListener(() {
+    emailCtr.addListener(() {
       _setStateEnableButton();
     });
-    password.addListener(() {
+    passwordCtr.addListener(() {
       _setStateEnableButton();
     });
   }
@@ -51,30 +54,36 @@ class _SignupState extends ConsumerState<Signup> {
   void _setStateEnableButton() {
     setState(() {
       enableButtonNotifier = (
-        firstName: firstName.text.isNotEmpty,
-        lastName: lastName.text.isNotEmpty,
-        email: email.text.isNotEmpty,
-        password: password.text.isNotEmpty,
+        isFirstNameEnabled: firstNameCtr.text.isNotEmpty,
+        isLastNameEnabled: lastNameCtr.text.isNotEmpty,
+        isEmailEnabled: emailCtr.text.isNotEmpty,
+        isPasswordEnabled: passwordCtr.text.isNotEmpty,
       );
     });
+    if (enableButtonNotifier.isEmailEnabled) {
+      emailTextFieldError = false;
+    }
+    if (enableButtonNotifier.isPasswordEnabled) {
+      passwordTextFieldError = false;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(signUpControllerProvider);
     ref.listen(signUpControllerProvider, (_, next) {
-      if (next.value ?? false) {
+      if (next.value?.$1 != null && next.value?.$2 == null) {
         context.pushNamed(
           Routes.emailConfirmation,
-          pathParameters: {'email': email.text, 'previousPage': 'signup'},
+          pathParameters: {'email': emailCtr.text, 'previousPage': 'signup'},
         );
-      } else if (next.hasError && !next.isLoading) {
+      } else if (next.value?.$1 == null && next.value?.$2 != null) {
         showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: const Text('User already exists'),
-              content: const Text('Please Login'),
+              title: const Text('Error!'),
+              content: Text('${next.value?.$2}'),
               actions: [
                 TextButton(
                   onPressed: () {
@@ -96,11 +105,11 @@ class _SignupState extends ConsumerState<Signup> {
           padding: const EdgeInsets.only(left: 30, right: 30),
           child: Column(
             children: [
-              const SizedBox(height: 100),
+              const SizedBox(height: 45),
               Stack(
                 children: [
                   Text(
-                    'Signup with email',
+                    'SignUp with email',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const GreenLine(right: 80),
@@ -123,7 +132,7 @@ class _SignupState extends ConsumerState<Signup> {
                   TextField(
                     decoration:
                         const InputDecoration(hintText: 'Enter first name'),
-                    controller: firstName,
+                    controller: firstNameCtr,
                   ),
                 ],
               ),
@@ -138,7 +147,7 @@ class _SignupState extends ConsumerState<Signup> {
                   TextField(
                     decoration:
                         const InputDecoration(hintText: 'Enter last name'),
-                    controller: lastName,
+                    controller: lastNameCtr,
                   ),
                 ],
               ),
@@ -151,8 +160,12 @@ class _SignupState extends ConsumerState<Signup> {
                     style: Theme.of(context).textTheme.displaySmall,
                   ),
                   TextField(
-                    decoration: const InputDecoration(hintText: 'Enter email'),
-                    controller: email,
+                    decoration: InputDecoration(
+                      hintText: 'Enter email',
+                      errorText:
+                          (emailTextFieldError) ? 'Email must be email' : null,
+                    ),
+                    controller: emailCtr,
                   ),
                 ],
               ),
@@ -160,19 +173,23 @@ class _SignupState extends ConsumerState<Signup> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Password'),
+                  Text(
+                    'Password',
+                    style: Theme.of(context).textTheme.displaySmall,
+                  ),
                   PasswordFieldProvider(
-                    controller: password,
+                    controller: passwordCtr,
                     hintText: 'Enter password',
+                    passwordTextFieldError: passwordTextFieldError,
                   ),
                 ],
               ),
               const Spacer(),
               TextButton(
-                style: (enableButtonNotifier.firstName &
-                        enableButtonNotifier.lastName &
-                        enableButtonNotifier.email &
-                        enableButtonNotifier.password)
+                style: (enableButtonNotifier.isFirstNameEnabled &
+                        enableButtonNotifier.isLastNameEnabled &
+                        enableButtonNotifier.isEmailEnabled &
+                        enableButtonNotifier.isPasswordEnabled)
                     ? const ButtonStyle(
                         backgroundColor: WidgetStatePropertyAll(
                           Color.fromARGB(255, 97, 145, 122),
@@ -182,19 +199,36 @@ class _SignupState extends ConsumerState<Signup> {
                         ),
                       )
                     : null,
-                onPressed: (enableButtonNotifier.firstName &
-                        enableButtonNotifier.lastName &
-                        enableButtonNotifier.email &
-                        enableButtonNotifier.password)
+                onPressed: (enableButtonNotifier.isFirstNameEnabled &
+                        enableButtonNotifier.isLastNameEnabled &
+                        enableButtonNotifier.isEmailEnabled &
+                        enableButtonNotifier.isPasswordEnabled)
                     ? () {
-                        ref.read(signUpControllerProvider.notifier).signup(
-                              ProfileInfo(
-                                firstName: firstName.text,
-                                lastName: lastName.text,
-                                email: email.text,
-                                password: password.text,
-                              ),
-                            );
+                        Validation validation = Validation();
+                        bool emailValidate =
+                            validation.validateEmail(emailCtr.text);
+                        bool passwordValidate =
+                            validation.validatePassword(passwordCtr.text);
+                        if (emailValidate && passwordValidate) {
+                          ref.read(signUpControllerProvider.notifier).signUp(
+                                ProfileInfo(
+                                  firstName: firstNameCtr.text,
+                                  lastName: lastNameCtr.text,
+                                  email: emailCtr.text,
+                                  password: passwordCtr.text,
+                                ),
+                              );
+                        }
+                        if (!emailValidate) {
+                          setState(() {
+                            emailTextFieldError = true;
+                          });
+                        }
+                        if (!passwordValidate) {
+                          setState(() {
+                            passwordTextFieldError = true;
+                          });
+                        }
                       }
                     : null,
                 child: (state.isLoading)
@@ -202,10 +236,10 @@ class _SignupState extends ConsumerState<Signup> {
                         backgroundColor: Colors.white)
                     : Text(
                         'Create an account',
-                        style: (enableButtonNotifier.firstName &
-                                enableButtonNotifier.lastName &
-                                enableButtonNotifier.email &
-                                enableButtonNotifier.password)
+                        style: (enableButtonNotifier.isFirstNameEnabled &
+                                enableButtonNotifier.isLastNameEnabled &
+                                enableButtonNotifier.isEmailEnabled &
+                                enableButtonNotifier.isPasswordEnabled)
                             ? TextStyle(
                                 color: Theme.of(context).colorScheme.surface,
                               )
