@@ -128,10 +128,10 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
                     'Email Confirmation',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
-                  const GreenLine(right: 80),
+                  const GreenLine(right: 110),
                 ],
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 15),
               Center(
                 child: Text(
                   'We’ve sent a code to your email address. \nPlease check your inbox',
@@ -139,7 +139,7 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
                   textAlign: TextAlign.center,
                 ),
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 70),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -185,7 +185,7 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
                             : const TextStyle(color: Color(0xFF797C7B)),
                       ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -210,6 +210,7 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
                         ),
                 ],
               ),
+              const SizedBox(height: 30),
             ],
           ),
         ),

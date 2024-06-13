@@ -3,7 +3,6 @@ import 'package:authentication_app/core/service/navigation/routes/routes.dart';
 import 'package:authentication_app/core/widgets/green_line.dart';
 import 'package:authentication_app/core/widgets/password_field_provider.dart';
 import 'package:authentication_app/core/widgets/validation.dart';
-import 'package:authentication_app/feature/login/domain/entities/login_entity.dart';
 import 'package:authentication_app/feature/login/presentation/riverpod/controller.dart';
 import 'package:authentication_app/feature/login/presentation/widgets/login_page_logo.dart';
 import 'package:flutter/material.dart';
@@ -86,10 +85,6 @@ class _LoginState extends ConsumerState<Login> {
       }
     });
 
-    return loginPage(context, state);
-  }
-
-  Scaffold loginPage(BuildContext context, AsyncValue<LoginEntity?> state) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -174,7 +169,9 @@ class _LoginState extends ConsumerState<Login> {
                 children: [
                   Text(
                     'Email',
-                    style: Theme.of(context).textTheme.displaySmall,
+                    style: emailTextFieldError
+                        ? const TextStyle(color: Colors.red)
+                        : Theme.of(context).textTheme.displaySmall,
                   ),
                   TextField(
                     decoration: InputDecoration(
@@ -192,7 +189,9 @@ class _LoginState extends ConsumerState<Login> {
                 children: [
                   Text(
                     'Password',
-                    style: Theme.of(context).textTheme.displaySmall,
+                    style: passwordTextFieldError
+                        ? const TextStyle(color: Colors.red)
+                        :  Theme.of(context).textTheme.displaySmall,
                   ),
                   PasswordFieldProvider(
                     passwordTextFieldError: passwordTextFieldError,

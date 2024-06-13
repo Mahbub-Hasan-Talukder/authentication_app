@@ -91,22 +91,24 @@ class _ResetPassState extends ConsumerState<ResetPass> {
                     'Reset password',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
-                  const GreenLine(right: 80),
+                  const GreenLine(right: 90),
                 ],
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 15),
               Text(
                 'Please enter a new password. Don’t enter \nyour old password.',
                 style: Theme.of(context).textTheme.titleSmall,
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 70),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     'Password',
-                    style: Theme.of(context).textTheme.displaySmall,
+                    style: passwordFieldError
+                        ? const TextStyle(color: Color(0xFFFF2D1B))
+                        : Theme.of(context).textTheme.displaySmall,
                   ),
                   PasswordFieldProvider(
                     passwordTextFieldError: passwordFieldError,
@@ -121,7 +123,9 @@ class _ResetPassState extends ConsumerState<ResetPass> {
                 children: [
                   Text(
                     'Confirm password',
-                    style: Theme.of(context).textTheme.displaySmall,
+                    style: passwordFieldError
+                        ? const TextStyle(color: Color(0xFFFF2D1B))
+                        : Theme.of(context).textTheme.displaySmall,
                   ),
                   PasswordFieldProvider(
                     passwordTextFieldError: confirmPassFieldError,
@@ -188,7 +192,7 @@ class _ResetPassState extends ConsumerState<ResetPass> {
                               ),
                       ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 30),
             ],
           ),
         ),

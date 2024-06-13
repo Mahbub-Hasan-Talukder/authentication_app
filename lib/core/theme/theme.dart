@@ -25,6 +25,7 @@ ThemeData theme = ThemeData(
         color: Color(0xFF24786D),
       ),
     ),
+    errorStyle: TextStyle(color: Color(0xFFFF2D1B)),
   ),
   textButtonTheme: const TextButtonThemeData(
     style: ButtonStyle(

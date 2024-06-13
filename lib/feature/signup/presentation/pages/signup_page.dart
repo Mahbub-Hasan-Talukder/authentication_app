@@ -102,26 +102,26 @@ class _SignUpState extends ConsumerState<SignUp> {
       appBar: AppBar(),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(left: 30, right: 30),
+          padding: const EdgeInsets.only(left: 25, right: 25),
           child: Column(
             children: [
               const SizedBox(height: 45),
               Stack(
                 children: [
                   Text(
-                    'SignUp with email',
+                    'Sign up with email',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
-                  const GreenLine(right: 80),
+                  const GreenLine(right: 100),
                 ],
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 15),
               Text(
                 'Get chatting with friends and family today by\n signing up for our chat app!',
                 style: Theme.of(context).textTheme.titleSmall,
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 60),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -136,7 +136,7 @@ class _SignUpState extends ConsumerState<SignUp> {
                   ),
                 ],
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 30),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -151,13 +151,15 @@ class _SignUpState extends ConsumerState<SignUp> {
                   ),
                 ],
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 30),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     'Email',
-                    style: Theme.of(context).textTheme.displaySmall,
+                    style: emailTextFieldError
+                        ? const TextStyle(color: Color(0xFFFF2D1B))
+                        : Theme.of(context).textTheme.displaySmall,
                   ),
                   TextField(
                     decoration: InputDecoration(
@@ -169,13 +171,15 @@ class _SignUpState extends ConsumerState<SignUp> {
                   ),
                 ],
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 30),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     'Password',
-                    style: Theme.of(context).textTheme.displaySmall,
+                    style: passwordTextFieldError
+                        ? const TextStyle(color: Color(0xFFFF2D1B))
+                        : Theme.of(context).textTheme.displaySmall,
                   ),
                   PasswordFieldProvider(
                     controller: passwordCtr,
@@ -248,7 +252,7 @@ class _SignUpState extends ConsumerState<SignUp> {
                               ),
                       ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 15),
               GestureDetector(
                 child: Text(
                   'Already have an account? Login',
@@ -256,7 +260,7 @@ class _SignUpState extends ConsumerState<SignUp> {
                 ),
                 onTap: () => GoRouter.of(context).pushNamed(Routes.login),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 30),
             ],
           ),
         ),

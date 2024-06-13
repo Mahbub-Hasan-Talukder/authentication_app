@@ -28,7 +28,7 @@ class PasswordFieldProviderState extends State<PasswordFieldProvider> {
       obscureText: _isSecurePassword,
       decoration: InputDecoration(
         errorText: (widget.passwordTextFieldError)
-            ? 'Password length must be  greater than 6'
+            ? 'Password length must be greater than 5'
             : null,
         hintText: widget.hintText,
         suffixIcon: IconButton(
