@@ -65,6 +65,7 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
       }
     });
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(),
       body: SafeArea(
         child: Padding(

@@ -115,6 +115,7 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
     });
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(),
       body: SafeArea(
         child: Padding(
