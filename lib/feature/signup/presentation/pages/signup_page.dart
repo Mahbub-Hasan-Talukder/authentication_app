@@ -98,166 +98,173 @@ class _SignUpState extends ConsumerState<SignUp> {
       }
     });
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       appBar: AppBar(),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 30, right: 30),
-          child: Column(
-            children: [
-              const SizedBox(height: 45),
-              Stack(
-                children: [
-                  Text(
-                    'SignUp with email',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const GreenLine(right: 80),
-                ],
-              ),
-              const SizedBox(height: 30),
-              Text(
-                'Get chatting with friends and family today by\n signing up for our chat app!',
-                style: Theme.of(context).textTheme.titleSmall,
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 40),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'First Name',
-                    style: Theme.of(context).textTheme.displaySmall,
-                  ),
-                  TextField(
-                    decoration:
-                        const InputDecoration(hintText: 'Enter first name'),
-                    controller: firstNameCtr,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 40),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Last Name',
-                    style: Theme.of(context).textTheme.displaySmall,
-                  ),
-                  TextField(
-                    decoration:
-                        const InputDecoration(hintText: 'Enter last name'),
-                    controller: lastNameCtr,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 40),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Email',
-                    style: Theme.of(context).textTheme.displaySmall,
-                  ),
-                  TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Enter email',
-                      errorText:
-                          (emailTextFieldError) ? 'Email must be email' : null,
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 25, right: 25),
+            child: Column(
+              children: [
+                const SizedBox(height: 45),
+                Stack(
+                  children: [
+                    Text(
+                      'Sign up with email',
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
-                    controller: emailCtr,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 40),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Password',
+                    const GreenLine(right: 100),
+                  ],
+                ),
+                const SizedBox(height: 15),
+                Text(
+                  'Get chatting with friends and family today by\n signing up for our chat app!',
+                  style: Theme.of(context).textTheme.titleSmall,
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 60),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'First Name',
+                      style: Theme.of(context).textTheme.displaySmall,
+                    ),
+                    TextField(
+                      decoration:
+                          const InputDecoration(hintText: 'Enter first name'),
+                      controller: firstNameCtr,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 30),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Last Name',
+                      style: Theme.of(context).textTheme.displaySmall,
+                    ),
+                    TextField(
+                      decoration:
+                          const InputDecoration(hintText: 'Enter last name'),
+                      controller: lastNameCtr,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 30),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Email',
+                      style: emailTextFieldError
+                          ? const TextStyle(color: Color(0xFFFF2D1B))
+                          : Theme.of(context).textTheme.displaySmall,
+                    ),
+                    TextField(
+                      decoration: InputDecoration(
+                        hintText: 'Enter email',
+                        errorText: (emailTextFieldError)
+                            ? 'Email must be email'
+                            : null,
+                      ),
+                      controller: emailCtr,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 30),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Password',
+                      style: passwordTextFieldError
+                          ? const TextStyle(color: Color(0xFFFF2D1B))
+                          : Theme.of(context).textTheme.displaySmall,
+                    ),
+                    PasswordFieldProvider(
+                      controller: passwordCtr,
+                      hintText: 'Enter password',
+                      passwordTextFieldError: passwordTextFieldError,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 100),
+                TextButton(
+                  style: (enableButtonNotifier.isFirstNameEnabled &
+                          enableButtonNotifier.isLastNameEnabled &
+                          enableButtonNotifier.isEmailEnabled &
+                          enableButtonNotifier.isPasswordEnabled)
+                      ? const ButtonStyle(
+                          backgroundColor: WidgetStatePropertyAll(
+                            Color(0xFF24786D),
+                          ),
+                          minimumSize: WidgetStatePropertyAll(
+                            Size(double.infinity, 50),
+                          ),
+                        )
+                      : null,
+                  onPressed: (enableButtonNotifier.isFirstNameEnabled &
+                          enableButtonNotifier.isLastNameEnabled &
+                          enableButtonNotifier.isEmailEnabled &
+                          enableButtonNotifier.isPasswordEnabled)
+                      ? () {
+                          Validation validation = Validation();
+                          bool emailValidate =
+                              validation.validateEmail(emailCtr.text);
+                          bool passwordValidate =
+                              validation.validatePassword(passwordCtr.text);
+                          if (emailValidate && passwordValidate) {
+                            ref.read(signUpControllerProvider.notifier).signUp(
+                                  ProfileInfo(
+                                    firstName: firstNameCtr.text,
+                                    lastName: lastNameCtr.text,
+                                    email: emailCtr.text,
+                                    password: passwordCtr.text,
+                                  ),
+                                );
+                          }
+                          if (!emailValidate) {
+                            setState(() {
+                              emailTextFieldError = true;
+                            });
+                          }
+                          if (!passwordValidate) {
+                            setState(() {
+                              passwordTextFieldError = true;
+                            });
+                          }
+                        }
+                      : null,
+                  child: (state.isLoading)
+                      ? const CircularProgressIndicator(
+                          backgroundColor: Colors.white)
+                      : Text(
+                          'Create an account',
+                          style: (enableButtonNotifier.isFirstNameEnabled &
+                                  enableButtonNotifier.isLastNameEnabled &
+                                  enableButtonNotifier.isEmailEnabled &
+                                  enableButtonNotifier.isPasswordEnabled)
+                              ? TextStyle(
+                                  color: Theme.of(context).colorScheme.surface,
+                                )
+                              : TextStyle(
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
+                                ),
+                        ),
+                ),
+                const SizedBox(height: 15),
+                GestureDetector(
+                  child: Text(
+                    'Already have an account? Login',
                     style: Theme.of(context).textTheme.displaySmall,
                   ),
-                  PasswordFieldProvider(
-                    controller: passwordCtr,
-                    hintText: 'Enter password',
-                    passwordTextFieldError: passwordTextFieldError,
-                  ),
-                ],
-              ),
-              const Spacer(),
-              TextButton(
-                style: (enableButtonNotifier.isFirstNameEnabled &
-                        enableButtonNotifier.isLastNameEnabled &
-                        enableButtonNotifier.isEmailEnabled &
-                        enableButtonNotifier.isPasswordEnabled)
-                    ? const ButtonStyle(
-                        backgroundColor: WidgetStatePropertyAll(
-                          Color.fromARGB(255, 97, 145, 122),
-                        ),
-                        minimumSize: WidgetStatePropertyAll(
-                          Size(double.infinity, 50),
-                        ),
-                      )
-                    : null,
-                onPressed: (enableButtonNotifier.isFirstNameEnabled &
-                        enableButtonNotifier.isLastNameEnabled &
-                        enableButtonNotifier.isEmailEnabled &
-                        enableButtonNotifier.isPasswordEnabled)
-                    ? () {
-                        Validation validation = Validation();
-                        bool emailValidate =
-                            validation.validateEmail(emailCtr.text);
-                        bool passwordValidate =
-                            validation.validatePassword(passwordCtr.text);
-                        if (emailValidate && passwordValidate) {
-                          ref.read(signUpControllerProvider.notifier).signUp(
-                                ProfileInfo(
-                                  firstName: firstNameCtr.text,
-                                  lastName: lastNameCtr.text,
-                                  email: emailCtr.text,
-                                  password: passwordCtr.text,
-                                ),
-                              );
-                        }
-                        if (!emailValidate) {
-                          setState(() {
-                            emailTextFieldError = true;
-                          });
-                        }
-                        if (!passwordValidate) {
-                          setState(() {
-                            passwordTextFieldError = true;
-                          });
-                        }
-                      }
-                    : null,
-                child: (state.isLoading)
-                    ? const CircularProgressIndicator(
-                        backgroundColor: Colors.white)
-                    : Text(
-                        'Create an account',
-                        style: (enableButtonNotifier.isFirstNameEnabled &
-                                enableButtonNotifier.isLastNameEnabled &
-                                enableButtonNotifier.isEmailEnabled &
-                                enableButtonNotifier.isPasswordEnabled)
-                            ? TextStyle(
-                                color: Theme.of(context).colorScheme.surface,
-                              )
-                            : TextStyle(
-                                color: Theme.of(context).colorScheme.secondary,
-                              ),
-                      ),
-              ),
-              const SizedBox(height: 10),
-              GestureDetector(
-                child: Text(
-                  'Already have an account? Login',
-                  style: Theme.of(context).textTheme.displaySmall,
+                  onTap: () => GoRouter.of(context).pushNamed(Routes.login),
                 ),
-                onTap: () => GoRouter.of(context).pushNamed(Routes.login),
-              ),
-              const SizedBox(height: 20),
-            ],
+                const SizedBox(height: 30),
+              ],
+            ),
           ),
         ),
       ),

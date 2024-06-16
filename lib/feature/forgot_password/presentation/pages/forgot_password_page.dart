@@ -65,10 +65,11 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
       }
     });
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(left: 30, right: 30),
+          padding: const EdgeInsets.only(left: 25, right: 25),
           child: Column(
             children: [
               const SizedBox(height: 45),
@@ -81,22 +82,21 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
                   const GreenLine(right: 90),
                 ],
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 15),
               Text(
                 textAlign: TextAlign.center,
                 'Enter your email address. We will send a code \n to verify your identity',
                 style: Theme.of(context).textTheme.titleSmall,
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 70),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Email',
-                    style: TextStyle(
-                      color: Color(0xFF24786D),
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: emailTextFieldError
+                        ? const TextStyle(color: Colors.red)
+                        : Theme.of(context).textTheme.displaySmall,
                   ),
                   TextField(
                     controller: emailCtr,
@@ -112,7 +112,7 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
                 style: (enableButtonNotifier)
                     ? const ButtonStyle(
                         backgroundColor: WidgetStatePropertyAll(
-                          Color.fromARGB(255, 97, 145, 122),
+                          Color(0xFF24786D),
                         ),
                         minimumSize: WidgetStatePropertyAll(
                           Size(double.infinity, 50),
@@ -151,7 +151,7 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
                             : null,
                       ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 15),
               GestureDetector(
                 child: Text(
                   "Remember your password? Login",
@@ -159,6 +159,7 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
                 ),
                 onTap: () => GoRouter.of(context).pushNamed(Routes.login),
               ),
+              const SizedBox(height: 30),
             ],
           ),
         ),

@@ -5,6 +5,7 @@ import 'package:authentication_app/core/widgets/green_line.dart';
 import 'package:authentication_app/feature/email_confirmation/presentation/riverpod/email_confirmation_controller.dart';
 import 'package:authentication_app/feature/email_confirmation/presentation/riverpod/otp_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -115,6 +116,7 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
     });
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(),
       body: SafeArea(
         child: Padding(
@@ -128,10 +130,10 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
                     'Email Confirmation',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
-                  const GreenLine(right: 80),
+                  const GreenLine(right: 110),
                 ],
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 15),
               Center(
                 child: Text(
                   'We’ve sent a code to your email address. \nPlease check your inbox',
@@ -139,7 +141,7 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
                   textAlign: TextAlign.center,
                 ),
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 70),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -150,7 +152,14 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  TextField(controller: otpController),
+                  TextField(
+                    controller: otpController,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                      LengthLimitingTextInputFormatter(6),
+                    ],
+                  ),
                 ],
               ),
               const Spacer(),
@@ -158,7 +167,7 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
                 style: (enableButtonNotifier)
                     ? const ButtonStyle(
                         backgroundColor: WidgetStatePropertyAll(
-                          Color.fromARGB(255, 97, 145, 122),
+                          Color(0xFF24786D),
                         ),
                       )
                     : null,
@@ -185,7 +194,7 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
                             : const TextStyle(color: Color(0xFF797C7B)),
                       ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -210,6 +219,7 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
                         ),
                 ],
               ),
+              const SizedBox(height: 30),
             ],
           ),
         ),

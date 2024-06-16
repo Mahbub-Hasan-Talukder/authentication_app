@@ -22,9 +22,10 @@ ThemeData theme = ThemeData(
     ),
     focusedBorder: UnderlineInputBorder(
       borderSide: BorderSide(
-        color: Color(0xFF24786D),
+        color: Color.fromARGB(255, 36, 112, 102),
       ),
     ),
+    errorStyle: TextStyle(color: Color(0xFFFF2D1B)),
   ),
   textButtonTheme: const TextButtonThemeData(
     style: ButtonStyle(
