@@ -65,101 +65,105 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
       }
     });
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 30, right: 30),
-          child: Column(
-            children: [
-              const SizedBox(height: 45),
-              Stack(
-                children: [
-                  Text(
-                    'Forgot Password',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const GreenLine(right: 90),
-                ],
-              ),
-              const SizedBox(height: 30),
-              Text(
-                textAlign: TextAlign.center,
-                'Enter your email address. We will send a code \n to verify your identity',
-                style: Theme.of(context).textTheme.titleSmall,
-              ),
-              const SizedBox(height: 40),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Email',
-                    style: TextStyle(
-                      color: Color(0xFF24786D),
-                      fontWeight: FontWeight.w600,
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 25, right: 25),
+            child: Column(
+              children: [
+                const SizedBox(height: 45),
+                Stack(
+                  children: [
+                    Text(
+                      'Forgot Password',
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
-                  ),
-                  TextField(
-                    controller: emailCtr,
-                    decoration: InputDecoration(
-                      errorText:
-                          (emailTextFieldError) ? 'Email must be email' : null,
+                    const GreenLine(right: 90),
+                  ],
+                ),
+                const SizedBox(height: 15),
+                Text(
+                  textAlign: TextAlign.center,
+                  'Enter your email address. We will send a code \n to verify your identity',
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
+                const SizedBox(height: 70),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Email',
+                      style: emailTextFieldError
+                          ? const TextStyle(color: Colors.red)
+                          : Theme.of(context).textTheme.displaySmall,
                     ),
-                  ),
-                ],
-              ),
-              const Spacer(),
-              TextButton(
-                style: (enableButtonNotifier)
-                    ? const ButtonStyle(
-                        backgroundColor: WidgetStatePropertyAll(
-                          Color.fromARGB(255, 97, 145, 122),
-                        ),
-                        minimumSize: WidgetStatePropertyAll(
-                          Size(double.infinity, 50),
-                        ),
-                      )
-                    : null,
-                onPressed: (enableButtonNotifier)
-                    ? () {
-                        Validation validation = Validation();
-                        bool emailValidate =
-                            validation.validateEmail(emailCtr.text);
-                        if (emailValidate) {
-                          ref
-                              .read(forgotPasswordControllerProvider.notifier)
-                              .forgotPassword(
-                                email: emailCtr.text.toString(),
-                              );
-                        }
-                        if (!emailValidate) {
-                          setState(() {
-                            emailTextFieldError = true;
-                          });
-                        }
-                      }
-                    : null,
-                child: (state.isLoading)
-                    ? const CircularProgressIndicator(
-                        backgroundColor: Colors.white,
-                      )
-                    : Text(
-                        'Submit',
-                        style: (enableButtonNotifier)
-                            ? const TextStyle(
-                                color: Color.fromARGB(255, 234, 237, 236),
-                              )
+                    TextField(
+                      controller: emailCtr,
+                      decoration: InputDecoration(
+                        errorText: (emailTextFieldError)
+                            ? 'Email must be email'
                             : null,
                       ),
-              ),
-              const SizedBox(height: 10),
-              GestureDetector(
-                child: Text(
-                  "Remember your password? Login",
-                  style: Theme.of(context).textTheme.displaySmall,
+                    ),
+                  ],
                 ),
-                onTap: () => GoRouter.of(context).pushNamed(Routes.login),
-              ),
-            ],
+                const SizedBox(height: 350),
+                TextButton(
+                  style: (enableButtonNotifier)
+                      ? const ButtonStyle(
+                          backgroundColor: WidgetStatePropertyAll(
+                            Color(0xFF24786D),
+                          ),
+                          minimumSize: WidgetStatePropertyAll(
+                            Size(double.infinity, 50),
+                          ),
+                        )
+                      : null,
+                  onPressed: (enableButtonNotifier)
+                      ? () {
+                          Validation validation = Validation();
+                          bool emailValidate =
+                              validation.validateEmail(emailCtr.text);
+                          if (emailValidate) {
+                            ref
+                                .read(forgotPasswordControllerProvider.notifier)
+                                .forgotPassword(
+                                  email: emailCtr.text.toString(),
+                                );
+                          }
+                          if (!emailValidate) {
+                            setState(() {
+                              emailTextFieldError = true;
+                            });
+                          }
+                        }
+                      : null,
+                  child: (state.isLoading)
+                      ? const CircularProgressIndicator(
+                          backgroundColor: Colors.white,
+                        )
+                      : Text(
+                          'Submit',
+                          style: (enableButtonNotifier)
+                              ? const TextStyle(
+                                  color: Color.fromARGB(255, 234, 237, 236),
+                                )
+                              : null,
+                        ),
+                ),
+                const SizedBox(height: 15),
+                GestureDetector(
+                  child: Text(
+                    "Remember your password? Login",
+                    style: Theme.of(context).textTheme.displaySmall,
+                  ),
+                  onTap: () => GoRouter.of(context).pushNamed(Routes.login),
+                ),
+                const SizedBox(height: 30),
+              ],
+            ),
           ),
         ),
       ),
