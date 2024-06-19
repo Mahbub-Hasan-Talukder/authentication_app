@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:authentication_app/core/gen/fonts.gen.dart';
 import 'package:authentication_app/core/service/navigation/routes/routes.dart';
 import 'package:authentication_app/core/widgets/green_line.dart';
 import 'package:authentication_app/feature/email_confirmation/presentation/riverpod/email_confirmation_controller.dart';
@@ -109,7 +110,7 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
     });
     ref.listen(otpControllerProvider, (_, next) {
       if (next.value?.$1 != null) {
-        _showDialog(context, '${next.value?.$1?.message.toString()}');
+        _showDialog(context, '${next.value?.$1?.message}');
       } else if (next.value?.$2 != null) {
         _showDialog(context, '${next.value?.$2?.toString()}');
       }
@@ -190,6 +191,8 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
                         style: (enableButtonNotifier)
                             ? TextStyle(
                                 color: Theme.of(context).colorScheme.surface,
+                                fontFamily: FontFamily.caros,
+                                fontWeight: FontWeight.w600,
                               )
                             : const TextStyle(color: Color(0xFF797C7B)),
                       ),
@@ -230,6 +233,7 @@ class EmailConfirmationState extends ConsumerState<EmailConfirmation> {
   void _showDialog(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
+        backgroundColor: Theme.of(context).colorScheme.primary,
         content: Text(message),
         duration: const Duration(
           seconds: 2,

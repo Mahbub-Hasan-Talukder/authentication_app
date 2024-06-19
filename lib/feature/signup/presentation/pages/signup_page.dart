@@ -1,3 +1,4 @@
+import 'package:authentication_app/core/gen/fonts.gen.dart';
 import 'package:authentication_app/core/service/navigation/routes/routes.dart';
 import 'package:authentication_app/core/widgets/green_line.dart';
 import 'package:authentication_app/core/widgets/password_field_provider.dart';
@@ -247,6 +248,8 @@ class _SignUpState extends ConsumerState<SignUp> {
                                   enableButtonNotifier.isPasswordEnabled)
                               ? TextStyle(
                                   color: Theme.of(context).colorScheme.surface,
+                                  fontFamily: FontFamily.caros,
+                                  fontWeight: FontWeight.w600,
                                 )
                               : TextStyle(
                                   color:

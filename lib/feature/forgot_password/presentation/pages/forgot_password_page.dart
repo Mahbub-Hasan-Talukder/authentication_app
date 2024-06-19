@@ -1,3 +1,4 @@
+import 'package:authentication_app/core/gen/fonts.gen.dart';
 import 'package:authentication_app/core/service/navigation/routes/routes.dart';
 import 'package:authentication_app/core/widgets/green_line.dart';
 import 'package:authentication_app/core/widgets/validation.dart';
@@ -147,6 +148,8 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
                         style: (enableButtonNotifier)
                             ? const TextStyle(
                                 color: Color.fromARGB(255, 234, 237, 236),
+                                fontFamily: FontFamily.caros,
+                                fontWeight: FontWeight.w600,
                               )
                             : null,
                       ),

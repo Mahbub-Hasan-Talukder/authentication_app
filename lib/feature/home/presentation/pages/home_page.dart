@@ -1,4 +1,5 @@
 import 'package:authentication_app/core/gen/assets.gen.dart';
+import 'package:authentication_app/core/gen/fonts.gen.dart';
 import 'package:authentication_app/core/widgets/green_line.dart';
 import 'package:authentication_app/core/widgets/profile_picture_holder.dart';
 import 'package:authentication_app/feature/home/presentation/riverpod/home_controller.dart';
@@ -72,7 +73,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                   'Home Page',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
-                const GreenLine(right: 25),
+                const GreenLine(right: 55),
               ],
             ),
           ],
@@ -108,7 +109,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               TextButton(
                 style: ButtonStyle(
                     backgroundColor: const WidgetStatePropertyAll(
-                    Color(0xFF24786D),
+                      Color(0xFF24786D),
                     ),
                     foregroundColor: WidgetStatePropertyAll(
                       Theme.of(context).colorScheme.surface,
@@ -120,7 +121,13 @@ class _HomePageState extends ConsumerState<HomePage> {
                     ? const CircularProgressIndicator(
                         color: Colors.white,
                       )
-                    : const Text('Logout'),
+                    : const Text(
+                        'Logout',
+                        style: TextStyle(
+                          fontFamily: FontFamily.caros,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
               ),
               const SizedBox(height: 30),
             ],

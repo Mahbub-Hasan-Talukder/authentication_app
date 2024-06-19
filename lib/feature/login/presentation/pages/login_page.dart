@@ -1,4 +1,5 @@
 import 'package:authentication_app/core/gen/assets.gen.dart';
+import 'package:authentication_app/core/gen/fonts.gen.dart';
 import 'package:authentication_app/core/service/navigation/routes/routes.dart';
 import 'package:authentication_app/core/widgets/green_line.dart';
 import 'package:authentication_app/core/widgets/password_field_provider.dart';
@@ -313,7 +314,10 @@ class _LoginState extends ConsumerState<Login> {
                           style: (enableButtonNotifier.isEmailEnable &
                                   enableButtonNotifier.isPasswordEnable)
                               ? const TextStyle(
-                                  color: Color.fromARGB(255, 234, 237, 236))
+                                  color: Color.fromARGB(255, 234, 237, 236),
+                                  fontFamily: FontFamily.caros,
+                                  fontWeight: FontWeight.w600,
+                                )
                               : null,
                         ),
                 ),
