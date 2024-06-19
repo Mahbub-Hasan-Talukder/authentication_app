@@ -77,119 +77,124 @@ class _ResetPassState extends ConsumerState<ResetPass> {
       }
     });
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       appBar: AppBar(),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 24, right: 24),
-          child: Column(
-            children: [
-              const SizedBox(height: 45),
-              Stack(
-                children: [
-                  Text(
-                    'Reset password',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const GreenLine(right: 80),
-                ],
-              ),
-              const SizedBox(height: 30),
-              Text(
-                'Please enter a new password. Don’t enter \nyour old password.',
-                style: Theme.of(context).textTheme.titleSmall,
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 40),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Password',
-                    style: Theme.of(context).textTheme.displaySmall,
-                  ),
-                  PasswordFieldProvider(
-                    passwordTextFieldError: passwordFieldError,
-                    hintText: '',
-                    controller: passwordCtr,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 40),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Confirm password',
-                    style: Theme.of(context).textTheme.displaySmall,
-                  ),
-                  PasswordFieldProvider(
-                    passwordTextFieldError: confirmPassFieldError,
-                    hintText: '',
-                    controller: confirmPasswordCtr,
-                  ),
-                ],
-              ),
-              const Spacer(),
-              TextButton(
-                style: (enableButtonNotifier.isPassEnabled &
-                        enableButtonNotifier.isConfirmPassEnabled)
-                    ? const ButtonStyle(
-                        backgroundColor: WidgetStatePropertyAll(
-                          Color.fromARGB(255, 97, 145, 122),
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 24, right: 24),
+            child: Column(
+              children: [
+                const SizedBox(height: 45),
+                Stack(
+                  children: [
+                    Text(
+                      'Reset password',
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    const GreenLine(right: 90),
+                  ],
+                ),
+                const SizedBox(height: 15),
+                Text(
+                  'Please enter a new password. Don’t enter \nyour old password.',
+                  style: Theme.of(context).textTheme.titleSmall,
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 70),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Password',
+                      style: passwordFieldError
+                          ? const TextStyle(color: Color(0xFFFF2D1B))
+                          : Theme.of(context).textTheme.displaySmall,
+                    ),
+                    PasswordFieldProvider(
+                      passwordTextFieldError: passwordFieldError,
+                      hintText: '',
+                      controller: passwordCtr,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 40),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Confirm password',
+                      style: passwordFieldError
+                          ? const TextStyle(color: Color(0xFFFF2D1B))
+                          : Theme.of(context).textTheme.displaySmall,
+                    ),
+                    PasswordFieldProvider(
+                      passwordTextFieldError: confirmPassFieldError,
+                      hintText: '',
+                      controller: confirmPasswordCtr,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 280),
+                TextButton(
+                  style: (enableButtonNotifier.isPassEnabled &
+                          enableButtonNotifier.isConfirmPassEnabled)
+                      ? const ButtonStyle(
+                          backgroundColor: WidgetStatePropertyAll(
+                            Color(0xFF24786D),
+                          ),
+                          minimumSize: WidgetStatePropertyAll(
+                            Size(double.infinity, 50),
+                          ),
+                        )
+                      : null,
+                  onPressed: (enableButtonNotifier.isPassEnabled &
+                          enableButtonNotifier.isConfirmPassEnabled)
+                      ? () {
+                          Validation validation = Validation();
+                          bool confirmPasswordValidate =
+                              validation.validatePassword(passwordCtr.text);
+                          bool passwordValidate = validation
+                              .validatePassword(confirmPasswordCtr.text);
+                          if (confirmPasswordValidate && passwordValidate) {
+                            ref
+                                .read(resetPassControllerProvider.notifier)
+                                .resetPass(
+                                  email: widget.email,
+                                  password: passwordCtr.text,
+                                  confirmPassword: confirmPasswordCtr.text,
+                                );
+                          }
+                          if (!confirmPasswordValidate) {
+                            setState(() {
+                              passwordFieldError = true;
+                            });
+                          }
+                          if (!passwordValidate) {
+                            setState(() {
+                              confirmPassFieldError = true;
+                            });
+                          }
+                        }
+                      : null,
+                  child: (state.isLoading)
+                      ? const CircularProgressIndicator(
+                          backgroundColor: Colors.white,
+                        )
+                      : Text(
+                          'Reset Password',
+                          style: (enableButtonNotifier.isPassEnabled &
+                                  enableButtonNotifier.isConfirmPassEnabled)
+                              ? const TextStyle(
+                                  color: Color.fromARGB(255, 234, 237, 236),
+                                )
+                              : const TextStyle(
+                                  color: Color(0xFF797C7B),
+                                ),
                         ),
-                        minimumSize: WidgetStatePropertyAll(
-                          Size(double.infinity, 50),
-                        ),
-                      )
-                    : null,
-                onPressed: (enableButtonNotifier.isPassEnabled &
-                        enableButtonNotifier.isConfirmPassEnabled)
-                    ? () {
-                        Validation validation = Validation();
-                        bool confirmPasswordValidate =
-                            validation.validatePassword(passwordCtr.text);
-                        bool passwordValidate = validation
-                            .validatePassword(confirmPasswordCtr.text);
-                        if (confirmPasswordValidate && passwordValidate) {
-                          ref
-                              .read(resetPassControllerProvider.notifier)
-                              .resetPass(
-                                email: widget.email,
-                                password: passwordCtr.text,
-                                confirmPassword: confirmPasswordCtr.text,
-                              );
-                        }
-                        if (!confirmPasswordValidate) {
-                          setState(() {
-                            passwordFieldError = true;
-                          });
-                        }
-                        if (!passwordValidate) {
-                          setState(() {
-                            confirmPassFieldError = true;
-                          });
-                        }
-                      }
-                    : null,
-                child: (state.isLoading)
-                    ? const CircularProgressIndicator(
-                        backgroundColor: Colors.white,
-                      )
-                    : Text(
-                        'Reset Password',
-                        style: (enableButtonNotifier.isPassEnabled &
-                                enableButtonNotifier.isConfirmPassEnabled)
-                            ? const TextStyle(
-                                color: Color.fromARGB(255, 234, 237, 236),
-                              )
-                            : const TextStyle(
-                                color: Color(0xFF797C7B),
-                              ),
-                      ),
-              ),
-              const SizedBox(height: 20),
-            ],
+                ),
+                const SizedBox(height: 30),
+              ],
+            ),
           ),
         ),
       ),
