@@ -107,8 +107,8 @@ class _HomePageState extends ConsumerState<HomePage> {
               const Spacer(),
               TextButton(
                 style: ButtonStyle(
-                    backgroundColor: WidgetStatePropertyAll(
-                      Theme.of(context).colorScheme.primary.withOpacity(0.7),
+                    backgroundColor: const WidgetStatePropertyAll(
+                      Color(0xFF24786D),
                     ),
                     foregroundColor: WidgetStatePropertyAll(
                       Theme.of(context).colorScheme.surface,
