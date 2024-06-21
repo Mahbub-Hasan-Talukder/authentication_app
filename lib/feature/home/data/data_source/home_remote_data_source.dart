@@ -49,7 +49,6 @@ class HomeRemoteDataSource {
       if (response.statusCode == 201) {
         return LogoutModel.fromJson(jsonDecode(response.body));
       } else {
-        prefs.clear();
         return (null, jsonDecode(response.body)['message'].toString());
       }
     } catch (e) {

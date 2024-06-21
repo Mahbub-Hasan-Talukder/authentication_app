@@ -19,10 +19,15 @@ class HomeRepositoryImp implements HomeRepository {
   FutureOr<(LogoutModel?, String?)> logout() async {
     (LogoutModel?, String?) signOutRepositoryImp =
         await HomeRemoteDataSource.signOut();
+
     if (signOutRepositoryImp.$1 != null) {
-      SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
-      sharedPreferences.remove('loggedInEmail');
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      bool enableCheckBox = prefs.getString('enableCheckBox') != null;
+      if (!enableCheckBox) {
+        prefs.clear();
+      }
+      prefs.remove('enableCheckBox');
+      prefs.remove('token');
     }
     return signOutRepositoryImp;
   }

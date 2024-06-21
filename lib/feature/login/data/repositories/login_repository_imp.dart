@@ -39,6 +39,14 @@ class LoginRepositoryImp implements LoginRepository {
           key: 'loggedInEmail',
           value: email,
         );
+        loginLocalDataSource.setCacheData(
+          key: 'loggedInPass',
+          value: password,
+        );
+        loginLocalDataSource.setCacheData(
+          key: 'enableCheckBox',
+          value: 'true',
+        );
       }
     }
     return loginModel;

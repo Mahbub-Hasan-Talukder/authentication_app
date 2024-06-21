@@ -9,10 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends ConsumerStatefulWidget {
   const Login({super.key});
-
   @override
   ConsumerState<Login> createState() => _LoginState();
 }
@@ -39,6 +39,17 @@ class _LoginState extends ConsumerState<Login> {
       setState(() {
         _setEnableButtonState();
       });
+    });
+    Future(() async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? email = prefs.getString('loggedInEmail');
+      String? pass = prefs.getString('loggedInPass');
+      if (email != null) {
+        emailController.text = email;
+      }
+      if (pass != null) {
+        passwordController.text = pass;
+      }
     });
   }
 

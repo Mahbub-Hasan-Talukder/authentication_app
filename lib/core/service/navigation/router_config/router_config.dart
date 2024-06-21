@@ -65,9 +65,8 @@ class MyRouterConfig {
     ],
     redirect: (context, state) async {
       final prefs = await SharedPreferences.getInstance();
-      final email = prefs.getString('loggedInEmail');
-      final isLoggedIn = (email != null);
-
+      final token = prefs.getString('token');
+      final isLoggedIn = (token != null);
       if (isLoggedIn && state.fullPath == '/') {
         return '/home';
       } else if (!isLoggedIn && state.fullPath == '/') {
