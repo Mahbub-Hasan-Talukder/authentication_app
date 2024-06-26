@@ -1,13 +1,13 @@
 import 'package:authentication_app/core/service/navigation/routes/routes.dart';
-import 'package:authentication_app/feature/email_confirmation/presentation/views/email_confirmation_page.dart';
-import 'package:authentication_app/feature/forgot_password/presentation/views/forgot_password_page.dart';
-import 'package:authentication_app/feature/home/presentation/views/home_page.dart';
+import 'package:authentication_app/feature/email_confirmation/presentation/pages/email_confirmation_page.dart';
+import 'package:authentication_app/feature/forgot_password/presentation/pages/forgot_password_page.dart';
+import 'package:authentication_app/feature/home/presentation/pages/home_page.dart';
 import 'package:authentication_app/feature/login/presentation/pages/login_page.dart';
-import 'package:authentication_app/feature/reset_password/presentation/views/reset_password_page.dart';
-import 'package:authentication_app/feature/signup/presentation/views/signup_page.dart';
-import 'package:authentication_app/feature/update_profile/presentation/views/update_profile_page.dart';
+import 'package:authentication_app/feature/reset_password/presentation/pages/reset_password_page.dart';
+import 'package:authentication_app/feature/signup/presentation/pages/signup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyRouterConfig {
   static GoRouter router = GoRouter(
@@ -43,14 +43,7 @@ class MyRouterConfig {
         name: Routes.signup,
         path: '/signup',
         pageBuilder: (context, state) {
-          return const MaterialPage(child: Signup());
-        },
-      ),
-      GoRoute(
-        name: Routes.profile,
-        path: '/profile',
-        pageBuilder: (context, state) {
-          return MaterialPage(child: UpdateProfile());
+          return const MaterialPage(child: SignUp());
         },
       ),
       GoRoute(
@@ -58,7 +51,7 @@ class MyRouterConfig {
         path: '/resetPassword/:email',
         pageBuilder: (context, state) {
           return MaterialPage(
-            child: ResetPassword(email: state.pathParameters['email']!),
+            child: ResetPass(email: state.pathParameters['email']!),
           );
         },
       ),
@@ -70,5 +63,16 @@ class MyRouterConfig {
         },
       ),
     ],
+    redirect: (context, state) async {
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('token');
+      final isLoggedIn = (token != null);
+      if (isLoggedIn && state.fullPath == '/') {
+        return '/home';
+      } else if (!isLoggedIn && state.fullPath == '/') {
+        return '/';
+      }
+      return null;
+    },
   );
 }

@@ -1,5 +1,5 @@
-class Routes{
-  static const String login = 'login';
+class Routes {
+  static const String login = '/';
   static const String signup = 'signup';
   static const String emailConfirmation = 'emailConfirmation';
   static const String profile = 'profile';
