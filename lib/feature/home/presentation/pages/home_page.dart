@@ -1,4 +1,5 @@
 import 'package:authentication_app/core/gen/assets.gen.dart';
+import 'package:authentication_app/core/service/navigation/routes/routes.dart';
 import 'package:authentication_app/core/widgets/green_line.dart';
 import 'package:authentication_app/core/widgets/profile_picture_holder.dart';
 import 'package:authentication_app/feature/home/presentation/riverpod/home_controller.dart';
@@ -38,8 +39,8 @@ class _HomePageState extends ConsumerState<HomePage> {
       }
     });
     ref.listen(logoutControllerProvider, (_, next) {
-      if (next.value?.$1 != null) {
-        context.go('/');
+      if (next.value?.$1?.message != null) {
+        context.push(Routes.login);
       } else if (next.value?.$2 != null) {
         showDialog(
           context: context,
@@ -107,8 +108,8 @@ class _HomePageState extends ConsumerState<HomePage> {
               const Spacer(),
               TextButton(
                 style: ButtonStyle(
-                    backgroundColor: WidgetStatePropertyAll(
-                      Theme.of(context).colorScheme.primary.withOpacity(0.7),
+                    backgroundColor: const WidgetStatePropertyAll(
+                      Color(0xFF24786D),
                     ),
                     foregroundColor: WidgetStatePropertyAll(
                       Theme.of(context).colorScheme.surface,
